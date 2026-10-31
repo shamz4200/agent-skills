@@ -2,7 +2,7 @@
 #
 #   powershell -ExecutionPolicy Bypass -File install.ps1 [project-folder]     # default: the current folder
 #
-# Same steps as install.sh: copy skills to .claude/skills, OpenCode commands to .opencode/commands, a skills block in
+# Same steps as install.sh: copy skills to .claude/skills, start commands to .opencode/commands and .claude/commands, a skills block in
 # AGENTS.md, an empty .env kept out of git, and a check for Node, Python and FFmpeg. Safe to re-run.
 param([string]$Project = ".")
 $ErrorActionPreference = "Stop"
@@ -19,7 +19,8 @@ if (Test-Path (Join-Path $PSScriptRoot "skills")) {
 Write-Host "Installing skills into $Project"
 $skillsDir = Join-Path $Project ".claude\skills"
 $cmdDir = Join-Path $Project ".opencode\commands"
-New-Item -ItemType Directory -Force -Path $skillsDir, $cmdDir | Out-Null
+$claudeCmdDir = Join-Path $Project ".claude\commands"
+New-Item -ItemType Directory -Force -Path $skillsDir, $cmdDir, $claudeCmdDir | Out-Null
 $lines = @()
 foreach ($skill in Get-ChildItem (Join-Path $Src "skills") -Directory) {
     $dest = Join-Path $skillsDir $skill.Name
@@ -27,6 +28,8 @@ foreach ($skill in Get-ChildItem (Join-Path $Src "skills") -Directory) {
     Copy-Item -Recurse $skill.FullName $dest
     $cmds = Join-Path $skill.FullName "opencode\commands"
     if (Test-Path $cmds) { Copy-Item (Join-Path $cmds "*.md") $cmdDir -Force }
+    $ccmds = Join-Path $skill.FullName "claude\commands"
+    if (Test-Path $ccmds) { Copy-Item (Join-Path $ccmds "*.md") $claudeCmdDir -Force }
     $desc = (Select-String -Path (Join-Path $dest "SKILL.md") -Pattern "^description: (.*)" | Select-Object -First 1).Matches.Groups[1].Value
     $desc = ($desc -split '\. ')[0].TrimEnd('.') + "."                  # first sentence
     $lines += "- ``.claude/skills/$($skill.Name)/SKILL.md``: $desc"
@@ -42,6 +45,10 @@ $block = @(
     "",
     "Skills from $RepoUrl live in ``.claude/skills/``. Before a task that matches one, read its ``SKILL.md`` and follow it",
     "step by step.",
+    "",
+    "Start commands: when I type ``/what-if <idea>`` or ``/shamz <idea>``, make a Shamz What If episode of that idea with",
+    "``.claude/skills/shamz-what-if/SKILL.md``, from the first step to the finished episode. Claude Code and OpenCode also",
+    "have these as slash commands (``.claude/commands/``, ``.opencode/commands/``).",
     ""
 ) + $lines + @($end) -join "`n"
 $agents = Join-Path $Project "AGENTS.md"

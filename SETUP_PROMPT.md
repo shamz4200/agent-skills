@@ -17,9 +17,19 @@ Install my agent skills from https://github.com/shamz4200/agent-skills into this
 4. Ask me for my ElevenLabs API key and write it into .env as ELEVENLABS_API_KEY=<key>. Never print the key, put it
    in a commit, or paste it anywhere else.
 5. Read AGENTS.md and each installed skill's SKILL.md, then tell me which skills are installed, what each one does,
-   and how to start one (for example: "Make a Shamz What If episode: what if you could pause everyone but you?", or
-   /what-if in OpenCode).
+   and how to start one: /what-if or /shamz followed by the idea, for example
+   "/what-if What if you could see one minute ahead?".
 ```
+
+## Make your first cartoon
+
+After setup, start your agent from the same folder and type:
+
+```
+/what-if What if you could see one minute ahead?
+```
+
+or `/shamz` and your idea. Leave it running; the episode lands in `what-if-studio/out/<episode>/`.
 
 ## Updating later
 

@@ -53,8 +53,9 @@ git clone --depth 1 https://github.com/shamz4200/agent-skills /tmp/agent-skills
 bash /tmp/agent-skills/install.sh .
 ```
 
-Then ask your agent: "Make a Shamz What If episode: what if you could pause everyone but you?" In OpenCode, type
-`/what-if What if you could pause everyone but you?`. The first run copies the studio into `what-if-studio/` and
+Then start your agent from that folder and type `/what-if` or `/shamz` and your idea, for example
+`/what-if What if you could see one minute ahead?` (or just ask: "Make a Shamz What If episode: what if you could
+pause everyone but you?"). The first run copies the studio into `what-if-studio/` and
 installs it, which adds a few minutes.
 
 To see the examples first, from `studio/` after `npm install`: `npx remotion studio src/index.ts`, then open `Rewind`
@@ -68,7 +69,7 @@ or `CopyPaste`, or the `Cast` and `Crowd` sheets.
 | `references/` | The formula, the measured look and checklists, the building blocks (cast, wardrobe, sets), sound, traps |
 | `studio/` | The Remotion project: the engine (rig, wardrobe, wide cast, sets, light, UI) and two example episodes |
 | `scripts/` | voice, plan, stills, board, sfx, mixcheck, motiongrid, master |
-| `opencode/commands/what-if.md` | The `/what-if` command for OpenCode |
+| `opencode/commands/`, `claude/commands/` | The `/what-if` and `/shamz` start commands for OpenCode and Claude Code |
 
 ## Rules it follows
 

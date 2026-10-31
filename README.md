@@ -35,11 +35,33 @@ The installer puts each skill in `.claude/skills/<name>/`, any OpenCode commands
 skills in `AGENTS.md`, creates an empty `.env` and adds `.env` to `.gitignore`. It is safe to re-run; re-running
 updates the skills.
 
+## Make your first cartoon
+
+Start your agent **from inside your project folder** (where you ran the installer), type `/what-if` or `/shamz`
+and your idea as a What If question, press Enter and leave it running:
+
+```
+/what-if What if you could see one minute ahead?
+```
+
+```
+/shamz What if you could pause everyone but you?
+```
+
+It writes the script, voices it, draws a storyboard and fixes it, animates every shot in code and adds the sound.
+The finished episode lands in `what-if-studio/out/<episode>/`. The first run also sets up the studio, which adds a
+few minutes.
+
+- **Claude Code and OpenCode:** `/what-if` and `/shamz` are real slash commands.
+- **Other agents (Codex, Cursor, Aider, Gemini CLI):** type the same line; `AGENTS.md` tells them what it means.
+- **Tips:** start a fresh session for each cartoon; give notes in plain words ("the ball in shot 3 covers his face")
+  and it fixes and re-renders that shot; open the source of the episode's one real fact before you post.
+
 ## Use
 
-- **Claude Code:** start it in the project folder and ask, e.g. "Make a Shamz What If episode: what if you could
-  pause everyone but you?"
-- **OpenCode:** start it in the project folder and type `/what-if What if you could pause everyone but you?`
+- **Claude Code:** start it in the project folder and type `/what-if` or `/shamz` and your idea, or just ask:
+  "Make a Shamz What If episode: what if you could pause everyone but you?"
+- **OpenCode:** start it in the project folder and type `/what-if` or `/shamz` and your idea
 - **Other agents:** they find the skills through `AGENTS.md`; ask for the task in plain words.
 
 ## Keys
