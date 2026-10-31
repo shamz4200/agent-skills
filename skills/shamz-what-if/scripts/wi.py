@@ -88,6 +88,20 @@ def api_key():
     raise SystemExit(f'No ElevenLabs key: set one of {KEY_NAMES} in the environment or a .env file.')
 
 
+def setting(name):
+    """A setting by name (VOICE_ENGINE, SFX_ENGINE, CHATTERBOX_VOICE_SAMPLE): the environment, or the nearest .env above
+    the studio. None when unset."""
+    if os.environ.get(name):
+        return os.environ[name]
+    for d in [STUDIO, *STUDIO.parents]:
+        p = d / '.env'
+        if p.exists():
+            for line in read_env(p).splitlines():
+                if line.strip().startswith(name + '='):
+                    return line.split('=', 1)[1].strip().strip('"').strip("'") or None
+    return None
+
+
 def api(path, body=None, timeout=180):
     req = urllib.request.Request('https://api.elevenlabs.io' + path, headers={'xi-api-key': api_key(), 'Content-Type': 'application/json'})
     if body is not None:

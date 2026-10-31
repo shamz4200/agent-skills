@@ -39,9 +39,34 @@ one line in `engine/crowd.ts`, built from the wardrobe in `engine/wardrobe.tsx`.
 
 - Claude Code, OpenCode, or another coding agent
 - Node 18 or newer, ffmpeg (with ffprobe), Python 3.9+ with `numpy` and `Pillow`
-- An ElevenLabs API key in your environment or a `.env` file as `ELEVENLABS_API_KEY`. An episode uses roughly 150 to
-  250 credits. ElevenLabs' free plan is for non-commercial use and asks you to credit ElevenLabs, so check its terms
-  before you monetise.
+- **Voice and sound, pick a route:**
+  - **ElevenLabs (default):** an API key in your environment or `.env` as `ELEVENLABS_API_KEY`. An episode uses
+    roughly 150 to 250 credits. ElevenLabs' free plan is for non-commercial use and asks you to credit ElevenLabs, so
+    check its terms before you monetise.
+  - **Chatterbox (free, optional):** the voice is cloned on your own computer from your own voice sample, and the
+    sound comes from the starter library of 40 clips. No account, no key, no credits. See "The free Chatterbox route"
+    below.
+
+## The free Chatterbox route
+
+1. Install it once: `pip install chatterbox-tts faster-whisper` (about 3 GB of models download on the first run;
+   a GPU makes it much faster, but a CPU works).
+2. Record 10 to 30 seconds of clean speech in the voice you want (a quiet room, no music), save it as
+   `voice/my_voice.wav` in your project folder. The installer keeps `voice/` and `.env` out of git; never commit it.
+3. In your project's `.env`, add:
+
+   ```
+   VOICE_ENGINE=chatterbox
+   SFX_ENGINE=library
+   CHATTERBOX_VOICE_SAMPLE=../voice/my_voice.wav
+   ```
+
+   (the sample path is relative to the `what-if-studio/` folder, or use a full path). Leave `ELEVENLABS_API_KEY`
+   empty.
+4. Make episodes exactly as before: `/what-if` or `/shamz` and your idea.
+
+You can mix the routes: `VOICE_ENGINE=chatterbox` alone gives your own voice with ElevenLabs sound effects, and
+`SFX_ENGINE=library` alone gives an ElevenLabs voice with the free sound library.
 
 ## Install
 

@@ -1,6 +1,7 @@
-"""Step 2: the voice. ElevenLabs text-to-speech with character timestamps, then the pauses tightened to the genre's pace.
+"""Step 2: the voice. ElevenLabs text-to-speech with character timestamps (or, free, Chatterbox cloned from your own
+voice sample), then the pauses tightened to the genre's pace.
 
-python <skill>/scripts/voice.py <slug> [--force]
+python <skill>/scripts/voice.py <slug> [--force] [--chatterbox]
 Reads  src/episodes/<slug>/episode.json  (script, voice, gaps)
 Writes public/<slug>/voice_raw.mp3, public/<slug>/voice.wav (tightened), src/episodes/<slug>/words.json (word timings
        after tightening, used by plan.py) and out/<slug>/words_raw.json. Prints the credits it used.
@@ -9,27 +10,46 @@ gaps is free.
 
 episode.json "voice" (all optional): {"id": "TX3LPaxmHKxFdv7VOQHJ", "model": "eleven_multilingual_v2",
   "settings": {"stability": 0.4, "similarity_boost": 0.8, "style": 0.35, "use_speaker_boost": true}}
+The free route: "voice": {"engine": "chatterbox", "sample": "../my_voice.wav", "exaggeration": 0.5, "cfg_weight": 0.5}
+  or, for every episode, VOICE_ENGINE=chatterbox and CHATTERBOX_VOICE_SAMPLE=<path> in the environment or the .env.
+  Needs: pip install chatterbox-tts faster-whisper. No credits; runs on your computer (slower on a CPU).
 episode.json "gaps" (seconds, all optional): {"word": 0.12, "comma": 0.2, "sentence": 0.3, "question": 0.45,
   "pairs": {"anything|One": 0.6}}  -> every pause longer than its limit is cut to the limit, from its middle.
 """
-import base64, hashlib, json, re, sys, time
+import base64, hashlib, json, os, re, sys, time
 
 import numpy as np
 
-from wi import SR, api, spent_since, decode, ep_dir, load_episode, load_json, log_cost, out_dir, pub_dir, save_json, write_wav
+from wi import SR, STUDIO, api, spent_since, decode, ep_dir, load_episode, load_json, log_cost, out_dir, pub_dir, save_json, setting, write_wav
 
 slug = sys.argv[1]
 force = '--force' in sys.argv
 ep = load_episode(slug)
 V = {'id': 'TX3LPaxmHKxFdv7VOQHJ', 'model': 'eleven_multilingual_v2', 'settings': {'stability': 0.4, 'similarity_boost': 0.8, 'style': 0.35, 'use_speaker_boost': True}}
 V.update(ep.get('voice', {}))
+
+
+ENGINE = 'chatterbox' if '--chatterbox' in sys.argv else (V.get('engine') or setting('VOICE_ENGINE') or 'elevenlabs').lower()
+if ENGINE == 'chatterbox':
+    V['sample'] = V.get('sample') or setting('CHATTERBOX_VOICE_SAMPLE')
+    if V['sample'] and not os.path.isabs(V['sample']):
+        V['sample'] = str((STUDIO / V['sample']).resolve()) if (STUDIO / V['sample']).exists() else str((STUDIO.parent / V['sample']).resolve())
+    if V['sample'] and not os.path.exists(V['sample']):
+        raise SystemExit(f'Chatterbox voice sample not found: {V["sample"]}')
 text = ' '.join(b['text'].strip() for b in ep['script'])
-sig = hashlib.sha1(json.dumps([text, V], sort_keys=True).encode()).hexdigest()[:12]
-raw_mp3 = pub_dir(slug) / 'voice_raw.mp3'
+sig = hashlib.sha1(json.dumps([text, V, ENGINE], sort_keys=True).encode()).hexdigest()[:12]
+raw_mp3 = pub_dir(slug) / ('voice_raw.wav' if ENGINE == 'chatterbox' else 'voice_raw.mp3')
 raw_words = out_dir(slug) / 'words_raw.json'
 meta = load_json(out_dir(slug) / 'voice_meta.json', {})
 
-if force or meta.get('sig') != sig or not raw_mp3.exists() or not raw_words.exists():
+if ENGINE == 'chatterbox' and (force or meta.get('sig') != sig or not raw_mp3.exists() or not raw_words.exists()):
+    from chatterbox_voice import synth
+    print(f'{len(text)} characters to Chatterbox (local, free; sample: {os.path.basename(V["sample"]) if V["sample"] else "the default voice"})')
+    words = synth(text, raw_mp3, V['sample'], float(V.get('exaggeration', 0.5)), float(V.get('cfg_weight', 0.5)))
+    save_json(raw_words, words)
+    save_json(out_dir(slug) / 'voice_meta.json', {'sig': sig, 'chars': len(text), 'engine': 'chatterbox'})
+    log_cost(slug, 'voice', 0, 'Chatterbox, local')
+elif force or meta.get('sig') != sig or not raw_mp3.exists() or not raw_words.exists():
     print(f'{len(text)} characters to ElevenLabs (voice {V["id"]})')
     t0 = time.time()
     res = json.loads(api(f'/v1/text-to-speech/{V["id"]}/with-timestamps?output_format=mp3_44100_128', {'text': text, 'model_id': V['model'], 'voice_settings': V['settings']}))

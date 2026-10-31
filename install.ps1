@@ -65,11 +65,15 @@ if ($text -match $pattern) {
 # keys: names only, never values (UTF-8 without BOM, so every tool reads it)
 $envFile = Join-Path $Project ".env"
 if (-not (Test-Path $envFile)) {
-    [System.IO.File]::WriteAllText($envFile, "ELEVENLABS_API_KEY=`n", (New-Object System.Text.UTF8Encoding $false))
+    $envText = "ELEVENLABS_API_KEY=`n`n# Free route instead of ElevenLabs (see the skill's README): remove the # from these lines`n# VOICE_ENGINE=chatterbox`n# SFX_ENGINE=library`n# CHATTERBOX_VOICE_SAMPLE=../voice/my_voice.wav`n"
+    [System.IO.File]::WriteAllText($envFile, $envText, (New-Object System.Text.UTF8Encoding $false))
     Write-Host "  created .env (add your ElevenLabs key after the = sign)"
 }
 $gi = Join-Path $Project ".gitignore"
-if (-not (Test-Path $gi) -or -not (Select-String -Path $gi -Pattern "^\.env$" -Quiet)) { Add-Content -Path $gi -Value ".env" }
+foreach ($pat in @(".env", "voice/")) {                                  # keys and voice samples never go in git
+    if (-not (Test-Path $gi) -or -not (Select-String -Path $gi -Pattern ("^" + [regex]::Escape($pat) + "$") -Quiet)) { Add-Content -Path $gi -Value $pat }
+}
+New-Item -ItemType Directory -Force -Path (Join-Path $Project "voice") | Out-Null
 
 # tools the skills need
 $missing = @()

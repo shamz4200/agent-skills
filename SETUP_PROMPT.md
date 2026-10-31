@@ -16,10 +16,16 @@ Install my agent skills from https://github.com/shamz4200/agent-skills into this
    installed, this updates them and leaves .env alone.
 3. Install anything the installer reports as missing (Node.js 18+, Python 3.9+ with numpy and pillow, ffmpeg with
    ffprobe), using this computer's package manager. Ask me before installing system-wide.
-4. If .env has no ElevenLabs key yet, ask me for it and write it into .env as ELEVENLABS_API_KEY=<key>. Never print
-   the key, put it in a commit, or paste it anywhere else.
-5. Read AGENTS.md and each installed skill's SKILL.md, then tell me which skills are installed and confirm the start
-   commands below work in this agent.
+4. Ask me which voice and sound route I want, unless .env already shows one:
+   - ElevenLabs (default): if .env has no key yet, tell me to put my ElevenLabs API key after ELEVENLABS_API_KEY=
+     in .env myself (or in this environment's secrets). Never ask me to paste the key into this chat, never print
+     it, never put it in a commit.
+   - Chatterbox (free, my own voice cloned on this computer): run pip install chatterbox-tts faster-whisper, ask me
+     to save 10 to 30 seconds of clean speech as voice/my_voice.wav in this folder, then in .env remove the # from
+     VOICE_ENGINE=chatterbox, SFX_ENGINE=library and CHATTERBOX_VOICE_SAMPLE=../voice/my_voice.wav. The voice sample
+     never goes in git or to any online service.
+5. Read AGENTS.md and each installed skill's SKILL.md, then tell me which skills are installed, which voice route
+   is set up, and confirm the start commands below work in this agent.
 
 Start commands (make a Shamz What If episode from one idea):
   /what-if What if you could see one minute ahead?
@@ -47,6 +53,13 @@ After setup, start your agent from the same folder and type:
 ```
 
 or `/shamz` and your idea. Leave it running; the episode lands in `what-if-studio/out/<episode>/`.
+
+## Voice routes
+
+- **ElevenLabs (default):** studio voices and generated sound effects; about 150 to 250 credits an episode.
+- **Chatterbox (free):** your own voice, cloned on your computer from a 10 to 30 second sample, with the sound from
+  the skill's 40-clip library. No account, no key, no credits; slower without a GPU. Details in
+  [the skill's README](skills/shamz-what-if/README.md#the-free-chatterbox-route).
 
 ## Updating later
 

@@ -10,7 +10,7 @@ Aider, Gemini CLI and others).
 
 | Skill | What it does | Needs |
 |---|---|---|
-| [shamz-what-if](skills/shamz-what-if/) | One topic line in ("What if you could rewind 10 seconds?"), a finished 15-25 s stick-figure "What If" episode out, starring Shamz with a cast of 80: script, voice, storyboard with a self-check, animation in code (Remotion), sound, mastering to -14 LUFS | Node 18+, Python 3.9+ (numpy, pillow), ffmpeg, an ElevenLabs API key |
+| [shamz-what-if](skills/shamz-what-if/) | One topic line in ("What if you could rewind 10 seconds?"), a finished 15-25 s stick-figure "What If" episode out, starring Shamz with a cast of 80: script, voice, storyboard with a self-check, animation in code (Remotion), sound, mastering to -14 LUFS | Node 18+, Python 3.9+ (numpy, pillow), ffmpeg, and an ElevenLabs API key, or the free Chatterbox route (your own voice, cloned locally) |
 
 ![The wide cast](assets/crowd.png)
 

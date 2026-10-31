@@ -1,10 +1,13 @@
 """Step 7: sound. Generates the episode's sound effects and music bed with ElevenLabs, lines each hit up on its frame,
 mixes the effects and music stems, and sets their levels against the voice.
 
-python <skill>/scripts/sfx.py <slug> [--dry]
+python <skill>/scripts/sfx.py <slug> [--dry] [--library-only]
 Reads  src/episodes/<slug>/episode.json "sound", timeline.json and words.json
 Writes public/<slug>/sfx.wav and music.wav, sets their volumes in timeline.json, prints the credits it used.
 --dry lists the clips it would generate (and what is already in the library) without calling the API.
+--library-only (or SFX_ENGINE=library in the environment or .env) never calls ElevenLabs: a missing clip uses the
+  library clip of the same name if there is one, and is left out otherwise (its events are skipped and listed).
+  For the free route with a Chatterbox voice: name clips after the starter library (pop, whoosh, ding, ...).
 
 "sound": {
   "clips":   {"name": ["prompt", seconds], ...}       generated once, cached in library/sfx/ by name + prompt + length
@@ -24,10 +27,11 @@ import sys, time
 
 import numpy as np
 
-from wi import SR, api, clip_path, credits_used, spent_since, decode, ep_dir, load_episode, load_json, log_cost, loudness, pub_dir, resolve, save_json, stem, write_wav
+from wi import SR, api, clip_path, credits_used, spent_since, decode, ep_dir, load_episode, load_json, log_cost, loudness, pub_dir, resolve, save_json, setting, stem, write_wav
 
 slug = sys.argv[1]
 dry = '--dry' in sys.argv
+library_only = '--library-only' in sys.argv or (setting('SFX_ENGINE') or '').lower() == 'library'
 ep = load_episode(slug)
 S = ep.get('sound')
 if not S:
@@ -49,6 +53,17 @@ missing = [n for n, (_, _, p) in need.items() if not p.exists()]
 print(f'{len(need)} clips, {len(need) - len(missing)} already in the library, {len(missing)} to generate: {", ".join(missing) or "none"}')
 if dry:
     sys.exit(0)
+if missing and library_only:
+    from wi import LIB
+    for n in missing:
+        same = sorted(LIB.glob(f'{n}-*.mp3'))
+        if same:
+            need[n] = (need[n][0], need[n][1], same[0])
+            print(f'  {n}: using the library clip {same[0].name}')
+        else:
+            del need[n]
+            print(f'  {n}: not in the library, left out (library-only)')
+    missing = []
 if missing:
     before, _ = credits_used()
     t0 = time.time()
@@ -98,8 +113,11 @@ for ev in S.get('events', []):
     c, name, gain = ev[0], ev[1], ev[2]
     align = ev[3] if len(ev) > 3 else 'onset'
     until = cue(ev[4]) if len(ev) > 4 and ev[4] else None
-    put(sfx, cue(c), clips[name], gain, align, until)
+    if name in clips:
+        put(sfx, cue(c), clips[name], gain, align, until)
 for r in S.get('repeats', []):
+    if r['clip'] not in clips:
+        continue
     base = clips[r['clip']]
     g0, g1 = r.get('gain', [0.3, 0.3])
     p0, p1 = r.get('pitch', [1, 1])
@@ -112,7 +130,7 @@ for r in S.get('repeats', []):
 # ---------------------------------------------------------------- music
 music = np.zeros(int(DUR * SR))
 M = S.get('music')
-if M:
+if M and M['clip'] in clips:
     m = clips[M['clip']]
     m0 = int(cue(M['from']) / FPS * SR) if M.get('from') else 0
     n = min(len(music) - m0, len(m))

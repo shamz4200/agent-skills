@@ -32,7 +32,7 @@ schematic for the science beat, a cliffhanger blackout). Read the one closest to
 - **Never claim the viral channels are made with Claude** or any other tool. Nobody has said how they're made.
 - **Keys by name only.** `ELEVENLABS_API_KEY`, from the environment or a `.env`
   above the studio. Never print, paste or hardcode a key.
-- **Report the ElevenLabs credits** of every run: the scripts log them to `out/<slug>/costs.json` and `master.py`
+- **Report the ElevenLabs credits** of every run (0 on the free route): the scripts log them to `out/<slug>/costs.json` and `master.py`
   totals them in `report.json`. The voice's cost is read from the account's history (exact); sound clips don't show
   there, so their cost comes from the account counter, which can lag: re-read it before you report. Say the number
   when you hand the episode over. The copy-paste run cost 152 credits (78 for the voice, 74 for 12 new clips).
@@ -75,6 +75,13 @@ One ElevenLabs take with character timestamps (the 356-character copy-paste take
 cut to the genre's pace: `public/<slug>/voice.wav` and `src/episodes/<slug>/words.json`. Check the length (15-25 s)
 and the word times it prints. Retune pauses with `gaps` in `episode.json` and re-run: the take is cached, so that's free. Change a word
 and it calls the API again.
+
+**Free route (no ElevenLabs):** when `VOICE_ENGINE=chatterbox` is set (environment or `.env`), or the episode's
+`voice` has `"engine": "chatterbox"`, or you pass `--chatterbox`, the take comes from Chatterbox on this computer,
+cloned from `CHATTERBOX_VOICE_SAMPLE` (10 to 30 s of clean speech; without one it uses Chatterbox's default voice),
+and faster-whisper supplies the word times. Same files out, no credits. It is slower: about 1 to 3 minutes per
+episode on a laptop CPU, much less on a GPU. Needs `pip install chatterbox-tts faster-whisper` once. Never commit
+the voice sample.
 
 ### 3. Shot list
 
@@ -144,6 +151,15 @@ then generate:
 ```bash
 python <skill>/scripts/sfx.py <slug> --dry
 python <skill>/scripts/sfx.py <slug>
+```
+
+Free route: with `SFX_ENGINE=library` (environment or `.env`) or `--library-only`, sfx.py never calls ElevenLabs. Name
+the clips after the starter library in `library/sfx/` (`pop`, `ding`, `fall_whoosh`, `title_boom`, `room_tone`,
+`music`, ...): a clip whose prompt differs uses the library clip of the same name, and a clip the library doesn't have
+is left out and listed, so write the sound around what is there.
+
+```bash
+python <skill>/scripts/sfx.py <slug> --library-only
 ```
 
 It prints the credits it used and sets the stem volumes in `timeline.json`. Then check that every word stays clear:

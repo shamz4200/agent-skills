@@ -72,12 +72,22 @@ PY
 
 # keys: names only, never values
 if [ ! -f "$PROJECT/.env" ]; then
-  printf 'ELEVENLABS_API_KEY=\n' > "$PROJECT/.env"
+  cat > "$PROJECT/.env" <<'ENV'
+ELEVENLABS_API_KEY=
+
+# Free route instead of ElevenLabs (see the skill's README): remove the # from these lines
+# VOICE_ENGINE=chatterbox
+# SFX_ENGINE=library
+# CHATTERBOX_VOICE_SAMPLE=../voice/my_voice.wav
+ENV
   echo "  created .env (add your ElevenLabs key after the = sign)"
 fi
-if [ ! -f "$PROJECT/.gitignore" ] || ! grep -qxF ".env" "$PROJECT/.gitignore"; then
-  printf '.env\n' >> "$PROJECT/.gitignore"
-fi
+for pat in .env voice/; do                                         # keys and voice samples never go in git
+  if [ ! -f "$PROJECT/.gitignore" ] || ! grep -qxF "$pat" "$PROJECT/.gitignore"; then
+    printf '%s\n' "$pat" >> "$PROJECT/.gitignore"
+  fi
+done
+mkdir -p "$PROJECT/voice"
 
 # tools the skills need
 missing=()
