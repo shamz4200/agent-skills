@@ -33,13 +33,25 @@ def synth(text, out_wav, sample=None, exaggeration=0.5, cfg_weight=0.5, sentence
     [{'w', 's', 'e', 'p'}], the format voice.py expects (p = the punctuation after the word)."""
     import torchaudio as ta
 
+    import hashlib, pathlib
     model = _model()
     sentences = [s for s in re.split(r'(?<=[.!?…])\s+', text.strip()) if s]
     gap = np.zeros(int(sentence_gap * model.sr), dtype=np.float32)
+    # each sentence is cached by its text and the voice settings, so an interrupted take resumes where it stopped
+    # and editing one line re-voices only that sentence
+    cache = pathlib.Path(out_wav).parent / '.chatterbox_cache'
+    cache.mkdir(exist_ok=True)
+    tag = hashlib.sha1(f'{sample}|{exaggeration}|{cfg_weight}'.encode()).hexdigest()[:8]
     parts = []
-    for s in sentences:
-        wav = model.generate(s, audio_prompt_path=sample, exaggeration=exaggeration, cfg_weight=cfg_weight)
-        parts += [wav.squeeze(0).cpu().numpy().astype(np.float32), gap]
+    for i, s in enumerate(sentences):
+        f = cache / f'{hashlib.sha1(f"{tag}|{s}".encode()).hexdigest()[:16]}.npy'
+        if f.exists():
+            wav = np.load(f)
+        else:
+            wav = model.generate(s, audio_prompt_path=sample, exaggeration=exaggeration, cfg_weight=cfg_weight).squeeze(0).cpu().numpy().astype(np.float32)
+            np.save(f, wav)
+        print(f'  sentence {i + 1}/{len(sentences)}', flush=True)
+        parts += [wav, gap]
     audio = np.concatenate(parts[:-1]) if parts else np.zeros(1, dtype=np.float32)
     import torch
     ta.save(str(out_wav), torch.from_numpy(audio).unsqueeze(0), model.sr)
