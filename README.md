@@ -31,7 +31,8 @@ git clone --depth 1 https://github.com/shamz4200/agent-skills $env:TEMP\agent-sk
 powershell -ExecutionPolicy Bypass -File $env:TEMP\agent-skills\install.ps1 .
 ```
 
-The installer puts each skill in `.claude/skills/<name>/`, any OpenCode commands in `.opencode/commands/`, lists the
+The installer puts each skill in `.claude/skills/<name>/`, its start commands in `.claude/commands/` and
+`.opencode/commands/`, lists the
 skills in `AGENTS.md`, creates an empty `.env` and adds `.env` to `.gitignore`. It is safe to re-run; re-running
 updates the skills.
 
