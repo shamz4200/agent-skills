@@ -16,8 +16,9 @@ Writes public/<slug>/sfx.wav and music.wav, sets their volumes in timeline.json,
                                                         where the clip is cut with a short fade
   "repeats": [{"at": cue, "clip": name, "n": 15, "every": 2, "gain": [lo, hi], "pitch": [lo, hi]}]
                                                         one clip many times, each pitched a little differently
-  "music":   {"clip": name, "until": cue, "reverse_looks": ["rewind"], "from": cue}
-                                                        the bed starts at "from" (default 0), cut at "until"; during a look
+  "music":   {"clip": name, "until": cue, "reverse_looks": ["rewind"], "from": cue, "loop": true}
+                                                        the bed starts at "from" (default 0), cut at "until"; "loop"
+                                                        repeats a short bed (crossfaded) to fill a long episode; during a look
                                                         listed in reverse_looks it plays what just played, backwards
   "levels":  {"sfx_lu": 1.5, "music_lu": -9.5}         integrated loudness of each stem against the voice's
 }
@@ -132,6 +133,17 @@ music = np.zeros(int(DUR * SR))
 M = S.get('music')
 if M and M['clip'] in clips:
     m = clips[M['clip']]
+    if M.get('loop'):                                                   # a bed shorter than the episode repeats, crossfaded
+        xf = int(0.5 * SR)
+        reps = [m]
+        while sum(len(r) for r in reps) - xf * (len(reps) - 1) < len(music):
+            reps.append(m)
+        out = reps[0].copy()
+        for r in reps[1:]:
+            fade = np.linspace(0, 1, xf)
+            head = out[-xf:] * (1 - fade) + r[:xf] * fade
+            out = np.concatenate([out[:-xf], head, r[xf:]])
+        m = out
     m0 = int(cue(M['from']) / FPS * SR) if M.get('from') else 0
     n = min(len(music) - m0, len(m))
     music[m0:m0 + n] = m[:n]
