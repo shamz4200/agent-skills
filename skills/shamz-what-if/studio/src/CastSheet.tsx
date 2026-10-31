@@ -12,7 +12,7 @@ const Label: React.FC<{ x: number; y: number; text: string }> = ({ x, y, text })
   </text>
 );
 const P = (o: Partial<Pose>): Pose => ({ ...basePose, ...o });
-const NAMES: Record<CastName, string> = { pip: 'PIP A', pipHood: 'PIP B (HERO)', pipInk: 'PIP C', mo: 'MO, FRIEND', sis: 'SISTER', mom: 'MUM', suit: 'THE SUIT' };
+const NAMES: Record<CastName, string> = { shamz: 'SHAMZ (HERO)', pip: 'PIP A', pipHood: 'PIP B', pipInk: 'PIP C', mo: 'MO, FRIEND', sis: 'SISTER', mom: 'MUM', suit: 'THE SUIT' };
 
 export const CastSheet: React.FC = () => {
   const cast = Object.keys(LOOKS) as CastName[];
@@ -35,7 +35,7 @@ export const CastSheet: React.FC = () => {
         </g>
         <rect width={1920} height={1080} fill="#0B0816" opacity={0.35} />
         {cast.map((c, i) => {
-          const x = 150 + i * 270;
+          const x = 120 + i * 240;
           const small = c === 'sis' ? 0.68 : 0.82;
           return (
             <g key={c}>
@@ -46,7 +46,7 @@ export const CastSheet: React.FC = () => {
         })}
         {poses.map((q, i) => (
           <g key={q.name}>
-            <Hero look={LOOKS.pipHood} pose={P({ x: 220 + i * 370, y: row2 - 40, scale: 0.72, ...q.p })} shadow={0.6} />
+            <Hero look={LOOKS.shamz} pose={P({ x: 220 + i * 370, y: row2 - 40, scale: 0.72, ...q.p })} shadow={0.6} />
             <Label x={220 + i * 370} y={row2 + 110} text={q.name.toUpperCase()} />
           </g>
         ))}

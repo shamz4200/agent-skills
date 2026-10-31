@@ -1,5 +1,6 @@
 import React from 'react';
 import { lerp, easeInOut } from './anim';
+import { HairBack, HairFront, HeadwearFront, FacialHair, Specs, TopFront, coversTop, HairStyle, Headwear, Facial, Top } from './wardrobe';
 
 // The cast, drawn entirely in code: one rig, and a costume (a Look) per character. Every character is built
 // once here, so they look identical in every shot: that's the "drawn, not guessed" point. Original
@@ -29,10 +30,23 @@ export type Look = {
   shoe: string;
   face: string;
   hair: string;
-  extra?: 'hood' | 'curls' | 'bunches' | 'bob' | 'suit';
+  extra?: 'hood' | 'curls' | 'bunches' | 'bob' | 'suit' | 'locs';
+  iris?: string; // coloured eyes (a ringed iris with a dark pupil) instead of plain ink dots
+  // the wardrobe (engine/wardrobe.tsx): optional pieces any look can combine
+  hairStyle?: HairStyle;
+  headwear?: Headwear;
+  headwearCol?: string;
+  facial?: Facial;
+  facialCol?: string;
+  specs?: string;
+  top?: Top;
+  topCol?: string;
 };
-export type CastName = 'pip' | 'pipHood' | 'pipInk' | 'mo' | 'sis' | 'mom' | 'suit';
+export type CastName = 'shamz' | 'pip' | 'pipHood' | 'pipInk' | 'mo' | 'sis' | 'mom' | 'suit';
 export const LOOKS: Record<CastName, Look> = {
+  // Shamz, the hero: brown skin, red patterned eyes, orange twist locs under a green beanie (cream band, red tag),
+  // a green jacket with a cream collar. His outfit can change per episode; the face, eyes, locs and beanie stay.
+  shamz: { skin: '#7A4A2C', skinShade: '#643A21', hand: '#7A4A2C', jacket: '#2F6B48', jacketShade: '#25573A', accent: '#EFE6D2', limb: '#2A2733', line: '#121019', shoe: '#E9E4DA', face: '#1A1014', hair: '#F08A1C', extra: 'locs', iris: '#D3202A' },
   // A: Pip as built
   pip: { skin: C.skin, skinShade: C.skinShade, hand: C.skin, jacket: C.jacket, jacketShade: C.jacketShade, accent: C.jacketShade, limb: C.limb, line: C.ink, shoe: C.shoe, face: C.ink, hair: C.ink },
   // B: Pip in a dark hoodie with mustard drawstrings: the body goes dark and catches the rim light, the head stays the brightest thing
@@ -219,7 +233,7 @@ export const reachAngle = (pose: Pose, target: P) => {
   return world - pose.tilt;
 };
 
-const Face: React.FC<{ expr: Expr; blink: number; look: number; glasses: number; yaw?: number; ink?: string; glint?: number; glintColor?: string }> = ({ expr, blink, look, glasses, yaw = 0, ink = C.ink, glint = 0, glintColor = '#8FF0FF' }) => {
+const Face: React.FC<{ expr: Expr; blink: number; look: number; glasses: number; yaw?: number; ink?: string; glint?: number; glintColor?: string; iris?: string }> = ({ expr, blink, look, glasses, yaw = 0, ink = C.ink, glint = 0, glintColor = '#8FF0FF', iris }) => {
   const ex = look * 7;
   const ay = Math.min(1, Math.abs(yaw));
   const farHidden = ay > 0.72;
@@ -246,8 +260,19 @@ const Face: React.FC<{ expr: Expr; blink: number; look: number; glasses: number;
     const ry = (big ? 13 : 10) * open;
     return (
       <g>
-        <ellipse cx={cx + ex} cy={eyeY + (lid ? 3 : 0)} rx={rx} ry={ry} fill={ink} />
-        {big && open > 0.5 ? <circle cx={cx + ex + 3.5} cy={eyeY - 4} r={3.4} fill="#fff" /> : null}
+        {iris ? (
+          // a ringed red iris: white of the eye, the iris with a darker ring, a dark pupil, a catchlight
+          <g>
+            <ellipse cx={cx + ex} cy={eyeY + (lid ? 3 : 0)} rx={rx + 6} ry={(ry / open + 6) * open} fill="#FFFFFF" stroke={ink} strokeWidth={3} />
+            <ellipse cx={cx + ex} cy={eyeY + (lid ? 3 : 0)} rx={rx + 2} ry={(ry / open + 2) * open} fill={iris} stroke="#5A0A10" strokeWidth={2} />
+            <ellipse cx={cx + ex} cy={eyeY + (lid ? 3 : 0)} rx={rx - 2.5} ry={Math.max(1, (ry / open - 2.5) * open)} fill="none" stroke="#5A0A10" strokeWidth={1.6} />
+            <circle cx={cx + ex} cy={eyeY + (lid ? 3 : 0)} r={Math.min(3.6, 3.6 * open)} fill="#14080A" />
+            {open > 0.5 ? <circle cx={cx + ex + 3.5} cy={eyeY - 4} r={2.6} fill="#fff" /> : null}
+          </g>
+        ) : (
+          <ellipse cx={cx + ex} cy={eyeY + (lid ? 3 : 0)} rx={rx} ry={ry} fill={ink} />
+        )}
+        {!iris && big && open > 0.5 ? <circle cx={cx + ex + 3.5} cy={eyeY - 4} r={3.4} fill="#fff" /> : null}
         {lid ? <path d={expr === 'tired' ? `M ${cx - 13} ${eyeY - 1} Q ${cx} ${eyeY - 5} ${cx + 13} ${eyeY - 1}` : `M ${cx - 12} ${eyeY - 4} L ${cx + 12} ${eyeY - 2}`} stroke={ink} strokeWidth={4} strokeLinecap="round" fill="none" /> : null}
         {expr === 'tired' ? <path d={`M ${cx - 12} ${eyeY + 14} Q ${cx} ${eyeY + 21} ${cx + 12} ${eyeY + 14}`} stroke="#8C7AA6" strokeWidth={4.5} fill="none" strokeLinecap="round" opacity={0.85} /> : null}
       </g>
@@ -309,7 +334,7 @@ const Face: React.FC<{ expr: Expr; blink: number; look: number; glasses: number;
   );
 };
 
-export const Hero: React.FC<{ pose: Pose; shadow?: number; rimId?: string; look?: Look }> = ({ pose, shadow = 1, rimId = 'rimR', look = LOOKS.pipHood }) => {
+export const Hero: React.FC<{ pose: Pose; shadow?: number; rimId?: string; look?: Look }> = ({ pose, shadow = 1, rimId = 'rimR', look = LOOKS.shamz }) => {
   const j = joints(pose);
   const L = look;
   // limbs are light with a dark outline, so they read on the dark sets (navy limbs vanished on navy walls)
@@ -362,13 +387,23 @@ export const Hero: React.FC<{ pose: Pose; shadow?: number; rimId?: string; look?
       ) : (
         <path d="M -22 -118 Q 0 -100 22 -118" stroke={L.accent} strokeWidth={6} fill="none" strokeLinecap="round" />
       )}
+      <TopFront L={L} />
     </g>
   );
   const head = (
     <g transform={`rotate(${pose.tilt}) rotate(${pose.headTilt} 0 ${HEAD.y + 40})`}>
+      {L.extra === 'locs'
+        ? // the locs behind the head, hanging to the shoulders
+          [-1, 1].map((sd) =>
+            [30, 46].map((dx, k) => (
+              <rect key={`bl${sd}${k}`} x={sd * dx - 8 - pose.yaw * 8} y={HEAD.y - 20} width={16} height={96 - k * 6} rx={8} fill={L.hair} stroke={L.line} strokeWidth={3.5} transform={`rotate(${pose.sway * 0.3} 0 ${HEAD.y})`} />
+            )),
+          )
+        : null}
+      <HairBack L={L} yaw={pose.yaw} sway={pose.sway} />
       <circle cx={HEAD.x} cy={HEAD.y} r={HEAD.r} fill={L.skin} stroke={L.line} strokeWidth={4} />
       <path d={`M ${HEAD.x + 14} ${HEAD.y + 58} A ${HEAD.r} ${HEAD.r} 0 0 0 ${HEAD.x + 60} ${HEAD.y + 14} A 70 70 0 0 1 ${HEAD.x + 14} ${HEAD.y + 58} Z`} fill={L.skinShade} />
-      {L.extra === 'bunches' || L.extra === 'bob' || L.extra === 'suit' ? null : (
+      {L.extra === 'bunches' || L.extra === 'bob' || L.extra === 'suit' || L.extra === 'locs' || coversTop(L) ? null : (
         <path transform={`translate(${-pose.yaw * 16} 0)`} d={`M -6 ${HEAD.y - 60} q 10 -26 30 -18 q -16 2 -14 16 q -8 -10 -16 2 Z`} fill={L.hair} />
       )}
       {L.extra === 'bunches' ? (
@@ -398,7 +433,34 @@ export const Hero: React.FC<{ pose: Pose; shadow?: number; rimId?: string; look?
         // short combed-back hair with a hard side parting
         <path transform={`translate(${-pose.yaw * 14} 0)`} d={`M -60 ${HEAD.y - 18} Q -64 ${HEAD.y - 70} 4 ${HEAD.y - 68} Q 64 ${HEAD.y - 64} 60 ${HEAD.y - 18} Q 52 ${HEAD.y - 44} 18 ${HEAD.y - 46} L 12 ${HEAD.y - 54} L 6 ${HEAD.y - 46} Q -44 ${HEAD.y - 46} -60 ${HEAD.y - 18} Z`} fill={L.hair} />
       ) : null}
-      <Face expr={pose.expr} blink={pose.blink} look={pose.look} glasses={pose.glasses} yaw={pose.yaw} ink={L.face} glint={pose.glint} glintColor={pose.glintColor} />
+      {L.extra === 'locs' ? (
+        // twist locs framing the face, then the beanie: a ribbed green dome, a cream band, a small red tag
+        <g transform={`translate(${-pose.yaw * 14} 0)`}>
+          {[-1, 1].map((sd) =>
+            [56, 70].map((dx, k) => (
+              <g key={`sl${sd}${k}`} transform={`rotate(${sd * 4 + pose.sway * 0.4} ${sd * dx} ${HEAD.y - 36})`}>
+                <rect x={sd * dx - 9} y={HEAD.y - 40} width={18} height={k ? 100 : 108} rx={9} fill={L.hair} stroke={L.line} strokeWidth={3.5} />
+                {[0, 1, 2, 3].map((t) => (
+                  <path key={t} d={`M ${sd * dx - 7} ${HEAD.y - 16 + t * 22} L ${sd * dx + 7} ${HEAD.y - 8 + t * 22}`} stroke="#B85F0C" strokeWidth={2.5} strokeLinecap="round" />
+                ))}
+              </g>
+            )),
+          )}
+          <path d={`M -64 ${HEAD.y - 40} Q -66 ${HEAD.y - 104} 0 ${HEAD.y - 106} Q 66 ${HEAD.y - 104} 64 ${HEAD.y - 40} Z`} fill="#2F6B48" stroke={L.line} strokeWidth={4} strokeLinejoin="round" />
+          {[-40, -20, 0, 20, 40].map((x) => (
+            <path key={x} d={`M ${x} ${HEAD.y - 44} Q ${x * 1.06} ${HEAD.y - 80} ${x * 0.5} ${HEAD.y - 100}`} stroke="#25573A" strokeWidth={3} fill="none" />
+          ))}
+          <rect x={-70} y={HEAD.y - 58} width={140} height={22} rx={8} fill="#EFE6D2" stroke={L.line} strokeWidth={4} />
+          <rect x={36} y={HEAD.y - 54} width={18} height={14} rx={2} fill="#C8382E" />
+        </g>
+      ) : null}
+      <HairFront L={L} yaw={pose.yaw} />
+      {L.headwear !== 'helmet' ? <HeadwearFront L={L} yaw={pose.yaw} /> : null}
+      <FacialHair L={L} yaw={pose.yaw} layer="under" />
+      <Face expr={pose.expr} blink={pose.blink} look={pose.look} glasses={pose.glasses} yaw={pose.yaw} ink={L.face} glint={pose.glint} glintColor={pose.glintColor} iris={L.iris} />
+      <FacialHair L={L} yaw={pose.yaw} layer="over" />
+      <Specs L={L} yaw={pose.yaw} />
+      {L.headwear === 'helmet' ? <HeadwearFront L={L} yaw={pose.yaw} /> : null}
       {L.extra === 'curls'
         ? [-150, -125, -100, -78, -55, -30].map((deg, k) => {
             const a = (deg * Math.PI) / 180;

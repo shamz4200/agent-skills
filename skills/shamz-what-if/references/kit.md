@@ -41,11 +41,33 @@ export const S4: React.FC<ShotProps> = ({ t, len }) => {
 
 ## The cast (`rig.tsx`)
 
-One rig, a costume per character (`LOOKS`): `pip` (A, mustard jacket), `pipHood` (B, the hero: dark hoodie, mustard
+One rig, a costume per character (`LOOKS`): `shamz` (the hero: brown skin, red ringed eyes via `iris`, orange twist
+locs and a green beanie via `extra: 'locs'`, green jacket), `pip` (A, mustard jacket), `pipHood` (B: dark hoodie, mustard
 drawstrings), `pipInk` (C, dark head), `mo` (the friend: curls, olive jacket, headphones), `sis` (the little sister:
 bunches with coral bands, teal; draw her at about 0.7 of Pip's scale), `mom` (a bob, a rose cardigan), `suit` (the
 man in a suit: combed hair, charcoal suit, red tie). Render the cast sheet with
 `npx remotion still src/index.ts Cast out/cast.png`.
+
+**The wide cast (`crowd.ts`):** 72 more characters on the same rig, for friends, family, crowds, experts and
+passers-by: `CROWD_LOOKS.doctor`, `.chef`, `.astronaut`, `.grandma`, `.zara`, `.harjit`, `.kemi` and so on (every name
+is on the crowd sheet: `npx remotion still src/index.ts Crowd out/crowd.png`). `CROWD` lists them with a label and a
+`scale` to draw them at next to Shamz (kids 0.48 to 0.72, grandparents 0.92). Pick extras so a shot reads at a
+glance: a mix of ages, skin tones and silhouettes, never two near-identical looks side by side.
+
+**The wardrobe (`wardrobe.tsx`):** any `Look` can combine these optional pieces, so a new character is a new entry,
+not new drawing code:
+
+| Field | Options |
+|---|---|
+| `hairStyle` | `afro`, `buzz`, `bald`, `ponytail`, `bun`, `long`, `braids`, `mohawk`, `spiky`, `sidepart`, `wavy`, `puffs` |
+| `headwear` (+ `headwearCol`) | `cap`, `beanie`, `hijab`, `turban`, `hardhat`, `chef`, `beret`, `headband`, `sunhat`, `helmet` (space) |
+| `facial` (+ `facialCol`) | `beard`, `mustache`, `stubble`, `goatee` |
+| `specs` | a frame colour: round glasses |
+| `top` (+ `topCol`) | `labcoat`, `apron`, `hivis`, `stripes`, `scarf`, `tie`, `overalls`, `dress`, `cardigan`, `spacesuit` |
+| `iris` | a colour: ringed coloured eyes (Shamz's red eyes) instead of ink dots |
+
+Add a character to `SPECS` in `crowd.ts` (skin index 0-7, jacket, hair colour, wardrobe pieces), render the crowd
+sheet, and check it sits with everyone else.
 
 `<Hero look pose rimId shadow />` (alias `Actor`). The **pose**:
 

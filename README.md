@@ -1,4 +1,6 @@
-# agent-skills
+# Shamz agent skills
+
+![Shamz](assets/hero.png)
 
 Skills for AI coding agents: folders of instructions, scripts and code that teach an agent one job from start to
 finish. They work in Claude Code and OpenCode directly, and in any agent that reads `AGENTS.md` (Codex, Cursor,
@@ -8,7 +10,9 @@ Aider, Gemini CLI and others).
 
 | Skill | What it does | Needs |
 |---|---|---|
-| [what-if-animation](skills/what-if-animation/) | One topic line in ("What if you could rewind 10 seconds?"), a finished 15-25 s stick-figure "What If" episode out: script, voice, storyboard with a self-check, animation in code (Remotion), sound, mastering to -14 LUFS | Node 18+, Python 3.9+ (numpy, pillow), ffmpeg, an ElevenLabs API key |
+| [shamz-what-if](skills/shamz-what-if/) | One topic line in ("What if you could rewind 10 seconds?"), a finished 15-25 s stick-figure "What If" episode out, starring Shamz with a cast of 80: script, voice, storyboard with a self-check, animation in code (Remotion), sound, mastering to -14 LUFS | Node 18+, Python 3.9+ (numpy, pillow), ffmpeg, an ElevenLabs API key |
+
+![The wide cast](assets/crowd.png)
 
 ## Install
 
@@ -33,8 +37,8 @@ updates the skills.
 
 ## Use
 
-- **Claude Code:** start it in the project folder and ask, e.g. "Make a What If episode: what if you could pause
-  everyone but you?"
+- **Claude Code:** start it in the project folder and ask, e.g. "Make a Shamz What If episode: what if you could
+  pause everyone but you?"
 - **OpenCode:** start it in the project folder and type `/what-if What if you could pause everyone but you?`
 - **Other agents:** they find the skills through `AGENTS.md`; ask for the task in plain words.
 
@@ -47,10 +51,7 @@ Keys go in the project's `.env` (for example `ELEVENLABS_API_KEY=...`), never in
 Add a folder under `skills/` with a `SKILL.md` (front matter `name` and `description`, then the steps), plus any
 `references/`, `scripts/` and `opencode/commands/`. The installers pick it up automatically.
 
-## Credits and licences
+## Licences
 
-- `skills/what-if-animation` is by [FreshStack](https://freshstack.ai), copied from
-  [kelano86/what-if-animation](https://github.com/kelano86/what-if-animation) under the MIT licence; its `LICENSE`
-  stays in its folder and [UPSTREAM.md](skills/what-if-animation/UPSTREAM.md) records the version. Remotion is free
-  for individuals and companies of up to three people; ElevenLabs output follows your ElevenLabs plan's terms.
-- Everything else in this repo: MIT, see [LICENSE](LICENSE).
+MIT. Each skill folder keeps its own `LICENSE`, which must stay with its files; see [LICENSE](LICENSE) for the rest
+of this repo.

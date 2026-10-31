@@ -1,9 +1,9 @@
 ---
-name: what-if-animation
-description: Make a "What If" animated episode from one topic line ("What if you could rewind 10 seconds?"), in the dusk-lit stick-figure style of the What If channels that broke out on YouTube in October 2026. Writes the script on the seven-beat What If formula, voices it with ElevenLabs, lays out a shot list at the genre's pace, renders a storyboard of stills and self-checks it before animating, animates every frame in code (Remotion and SVG, with an original cast on one rig, rooms in perspective and light from lamps and windows), generates and syncs the sound, and masters a finished 15-25 s episode to -14 LUFS. Use when someone asks for a What If episode, animation or cartoon, "make a what if video about X", a stick-figure explainer in this style, or to run the free What If skill.
+name: shamz-what-if
+description: Make a Shamz "What If" animated episode from one topic line ("What if you could rewind 10 seconds?"), in the dusk-lit stick-figure style of the What If channels that broke out on YouTube in October 2026. Writes the script on the seven-beat What If formula, voices it with ElevenLabs, lays out a shot list at the genre's pace, renders a storyboard of stills and self-checks it before animating, animates every frame in code (Remotion and SVG, with an original cast on one rig, rooms in perspective and light from lamps and windows), generates and syncs the sound, and masters a finished 15-25 s episode to -14 LUFS. Shamz is the hero. Use when someone asks for a What If episode, animation or cartoon, "make a what if video about X", a stick-figure explainer in this style, or to run the Shamz What If skill.
 ---
 
-# What If animation
+# Shamz What If animation
 
 One topic line in, a finished 15-25 second episode out. Every frame is SVG that Claude writes (rendered by
 Remotion); the voice and the sound come from ElevenLabs. Two examples ship in `studio/src/episodes/`, both ready to
@@ -23,9 +23,11 @@ schematic for the science beat, a cliffhanger blackout). Read the one closest to
 
 ## Rules
 
-- **Original characters only.** Pip (the hero, look B) and Mo (his friend) are ours, and so are the sister, mum and
-  the suit on the rig. Never a channel's own hero, and nothing that resembles a famous cartoon character: check every
-  new look on the cast sheet (Mo's first hat was dropped for drifting toward one).
+- **Shamz is the hero.** Every episode stars Shamz (`LOOKS.shamz`): brown skin, red ringed eyes, orange twist
+  locs, a green beanie with a cream band and a red tag. He is "you" in the script. His jacket can change per
+  episode (a new `Look` with the same face, eyes, locs and beanie); check every new costume on the cast sheet.
+- **Original characters only.** The supporting cast on the rig (Mo the friend, the sister, mum, the suit, and Pip as
+  an extra) is original. Never a channel's own hero, and nothing that resembles a famous cartoon character.
 - **Original stories.** The formula is shared; the episode isn't anyone else's. Don't remake a channel's title.
 - **Never claim the viral channels are made with Claude** or any other tool. Nobody has said how they're made.
 - **Keys by name only.** `ELEVENLABS_API_KEY`, from the environment or a `.env`
@@ -99,8 +101,9 @@ each a pure function of its clock `t` (copy the patterns in the two examples' `s
 episode and its power look), then add the episode to `src/episodes/index.ts`. At this step each shot only needs to
 be right at its `key` frame. When a topic needs a place the library lacks, build it with the room kit and add it to
 `src/engine/sets/` (and to the skill's copy) so the next episode has it, as the copy-paste run did with the kitchen
-and the schematic. A new character or costume: add the look, then check it on the cast sheet
-(`npx remotion still src/index.ts Cast out/cast.png`).
+and the schematic. Supporting characters come from the wide cast in `engine/crowd.ts` (72 looks: jobs, ages,
+families, friends). A new character or costume: add the look (see the wardrobe in `references/kit.md`), then check it
+on the cast sheet (`npx remotion still src/index.ts Cast out/cast.png`) or the crowd sheet (`... Crowd out/crowd.png`).
 
 ```bash
 npx tsc --noEmit

@@ -17,7 +17,7 @@ the last line.
 7. **Cliffhanger.** "Part 1 of 2", a question for the comments, sometimes an "is any of this real?" section and
    sourced science notes in the description.
 
-Recurring cast: you (second person), a best friend, a little sister, mum. In our cast: Pip is "you", Mo is the best
+Recurring cast: you (second person), a best friend, a little sister, mum. In our cast: Shamz is "you", Mo is the best
 friend, and `sis`, `mom` and `suit` are on the rig for beats 5 and 6.
 
 ## The 15 to 25 second shape
