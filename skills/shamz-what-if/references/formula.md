@@ -93,3 +93,13 @@ The copy-paste example (`studio/src/episodes/copy-paste/episode.json`), 61 words
 
 `voice.py` joins the beats' text with spaces and sends it as one take, so the read flows; the beats are for you and
 for the storyboard.
+
+## Endings and Part 2s
+
+- **Pitching:** for every idea, say whether it ends on a cliffhanger for a Part 2.
+- **A Part 2 episode** ends on the cliffhanger and "Part two is coming". That's a promise to viewers: make the Part 2
+  next. Shamz keeps the same outfit in a Part 2.
+- **No Part 2:** end with a question for the comments and a call to subscribe, e.g. "Would you have stayed? Tell me
+  in the comments, and subscribe so you don't miss the next What If."
+- **New outfit:** every new episode (not a Part 2) gives Shamz a new outfit; same face, red eyes, orange locs and green
+  beanie.

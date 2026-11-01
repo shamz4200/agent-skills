@@ -26,6 +26,11 @@ schematic for the science beat, a cliffhanger blackout). Read the one closest to
 - **Shamz is the hero.** Every episode stars Shamz (`LOOKS.shamz`): brown skin, red ringed eyes, orange twist
   locs, a green beanie with a cream band and a red tag. He is "you" in the script. His jacket can change per
   episode (a new `Look` with the same face, eyes, locs and beanie); check every new costume on the cast sheet.
+- **A new outfit every episode.** Each new episode gives Shamz a new outfit (a new `Look`: same face, red eyes,
+  orange locs and green beanie). A Part 2 keeps its Part 1 outfit.
+- **Say how it ends, and keep the promise.** When pitching ideas, say for each one whether it ends on a cliffhanger
+  for a Part 2. An episode that ends on "Part two is coming" must get its Part 2 next. An episode with no Part 2 ends
+  with a question for the comments and a call to subscribe (see `references/formula.md`, "Endings and Part 2s").
 - **Original characters only.** The supporting cast on the rig (Mo the friend, the sister, mum, the suit, and Pip as
   an extra) is original. Never a channel's own hero, and nothing that resembles a famous cartoon character.
 - **Original stories.** The formula is shared; the episode isn't anyone else's. Don't remake a channel's title.
