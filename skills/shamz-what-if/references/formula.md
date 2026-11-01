@@ -14,8 +14,14 @@ the last line.
 4. **The not-so-fun part.** The cost, with real science and real numbers woven into the story ("That's real.").
 5. **Someone powerful notices.** A man in a suit, robbers, a government.
 6. **A moral choice with family at stake,** usually a little sister.
-7. **Cliffhanger.** "Part 1 of 2", a question for the comments, sometimes an "is any of this real?" section and
-   sourced science notes in the description.
+7. **The ending: a cliffhanger, or a question and a subscribe.** Decide which one before writing the script, and
+   tell the person which it is when you hand them the script:
+   - **Cliffhanger** (the story continues in a Part 2): leave a thread open, end on "Part two, soon", and say up
+     front that this idea needs another part.
+   - **Complete** (the story ends here, including a series finale): close every thread, then end on a question for
+     the comments and a call to subscribe, for example "Tell me in the comments, and subscribe so you don't miss
+     the next What If."
+   Either way, the description carries the sourced science notes (sometimes an "is any of this real?" section).
 
 Recurring cast: you (second person), a best friend, a little sister, mum. In our cast: Shamz is "you", Mo is the best
 friend, and `sis`, `mom` and `suit` are on the rig for beats 5 and 6.
