@@ -5,6 +5,7 @@ import { STUDIO } from './studio.config';
 import { EPISODES } from './episodes';
 import { CastSheet } from './CastSheet';
 import { CrowdSheet, CROWD_SIZE } from './CrowdSheet';
+import { DoodleSheet } from './DoodleSheet';
 
 // Every episode gets two compositions: <Id> (the film) and <Id>Board (one frame per shot, at its key frame, for the
 // storyboard). Cast renders the cast sheet; Crowd renders the wide cast (engine/crowd.ts).
@@ -21,6 +22,7 @@ export const Root: React.FC = () => {
         </React.Fragment>
       ))}
       <Composition id="Cast" component={CastSheet} durationInFrames={1} {...common} />
+      <Composition id="DoodleCast" component={DoodleSheet} durationInFrames={1} fps={STUDIO.fps} width={1920} height={1080} />
       <Composition id="Crowd" component={CrowdSheet} durationInFrames={1} fps={STUDIO.fps} width={CROWD_SIZE.width} height={CROWD_SIZE.height} />
     </>
   );
