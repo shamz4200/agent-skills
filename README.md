@@ -78,3 +78,11 @@ Add a folder under `skills/` with a `SKILL.md` (front matter `name` and `descrip
 
 MIT. Each skill folder keeps its own `LICENSE`, which must stay with its files; see [LICENSE](LICENSE) for the rest
 of this repo.
+
+## Styles in the Shamz skill
+
+- **What If Dusk**: the skill's main style (stick-figure cast at dusk, the seven-beat What If formula).
+- **Night Dossier ("ND style")**: true-story investigations told at night: bean characters, one warm lamp per scene,
+  a camera that never stops, handwritten type-on cards, files, maps and stamps, with Shamz as the investigator.
+  Engine, a 60-second example, full-episode tools and a master prompt for any agent:
+  [`skills/shamz-what-if/night-dossier/`](skills/shamz-what-if/night-dossier/README.md).
