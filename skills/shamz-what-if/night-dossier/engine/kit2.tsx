@@ -392,7 +392,7 @@ export const Flow: React.FC<SP> = ({ f, d, m, p }) => (
     <Layer depth={0.4}><rect x={-400} y={-300} width={W + 800} height={H + 600} fill="#101733" /><g stroke="#fff" opacity={0.04} strokeWidth={2}>{Array.from({ length: 24 }).map((_, i) => <line key={i} x1={-200 + i * 100} x2={-200 + i * 100} y1={-200} y2={1300} />)}{Array.from({ length: 14 }).map((_, i) => <line key={i} x1={-300} x2={2300} y1={i * 100} y2={i * 100} />)}</g></Layer>
     <Layer>
       {p.title && <T x={960} y={130} s={64} c="#fff" a="middle" ls={5}>{p.title}</T>}
-      <g transform="translate(960 580) scale(1.1) translate(-960 -600)">
+      <g transform="translate(960 580) scale(1.2) translate(-960 -600)">
       {p.edges.map(([a, b]: [number, number], i: number) => {
         const A = p.nodes[a], B = p.nodes[b];
         const at = (m.go ?? 6) + i * (p.step ?? 10);

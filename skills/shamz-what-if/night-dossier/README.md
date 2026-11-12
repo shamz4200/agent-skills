@@ -55,6 +55,11 @@ Work in a new folder (copy `example/` as the start) with `node_modules` linked t
    --public-dir public`, then mux with `-af loudnorm=I=-14:TP=-1.5`.
 6. **QC** a 1 fps contact sheet of the finished video before anyone else sees it.
 
+For a full episode (the 12-minute Wirecard film was built this way): `tools/voice.py` -> `tools/retime.py` ->
+shot list like `tools/timeline.full-episode.example.ts` with `tools/Root.full-episode.example.tsx` -> storyboard ->
+`tools/mix.py` -> `bash tools/render.sh <total frames> 1800` (chunked, resumable) -> mux with
+`-af "volume=<gain>dB,alimiter=limit=0.8:level=disabled"` to about -14 LUFS. Keep audio in `audio/`, not `public/`.
+
 Traps that cost time: the render browser may not reach Google Fonts (the fonts ship in `example/public/fonts`,
 loaded with `@remotion/fonts`); keep `.cache/` and `node_modules` out of git (the webpack cache is over 100 MB);
 whisper can mis-time a stretch with spoken numbers, which is why `retime.py` times each sentence on its own.

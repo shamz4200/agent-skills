@@ -6,7 +6,7 @@ anything unmatched is spread between its neighbours), so a mis-heard number can 
 Then a silent gap is opened before each chapter for its title card.
 
     python3 retime.py            (after voice.py)
-Writes public/voice_ep.wav, studio_src/words.json (final), studio_src/lines.json, studio_src/chapters.json.
+Writes audio/voice_ep.wav, studio_src/words.json (final), studio_src/lines.json, studio_src/chapters.json.
 """
 import os
 from pathlib import Path as _P
@@ -38,8 +38,8 @@ for l in open('script.md').read().split('\n'):
 text = ' '.join(l for _, l in lines)
 sentences = [s for s in re.split(r'(?<=[.!?…])\s+', text.strip()) if s]
 tag = hashlib.sha1(f'{SAMPLE}|0.5|0.5'.encode()).hexdigest()[:8]
-cache = Path('public/.chatterbox_cache')
-sr = sf.info('public/voice.wav').samplerate if Path('public/voice.wav').exists() else 24000
+cache = Path('audio/.chatterbox_cache')
+sr = sf.info('audio/voice.wav').samplerate if Path('audio/voice.wav').exists() else 24000
 
 from faster_whisper import WhisperModel  # noqa: E402
 wm = WhisperModel('small.en', device='cpu', compute_type='int8')
@@ -120,7 +120,7 @@ for name, wi in order[1:]:
     pre = 2.2 if not cuts else 0.5          # hold on the last shot before the card (longer after the title)
     cuts.append((t0, pre + CARD, name, pre))
 total = t - GAP
-audio = np.zeros(int((total + CARD * len(cuts) + 1) * sr), np.float32)
+audio = np.zeros(int((total + sum(x[1] for x in cuts) + 2) * sr), np.float32)
 for ct, wav in clips:
     off = sum(x[1] for x in cuts if x[0] <= ct + 1e-9)
     a0 = int((ct + off) * sr)
@@ -135,7 +135,7 @@ for c, g, name, pre in cuts:
     chapters.append({'title': name, 's': round(c + done + pre - 0.1, 3), 'e': round(c + done + g - 0.25, 3)})
     done += g
 end = words[-1]['e']
-sf.write('public/voice_ep.wav', audio[: int((end + 0.5) * sr)], sr)
+sf.write('audio/voice_ep.wav', audio[: int((end + 0.5) * sr)], sr)
 json.dump(words, open('studio_src/words.json', 'w'))
 json.dump(out_lines, open('studio_src/lines.json', 'w'), indent=0)
 json.dump(chapters, open('studio_src/chapters.json', 'w'), indent=0)

@@ -425,14 +425,14 @@ export const Sites: React.FC<SP> = ({ f, d, m }) => {
       <Layer depth={0.6}><rect x={-400} y={-300} width={W + 800} height={H + 600} fill="#1d2444" /></Layer>
       <Layer>
         <rect x={-400} y={860} width={W + 800} height={500} fill="#3a2b25" stroke={INK} strokeWidth={9} />
-        {[[520, a, 'gamble'], [1400, b, 'adult']].map(([x, at, k]: any) => <g key={k} opacity={f >= at ? 1 : 0.25}>
+        {[[520, a, 'gamble'], [1400, b, 'adult']].map(([x, at, k]: any) => <g key={k} opacity={f >= at ? 1 : 0.6}>
           <g stroke={INK} strokeWidth={9} strokeLinejoin="round"><rect x={x - 60} y={800} width={120} height={60} fill="#b8b09a" /><rect x={x - 290} y={300} width={580} height={500} rx={44} fill="#cfc6ad" /><rect x={x - 240} y={346} width={480} height={380} rx={26} fill={k === 'gamble' ? '#0f4a2a' : '#4a1028'} /></g>
           {k === 'gamble' ? <g transform={`translate(${x} 536)`}><g transform={`rotate(${f * 5})`} stroke={INK} strokeWidth={5}><circle r={120} fill="#7a1f22" />{Array.from({ length: 12 }).map((_, i) => <path key={i} d="M 0 0 L 120 0 A 120 120 0 0 1 104 60 Z" fill={i % 2 ? '#111' : '#c8372f'} transform={`rotate(${i * 30})`} />)}<circle r={34} fill={C.gold} /></g><circle cx={0} cy={-98} r={12} fill="#fff" stroke={INK} strokeWidth={4} /><text y={176} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={44} fill={C.gold} letterSpacing={6}>CASINO</text></g>
             : <g transform={`translate(${x} 536)`}><circle r={120} fill="none" stroke="#ff6b8a" strokeWidth={16} /><text y={36} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={110} fill="#ff6b8a">18+</text><text y={176} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={40} fill="#ff6b8a" letterSpacing={6}>ADULTS ONLY</text></g>}
           {f >= at && [0, 1, 2].map((i) => { const t = ((f - at + i * 12) % 36) / 36; return <g key={i} transform={`translate(${x + (960 - x) * t} ${300 - Math.sin(t * Math.PI) * 130 - 30})`}><circle r={22} fill={C.green} stroke={INK} strokeWidth={5} /><text y={10} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={28} fill={INK}>€</text></g>; })}
         </g>)}
         <g transform="translate(960 250)"><rect x={-150} y={-60} width={300} height={110} rx={12} fill="#0e3a22" stroke={C.green} strokeWidth={7} /><text y={14} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={46} fill={C.green} letterSpacing={4}>WIRECARD</text></g>
-        <Night id="sites" amt={0.42} lights={[{ x: 520, y: 540, r: 480, color: '#7dffa0', power: f >= a ? 1 : 0.2 }, { x: 1400, y: 540, r: 480, color: '#ff8fb0', power: f >= b ? 1 : 0.2 }, { x: 960, y: 250, r: 300, color: C.green }]} />
+        <Night id="sites" amt={0.42} lights={[{ x: 520, y: 540, r: 480, color: '#7dffa0', power: f >= a ? 1 : 0.6 }, { x: 1400, y: 540, r: 480, color: '#ff8fb0', power: f >= b ? 1 : 0.6 }, { x: 960, y: 250, r: 300, color: C.green }]} />
       </Layer>
     </Cam>
   );

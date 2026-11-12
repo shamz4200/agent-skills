@@ -162,7 +162,7 @@ tone = 0.5 * np.sin(2 * np.pi * 36.71 * t) + 0.3 * np.sin(2 * np.pi * 55 * t + n
 tone *= 0.035 / np.abs(tone).max()
 
 # ------------------------------------------------------------------ voice, ducking, effects
-voice = dec('public/voice_ep.wav')
+voice = dec('audio/voice_ep.wav')
 voice = voice / np.abs(voice).max() * 0.86
 v = np.zeros(N, np.float32)
 v[: min(N, len(voice))] = voice[:N]
@@ -172,9 +172,13 @@ for w in words:
 k = int(0.35 * SR)
 env = np.convolve(env, np.ones(k, np.float32) / k, 'same')
 music = music / (np.abs(music).max() + 1e-9)
-music_gain = 0.30 - 0.185 * env                    # full between sentences, tucked under the voice
+music_gain = 0.24 - 0.165 * env                    # full between sentences, tucked well under the voice
 
 mix = v + music * music_gain + tone
+sp = env > 0.9
+rms = lambda x: float(np.sqrt(np.mean(x ** 2)))
+mu = (music * music_gain)[sp]
+print('under the voice: music is', round(20 * np.log10(rms(mu[np.abs(mu) > 1e-5]) / rms(v[sp])), 1), 'dB below the voice')
 
 # effects by shot kind, read from the shot list
 src = open('studio_src/timeline.ts').read()

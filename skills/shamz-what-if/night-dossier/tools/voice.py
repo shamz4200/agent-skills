@@ -1,5 +1,5 @@
 """Voice for the episode: every spoken line of script.md through Chatterbox (Shamz), with word timings.
-Writes public/voice.wav and studio_src/words.json; also studio_src/lines.json (line text, chapter, first word index)."""
+Writes audio/voice.wav and studio_src/words.json; also studio_src/lines.json (line text, chapter, first word index)."""
 import os
 from pathlib import Path as _P
 SKILL = _P(os.environ.get('SHAMZ_SKILL_DIR') or _P(__file__).resolve().parents[2])   # the shamz-what-if skill folder
@@ -13,7 +13,7 @@ for l in open('script.md').read().split('\n'):
     if l.startswith('## '): chap = l[3:]
     elif chap and l and not l.startswith('[SRC]'): lines.append((chap, l))
 text = ' '.join(l for _, l in lines)
-words = synth(text, 'public/voice.wav', VOICE_SAMPLE, 0.5, 0.5)
+words = synth(text, 'audio/voice.wav', VOICE_SAMPLE, 0.5, 0.5)
 json.dump(words, open('studio_src/words.json', 'w'))
 i, out = 0, []
 for c, l in lines:
