@@ -108,15 +108,15 @@ export const ShamzDesk: React.FC<SP> = ({ f, d, m, p }) => {
         <rect x={540} y={100} width={1120} height={560} fill="#9a6a3c" stroke={INK} strokeWidth={12} /><rect x={560} y={120} width={1080} height={520} fill="#b98a55" />
         {pins.map((k, i) => <g key={k}><Photo x={pos[i][0]} y={pos[i][1]} who={k} w={150} id={`sd${k}`} rot={(i % 2 ? 4 : -5)} /><circle cx={pos[i][0] + 75} cy={pos[i][1] + 4} r={10} fill={C.red} stroke={INK} strokeWidth={4} /></g>)}
         {pins.slice(1).map((k, i) => <line key={k} x1={pos[0][0] + 75} y1={pos[0][1] + 4} x2={pos[i + 1][0] + 75} y2={pos[i + 1][1] + 4} stroke={C.red} strokeWidth={5} />)}
-        <g transform="translate(1040 400) rotate(3)"><rect width={190} height={120} fill={C.paper} stroke={INK} strokeWidth={5} /><text x={95} y={52} textAnchor="middle" fontFamily={HAND} fontWeight={700} fontSize={44} fill={C.red}>{p.note ?? '€1.9 bn?'}</text><text x={95} y={96} textAnchor="middle" fontFamily={HAND} fontWeight={700} fontSize={30} fill={INK}>where is it</text></g>
-        <g transform="translate(260 180)"><rect width={190} height={250} fill="#27344d" stroke={INK} strokeWidth={8} /><rect x={16} y={16} width={158} height={150} fill="#0c1230" /><circle cx={130} cy={56} r={18} fill="#f3efd9" /><T x={95} y={214} s={26} c="#9fb0d0" a="middle">CASE 05</T></g>
+        <g transform="translate(1040 400) rotate(3)"><rect width={190} height={120} fill={C.paper} stroke={INK} strokeWidth={5} /><text x={95} y={52} textAnchor="middle" fontFamily={HAND} fontWeight={700} fontSize={44} fill={C.red}>{p.note ?? '€1.9 bn?'}</text><text x={95} y={96} textAnchor="middle" fontFamily={HAND} fontWeight={700} fontSize={30} fill={INK}>{p.note2 ?? 'where is it'}</text></g>
+        <g transform="translate(260 180)"><rect width={190} height={250} fill="#27344d" stroke={INK} strokeWidth={8} /><rect x={16} y={16} width={158} height={150} fill="#0c1230" /><circle cx={130} cy={56} r={18} fill="#f3efd9" /><T x={95} y={214} s={26} c="#9fb0d0" a="middle">{p.caseNo ?? 'CASE 05'}</T></g>
       </Layer>
       <Layer>
         <Bean {...LOOKS.shamz} x={960} y={1050} s={2.15} f={f} seed={7} legs={false} lit={-1} {...face[mode]} />
         <DeskSide x={220} w={1480} y={800} />
         <Lamp x={400} y={800} />
         <g stroke={INK} strokeWidth={7}>
-          <g transform="translate(1250 728) rotate(-4)"><rect width={300} height={72} fill="#b9853f" /><rect x={10} y={-22} width={280} height={30} fill="#c9954c" /><text x={150} y={48} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={30} fill={INK} stroke="none" letterSpacing={3}>WIRECARD</text></g>
+          <g transform="translate(1250 728) rotate(-4)"><rect width={300} height={72} fill="#b9853f" /><rect x={10} y={-22} width={280} height={30} fill="#c9954c" /><text x={150} y={48} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={30} fill={INK} stroke="none" letterSpacing={3}>{p.caseName ?? 'WIRECARD'}</text></g>
           <g transform="translate(680 742)"><path d="M -30 -40 L 30 -40 L 24 58 L -24 58 Z" fill="#e8e2d2" /><path d="M 30 -20 q 30 6 0 44" fill="none" /></g>
         </g>
         {p.file && <g transform="translate(830 700) rotate(-3)" stroke={INK} strokeWidth={6}><rect width={270} height={100} fill={C.paper} />{[0, 1, 2].map((i) => <line key={i} x1={20} x2={250} y1={28 + i * 24} y2={28 + i * 24} stroke="#8a8170" strokeWidth={4} />)}</g>}
@@ -217,7 +217,7 @@ export const Street: React.FC<SP> = ({ f, d, m, p }) => {
         {day && <circle cx={1500} cy={200} r={80} fill="#fff3b8" />}
       </Layer>
       <Layer depth={0.45}>
-        {(kind === 'tower' || kind === 'plain' || kind === 'station' || kind === 'bank1870' || kind === 'ghost') && [80, 380, 680, 1300, 1580, 1840].map((x, i) => <rect key={i} x={x} y={440 - (i * 71) % 160} width={210} height={700} fill="#141b3c" />)}
+        {(kind === 'tower' || kind === 'plain' || kind === 'station' || kind === 'bank1870' || kind === 'ghost' || kind === 'fed' || kind === 'bbank' || kind === 'branch' || kind === 'casino') && [80, 380, 680, 1300, 1580, 1840].map((x, i) => <rect key={i} x={x} y={440 - (i * 71) % 160} width={210} height={700} fill="#141b3c" />)}
         {kind === 'moscow' && <g stroke={INK} strokeWidth={7}>
           <rect x={-200} y={640} width={2400} height={400} fill="#3a1418" />{Array.from({ length: 30 }).map((_, i) => <rect key={i} x={-200 + i * 80} y={600} width={46} height={46} fill="#3a1418" />)}
           {[[520, 1.0, '#c8473f'], [760, 1.35, '#d8a23a'], [1020, 1.1, '#3f8fc8'], [1240, 0.9, '#4aa86a']].map(([x, s, c]: any, i) => <g key={i} transform={`translate(${x} 640) scale(${s})`}><rect x={-46} y={-220} width={92} height={220} fill="#e9e1cf" /><path d="M -60 -220 Q -76 -300 0 -350 Q 76 -300 60 -220 Z" fill={c} /><line x1={0} y1={-350} x2={0} y2={-400} /><line x1={-14} y1={-384} x2={14} y2={-384} /></g>)}
@@ -263,13 +263,39 @@ export const Street: React.FC<SP> = ({ f, d, m, p }) => {
           <path d="M 520 420 L 960 240 L 1400 420 Z" fill="#c9ccd6" /><rect x={540} y={420} width={840} height={56} fill="#aeb2bf" />{[0, 1, 2, 3, 4, 5].map((i) => <rect key={i} x={590 + i * 140} y={476} width={70} height={380} fill="#d9dce4" />)}<rect x={500} y={856} width={920} height={48} fill="#aeb2bf" />
           <text x={960} y={462} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={40} fill={INK} stroke="none" letterSpacing={6}>COMMERZBANK · EST. 1870</text>
         </g>}
+        {kind === 'fed' && <g stroke={INK} strokeWidth={9} strokeLinejoin="round">
+          <rect x={420} y={300} width={1080} height={600} fill="#8f8a7c" />{Array.from({ length: 5 }).map((_, r) => Array.from({ length: 9 }).map((__, i) => <rect key={`${r}${i}`} x={470 + i * 114} y={350 + r * 96} width={62} height={62} fill={(r * 3 + i) % 4 ? '#ffd98a' : '#3a4055'} strokeWidth={5} />))}
+          <rect x={860} y={740} width={200} height={160} fill="#3a2b25" /><path d="M 860 740 q 100 -90 200 0 Z" fill="#5c4130" />
+          <rect x={560} y={236} width={800} height={70} fill="#12303a" strokeWidth={7} /><text x={960} y={286} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={38} fill={C.gold} stroke="none" letterSpacing={4}>FEDERAL RESERVE BANK OF NEW YORK</text>
+          <line x1={1560} y1={900} x2={1560} y2={330} /><g strokeWidth={4}>{[0, 1, 2, 3, 4, 5].map((i) => <rect key={i} x={1560} y={340 + i * 16} width={170} height={16} fill={i % 2 ? '#fff' : '#c8372f'} />)}<rect x={1560} y={340} width={70} height={48} fill="#2a4fb0" /></g>
+        </g>}
+        {kind === 'bbank' && <g stroke={INK} strokeWidth={9} strokeLinejoin="round">
+          <rect x={700} y={180} width={520} height={720} fill="#39506e" />{Array.from({ length: 10 }).map((_, r) => Array.from({ length: 6 }).map((__, i) => <rect key={`${r}${i}`} x={734 + i * 78} y={250 + r * 58} width={50} height={34} fill={r === 1 && p.floor ? (i === 2 ? '#ff6b6b' : '#ffd98a') : (r * 5 + i * 3) % 4 ? '#ffd98a' : '#27306a'} strokeWidth={4} opacity={p.asleep ? ((r * 5 + i * 3) % 7 ? 0.25 : 1) : 1} />))}
+          <rect x={660} y={150} width={600} height={70} fill="#12303a" strokeWidth={7} /><text x={960} y={200} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={42} fill={C.gold} stroke="none" letterSpacing={5}>BANGLADESH BANK</text>
+          <rect x={900} y={780} width={120} height={120} fill="#ffd98a" />
+          {p.floor && <g strokeWidth={5}><line x1={1220} y1={325} x2={1340} y2={325} /><rect x={1340} y={296} width={250} height={58} fill="#0c0e16" /><text x={1465} y={336} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={30} fill="#fff" stroke="none" letterSpacing={3}>10TH FLOOR</text></g>}
+        </g>}
+        {kind === 'branch' && <g stroke={INK} strokeWidth={9} strokeLinejoin="round">
+          <rect x={560} y={440} width={800} height={460} fill="#d9cdb4" /><rect x={520} y={400} width={880} height={56} fill="#8a2a2a" />
+          <rect x={640} y={560} width={260} height={220} fill={p.closed ? '#27306a' : '#ffd98a'} /><rect x={1040} y={600} width={150} height={300} fill="#5c4130" />
+          <rect x={700} y={470} width={520} height={64} fill="#12303a" strokeWidth={6} /><text x={960} y={516} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={40} fill={C.gold} stroke="none" letterSpacing={5}>BANK · MAKATI BRANCH</text>
+          <line x1={300} y1={900} x2={300} y2={420} /><g strokeWidth={6}><rect x={170} y={430} width={300} height={74} rx={8} fill="#1f7a3a" /><text x={320} y={482} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={42} fill="#fff" stroke="none" letterSpacing={4}>JUPITER ST</text></g>
+          {p.lanterns && [620, 820, 1020, 1220, 1340].map((x, i) => <g key={i} strokeWidth={5}><line x1={x} y1={456} x2={x} y2={500 + (i % 2) * 20} /><ellipse cx={x} cy={530 + (i % 2) * 20} rx={26} ry={32} fill="#d8433b" /><rect x={x - 10} y={560 + (i % 2) * 20} width={20} height={12} fill={C.gold} /></g>)}
+          {p.closed && <g transform="translate(1115 720) rotate(-6)" strokeWidth={5}><rect x={-70} y={-30} width={140} height={60} fill={C.paper} /><text y={12} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={34} fill={C.red} stroke="none">CLOSED</text></g>}
+        </g>}
+        {kind === 'casino' && <g stroke={INK} strokeWidth={9} strokeLinejoin="round">
+          <rect x={380} y={300} width={1160} height={600} fill="#2a1638" />{Array.from({ length: 4 }).map((_, r) => Array.from({ length: 12 }).map((__, i) => <rect key={`${r}${i}`} x={420 + i * 92} y={420 + r * 86} width={56} height={50} fill={(r + i) % 3 ? '#ffd98a' : '#4a2a66'} strokeWidth={4} />))}
+          <rect x={560} y={210} width={800} height={150} rx={20} fill="#16081f" /><text x={960} y={318} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={120} fill={Math.floor(f / 8) % 2 ? '#ff5fa8' : '#ffd24a'} stroke="none" letterSpacing={18}>CASINO</text>
+          {Array.from({ length: 16 }).map((_, i) => <circle key={i} cx={585 + i * 50} cy={376} r={9} fill={(i + Math.floor(f / 5)) % 2 ? '#ffd24a' : '#ff5fa8'} strokeWidth={3} />)}
+          <rect x={860} y={700} width={200} height={200} fill="#ffd98a" /><path d="M 800 700 L 1120 700 L 1090 640 L 830 640 Z" fill="#b8433a" />
+        </g>}
         {kind === 'shack' && <g stroke={INK} strokeWidth={9} strokeLinejoin="round"><rect x={780} y={640} width={300} height={260} fill="#6a5a4a" /><path d="M 750 640 L 930 540 L 1110 640 Z" fill="#4a3a30" /><rect x={880} y={760} width={90} height={140} fill="#3a2b25" /><rect x={800} y={680} width={60} height={60} fill="#ffd98a" />
           <g transform={`translate(1180 ${520 + Math.sin(f / 8) * 6}) rotate(8)`}><path d="M 0 0 L -60 -70" /><path d="M -40 0 L 60 -50 L 420 -50 L 420 110 L 60 110 Z" fill={C.paper} /><circle cx={30} cy={30} r={12} fill={C.woodD} /><text x={240} y={56} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={70} fill={C.red} stroke="none">€340 M</text></g></g>}
         {kind === 'ghost' && <g stroke={INK} strokeWidth={9} strokeLinejoin="round"><rect x={660} y={380} width={600} height={520} fill="#39415e" /><rect x={880} y={620} width={160} height={280} fill="#22252f" /><rect x={740} y={470} width={440} height={80} fill="#12303a" /><text x={960} y={528} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={40} fill="#8d93a6" stroke="none" letterSpacing={4}>PARTNER OFFICE</text>
           <path d="M 880 620 q 80 40 160 0 M 880 620 l 60 80 M 1040 620 l -50 90 M 900 660 q 60 20 120 0" fill="none" strokeWidth={3} stroke="#cfd6e3" opacity={0.6} /><text x={960} y={800} textAnchor="middle" fontFamily={HAND} fontWeight={700} fontSize={170} fill="#fff" stroke="none" opacity={0.8}>?</text></g>}
         {p.lamp && <g stroke={INK} strokeWidth={8}><line x1={p.lamp} y1={gy - 30} x2={p.lamp} y2={380} /><path d={`M ${p.lamp} 380 q 0 -40 60 -40`} fill="none" /><rect x={p.lamp + 50} y={326} width={70} height={26} fill="#ffd98a" /></g>}
         <Cast list={p.cast ?? []} f={f} d={d} m={m} gy={gy} />
-        {!day && <Night id={`st${kind}${(p.cast ?? []).length}`} amt={p.dark ?? 0.56} lights={[...((p.cast ?? []).length ? [{ x: (p.cast as CastP[]).reduce((a: number, c: CastP) => a + (c.walk ? (c.walk[0] + c.walk[1]) / 2 : c.x), 0) / p.cast.length, y: 780, r: 460, ry: 320, power: 0.75 }] : []), ...(p.lights ?? (kind === 'tower' ? [{ x: p.tx ?? 960, y: 820, r: 560, ry: 300 }, { x: p.tx ?? 960, y: 300, r: 380, color: p.signC ?? C.green, power: 0.25 + 0.75 * on }] : kind === 'villa' ? [{ x: 430, y: 640, r: 520 }, { x: 1480, y: 600, r: 520, power: 0.7 }, { x: 960, y: 860, r: 420, ry: 200 }] : kind === 'sea' ? [{ x: 960, y: 640, r: 560 }, { x: 1480, y: 760, r: 380, color: Math.floor(f / 6) % 2 ? '#6f8cff' : '#ff6b6b' }] : p.lamp ? [{ x: p.lamp + 80, y: 640, r: 460, ry: 520 }, { x: 960, y: 800, r: 600, ry: 260, power: 0.5 }] : kind === 'moscow' ? [{ x: 960, y: 520, r: 1000, ry: 460, power: 0.85 }] : lights))]} />}
+        {!day && <Night id={`st${kind}${(p.cast ?? []).length}`} amt={p.dark ?? 0.56} lights={[...((p.cast ?? []).length ? [{ x: (p.cast as CastP[]).reduce((a: number, c: CastP) => a + (c.walk ? (c.walk[0] + c.walk[1]) / 2 : c.x), 0) / p.cast.length, y: 780, r: 460, ry: 320, power: 0.75 }] : []), ...(p.lights ?? (kind === 'tower' ? [{ x: p.tx ?? 960, y: 820, r: 560, ry: 300 }, { x: p.tx ?? 960, y: 300, r: 380, color: p.signC ?? C.green, power: 0.25 + 0.75 * on }] : kind === 'villa' ? [{ x: 430, y: 640, r: 520 }, { x: 1480, y: 600, r: 520, power: 0.7 }, { x: 960, y: 860, r: 420, ry: 200 }] : kind === 'sea' ? [{ x: 960, y: 640, r: 560 }, { x: 1480, y: 760, r: 380, color: Math.floor(f / 6) % 2 ? '#6f8cff' : '#ff6b6b' }] : p.lamp ? [{ x: p.lamp + 80, y: 640, r: 460, ry: 520 }, { x: 960, y: 800, r: 600, ry: 260, power: 0.5 }] : kind === 'moscow' ? [{ x: 960, y: 520, r: 1000, ry: 460, power: 0.85 }] : kind === 'fed' || kind === 'bbank' || kind === 'branch' ? [{ x: 960, y: 560, r: 900, ry: 520, power: 0.9 }] : kind === 'casino' ? [{ x: 960, y: 480, r: 900, ry: 520, color: '#ffb0e0' }] : lights))]} />}
         {(p.rain ?? (!day && kind !== 'station')) && <Rain f={f} op={0.14} n={60} />}
         {p.cctv && <g><rect x={80} y={60} width={W - 160} height={H - 120} fill="none" stroke="#fff" strokeWidth={5} opacity={0.7} /><circle cx={140} cy={120} r={16} fill={C.red} opacity={Math.floor(f / 10) % 2 ? 1 : 0.3} /><T x={170} y={134} s={40} c="#fff">REC</T><T x={W - 120} y={134} s={36} c="#fff" a="end">{p.cctv}</T></g>}
       </Layer>
@@ -287,7 +313,7 @@ export const Street: React.FC<SP> = ({ f, d, m, p }) => {
 export const Table: React.FC<SP> = ({ f, d, m, p }) => {
   const kind = p.kind ?? 'lunch';
   const v: [View, View] = Array.isArray(p.v) ? p.v : p.v === 'l' ? [[640, 560, 1.6], [660, 550, 1.75]] : p.v === 'r' ? [[1320, 560, 1.6], [1300, 550, 1.75]] : p.v === 'doc' ? [[960, 760, 2.2], [960, 750, 2.5]] : p.v === 'pull' ? [[960, 560, 1.3], [960, 540, 1.0]] : [[960, 540, 1.0], [960, 530, 1.09]];
-  const wall = kind === 'audit' ? '#2a3147' : kind === 'bar' ? '#2a1820' : '#4a2f22';
+  const wall = kind === 'audit' ? '#2a3147' : kind === 'bar' ? '#2a1820' : kind === 'casino' ? '#2a1232' : '#4a2f22';
   return (
     <Cam f={f} d={d} v={v} bg={wall}>
       <Layer depth={0.6}>
@@ -305,6 +331,10 @@ export const Table: React.FC<SP> = ({ f, d, m, p }) => {
         {kind === 'lunch' ? <g stroke={INK} strokeWidth={9}><path d="M 500 800 Q 960 740 1420 800 L 1380 1200 L 540 1200 Z" fill="#f1e6cc" />
           <rect x={945} y={690} width={30} height={90} fill="#fff7d6" strokeWidth={6} /><path d={`M 960 690 q -14 -26 0 -${44 + Math.sin(f / 3) * 5} q 14 26 0 ${44 + Math.sin(f / 3) * 5}`} fill="#ffb347" strokeWidth={4} />
           {[700, 1220].map((x) => <g key={x} strokeWidth={6}><ellipse cx={x} cy={800} rx={90} ry={22} fill="#fff" /><path d={`M ${x + 120} 700 l 30 0 l -6 50 q -9 12 -18 0 Z`} fill="#b8433a" /><line x1={x + 135} y1={756} x2={x + 135} y2={800} /></g>)}</g>
+          : kind === 'casino' ? <g stroke={INK} strokeWidth={9}><path d="M 300 800 Q 960 720 1620 800 L 1560 1200 L 360 1200 Z" fill="#1f6a45" /><path d="M 330 806 Q 960 730 1590 806" fill="none" stroke={C.gold} strokeWidth={6} />
+            {Array.from({ length: 9 }).map((_, i) => { const t = ((f + i * 9) % 70) / 70; return <g key={i} transform={`translate(${520 + i * 110} ${840 + (i % 3) * 36})`} strokeWidth={4}>{[0, 1, 2, 3].map((k) => <ellipse key={k} cx={0} cy={-k * 9} rx={30} ry={11} fill={['#d8433b', '#3b6ee0', '#e2b441', '#fff'][(i + k) % 4]} />)}</g>; })}
+            {[0, 1, 2].map((i) => { const t = ((f + i * 23) % 60) / 60; return <g key={i} transform={`translate(${700 + t * 520} ${790 - Math.sin(t * Math.PI) * 60})`} strokeWidth={4}><ellipse rx={26} ry={10} fill="#e2b441" /></g>; })}
+            {[860, 930, 1000].map((x, i) => <rect key={x} x={x} y={770} width={52} height={74} rx={6} fill="#fff" strokeWidth={5} transform={`rotate(${i * 6 - 6} ${x + 26} 800)`} />)}</g>
           : <g stroke={INK} strokeWidth={9}><rect x={360} y={790} width={1200} height={60} fill={kind === 'audit' ? '#6a6f80' : C.wood} /><rect x={420} y={850} width={1080} height={300} fill={kind === 'audit' ? '#3a3f52' : C.woodD} /></g>}
         {p.docs && <g stroke={INK} strokeWidth={6}><rect x={840} y={760} width={150} height={44} fill={C.paper} transform="rotate(-6 915 780)" /><rect x={960} y={756} width={150} height={44} fill={C.paper} transform="rotate(5 1035 780)" /><text x={1036} y={790} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={22} fill={C.red} stroke="none" transform="rotate(5 1035 780)">SECRET</text></g>}
         {p.laptops && [640, 1280].map((x) => <g key={x} stroke={INK} strokeWidth={7}><rect x={x - 90} y={690} width={180} height={104} rx={8} fill="#22252f" /><rect x={x - 76} y={702} width={152} height={80} fill="#1c3f8a" opacity={0.7 + 0.2 * Math.sin(f / 6 + x)} strokeWidth={0} /><rect x={x - 110} y={792} width={220} height={12} fill="#3a4055" /></g>)}
@@ -483,9 +513,9 @@ export const EndCard: React.FC<SP> = (sp) => {
   const k = lerp(f, [10, 24], [0, 1], easeOut);
   return (
     <AbsoluteFill>
-      <ShamzDesk {...sp} p={{ mode: 'smile', pins: ['mars', 'braun', 'mccrum', 'grozev'], v: [[960, 540, 1.0], [960, 540, 1.05]] }} />
+      <ShamzDesk {...sp} p={{ mode: 'smile', pins: ['mars', 'braun', 'mccrum', 'grozev'], v: [[960, 540, 1.0], [960, 540, 1.05]], ...(sp.p?.desk ?? {}) }} />
       <AbsoluteFill style={{ background: `rgba(5,7,16,${0.62 * k})`, alignItems: 'center', justifyContent: 'center', opacity: k }}>
-        <div style={{ fontFamily: LABEL, fontWeight: 700, fontSize: 92, color: '#fff', letterSpacing: 4, textAlign: 'center', lineHeight: 1.12, textShadow: '0 6px 0 #0a0d1e' }}>WHY DID IT TAKE <span style={{ color: C.gold }}>5 YEARS</span><br />FOR ANYONE TO LISTEN?</div>
+        <div style={{ fontFamily: LABEL, fontWeight: 700, fontSize: 92, color: '#fff', letterSpacing: 4, textAlign: 'center', lineHeight: 1.12, textShadow: '0 6px 0 #0a0d1e' }}>{sp.p?.q1 ?? 'WHY DID IT TAKE '}<span style={{ color: C.gold }}>{sp.p?.qa ?? '5 YEARS'}</span><br />{sp.p?.q2 ?? 'FOR ANYONE TO LISTEN?'}</div>
         <div style={{ fontFamily: HAND, fontWeight: 700, fontSize: 64, color: '#f6f1e6', marginTop: 26 }}>Tell me in the comments</div>
         <div style={{ fontFamily: LABEL, fontWeight: 700, fontSize: 54, color: INK, background: C.gold, border: `6px solid ${INK}`, borderRadius: 60, padding: '10px 54px', marginTop: 30, letterSpacing: 6, transform: `scale(${1 + 0.04 * Math.sin(f / 6)})` }}>SUBSCRIBE</div>
         <div style={{ fontFamily: LABEL, fontWeight: 700, fontSize: 30, color: '#cfd6ea', marginTop: 16, letterSpacing: 4 }}>FOR THE NEXT FILE</div>

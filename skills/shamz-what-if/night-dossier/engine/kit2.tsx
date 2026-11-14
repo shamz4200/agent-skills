@@ -44,6 +44,19 @@ export const LOOKS: Record<string, BeanLook> = {
   bul4: { body: '#3f4f6a', hair: 'crop', hairC: '#3a2f25', skin: C.skin2 },
   bul5: { body: '#6a5f3f', hair: 'bob', hairC: '#b8853f', skin: C.skin3 },
   judge: { body: '#16161d', hat: 'wig', glasses: true, collar: '#fff', skin: C.skin3 },
+  duty: { body: '#2f6f73', hair: 'short', hairC: '#16120f', glasses: true, collar: '#fff', skin: '#b9825a' },
+  clerk: { body: '#8a5570', hair: 'long', hairC: '#16120f', skin: '#b9825a' },
+  clerk2: { body: '#55708a', hair: 'side', hairC: '#16120f', tie: '#7a2f2a', collar: '#fff', skin: '#a8744c' },
+  fed: { body: '#31405e', hair: 'side', hairC: '#6b4a2a', glasses: true, tie: '#7a2f2a', collar: '#fff', skin: C.skin },
+  bmanager: { body: '#7a2f4a', hair: 'long', hairC: '#16120f', collar: '#fff', skin: '#c99a6a' },
+  gambler: { body: '#3a3a44', hair: 'short', hairC: '#0e0f16', glasses: true, skin: C.skin3 },
+  gambler2: { body: '#5a3a2a', hair: 'tuft', hairC: '#16120f', skin: '#c99a6a' },
+  dealer: { body: '#16161d', hair: 'side', hairC: '#16120f', tie: '#b8433a', collar: '#fff', skin: '#c99a6a' },
+  junket: { body: '#4a4a52', hair: 'crop', hairC: '#3a3530', glasses: true, collar: '#fff', skin: C.skin3 },
+  senator: { body: '#3d3a52', hair: 'bob', hairC: '#b9b2a4', glasses: true, collar: '#fff', skin: '#c99a6a' },
+  governor: { body: '#3a4a52', hair: 'bald', glasses: true, tie: '#1f5a3a', collar: '#fff', skin: '#a8744c' },
+  hacker: { body: '#39425c', hair: 'short', hairC: '#0e0f16', skin: '#8f9aac', collar: '#232a3e' },
+  agent: { body: '#1d2748', hair: 'crop', hairC: '#3a2f25', tie: '#b8433a', collar: '#fff', skin: C.skin },
   barrister: { body: '#16161d', hat: 'wig', collar: '#fff', skin: C.skin2 },
 };
 
@@ -235,6 +248,7 @@ const LON0 = -14, LON1 = 132, LAT0 = 64, LAT1 = -4;
 export const geo = (lon: number, lat: number): [number, number] => [((lon - LON0) / (LON1 - LON0)) * W, ((LAT0 - lat) / (LAT0 - LAT1)) * H];
 export const CITY: Record<string, [number, number]> = {
   london: [-0.1, 51.5], munich: [11.6, 48.1], vienna: [16.4, 48.2], minsk: [27.6, 53.9], moscow: [37.6, 55.8], dubai: [55.3, 25.2],
+  dhaka: [90.4, 23.8], newyork: [-74.0, 40.7], colombo: [79.9, 6.9], pyongyang: [125.7, 39.0], hanoi: [105.8, 21.0], quito: [-78.5, -0.2],
   singapore: [103.8, 1.4], manila: [121.0, 14.6], beijing: [116.4, 39.9], tripoli: [13.2, 32.9], frankfurt: [8.7, 50.1], yarmouth: [1.7, 52.6],
   mumbai: [72.9, 19.1], hongkong: [114.2, 22.3], kuala: [101.7, 3.1], chennai: [80.3, 13.1], berlin: [13.4, 52.5],
 };
