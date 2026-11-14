@@ -74,7 +74,7 @@ You are making an animated video in the Night Dossier style ("ND style"), a styl
 Get the tools:
 - Clone https://github.com/shamz4200/agent-skills and open skills/shamz-what-if/night-dossier/.
 - Read README.md (the style in one page and the pipeline) and STUDY.md (the measured reference) before anything else.
-- The engine is in engine/ (dossier.tsx, kit2.tsx, sets.tsx, cold.tsx). A finished 60-second example is in example/.
+- The engine is in engine/ (dossier.tsx, kit2.tsx, sets.tsx, heist.tsx, crypto.tsx, cold.tsx). A finished 60-second example is in example/.
   Full-episode tools are in tools/. The Remotion project and Python scripts it relies on are in ../studio and
   ../scripts (run npm install in ../studio; pip install chatterbox-tts faster-whisper soundfile numpy).
 
