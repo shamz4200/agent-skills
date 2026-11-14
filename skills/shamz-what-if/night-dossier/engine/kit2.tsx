@@ -57,6 +57,18 @@ export const LOOKS: Record<string, BeanLook> = {
   governor: { body: '#3a4a52', hair: 'bald', glasses: true, tie: '#1f5a3a', collar: '#fff', skin: '#a8744c' },
   hacker: { body: '#39425c', hair: 'short', hairC: '#0e0f16', skin: '#8f9aac', collar: '#232a3e' },
   agent: { body: '#1d2748', hair: 'crop', hairC: '#3a2f25', tie: '#b8433a', collar: '#fff', skin: C.skin },
+  lam: { body: '#e8e4dc', hair: 'short', hairC: '#16120f', glasses: false, collar: '#c9a23a', skin: '#e8c49a' },
+  victim: { body: '#55708a', hair: 'side', hairC: '#9a958c', glasses: true, collar: '#fff', skin: C.skin3 },
+  caller: { body: '#1b1d26', hair: 'short', hairC: '#16120f', skin: '#c99a6a' },
+  caller2: { body: '#2a2d36', hair: 'tuft', hairC: '#3a2a20', skin: C.skin },
+  crew1: { body: '#b8433a', hair: 'short', hairC: '#16120f', skin: '#a8744c' },
+  crew2: { body: '#3b6ee0', hair: 'tuft', hairC: '#3a2a20', skin: C.skin },
+  crew3: { body: '#1f1f26', hair: 'crop', hairC: '#6b4a2a', skin: C.skin3 },
+  friend: { body: '#4a7a5a', hair: 'side', hairC: '#16120f', skin: '#c99a6a' },
+  zach: { body: '#1b1d26', hat: 'cap', skin: '#5a6070' },
+  burglar: { body: '#15171f', hat: 'cap', skin: '#8f96a8' },
+  dad: { body: '#7a5a3a', hair: 'side', hairC: '#9a958c', glasses: true, skin: '#c99a6a' },
+  mum: { body: '#8a5570', hair: 'bob', hairC: '#3a3530', skin: '#c99a6a' },
   barrister: { body: '#16161d', hat: 'wig', collar: '#fff', skin: C.skin2 },
 };
 
@@ -248,6 +260,7 @@ const LON0 = -14, LON1 = 132, LAT0 = 64, LAT1 = -4;
 export const geo = (lon: number, lat: number): [number, number] => [((lon - LON0) / (LON1 - LON0)) * W, ((LAT0 - lat) / (LAT0 - LAT1)) * H];
 export const CITY: Record<string, [number, number]> = {
   london: [-0.1, 51.5], munich: [11.6, 48.1], vienna: [16.4, 48.2], minsk: [27.6, 53.9], moscow: [37.6, 55.8], dubai: [55.3, 25.2],
+  miami: [-80.2, 25.8], losangeles: [-118.2, 34.1], washington: [-77.0, 38.9], albuquerque: [-106.6, 35.1], danbury: [-73.5, 41.4],
   dhaka: [90.4, 23.8], newyork: [-74.0, 40.7], colombo: [79.9, 6.9], pyongyang: [125.7, 39.0], hanoi: [105.8, 21.0], quito: [-78.5, -0.2],
   singapore: [103.8, 1.4], manila: [121.0, 14.6], beijing: [116.4, 39.9], tripoli: [13.2, 32.9], frankfurt: [8.7, 50.1], yarmouth: [1.7, 52.6],
   mumbai: [72.9, 19.1], hongkong: [114.2, 22.3], kuala: [101.7, 3.1], chennai: [80.3, 13.1], berlin: [13.4, 52.5],

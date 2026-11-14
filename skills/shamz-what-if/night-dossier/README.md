@@ -13,6 +13,7 @@ and a dossier of files, maps, stamps and counters. Shamz is the investigator who
 | `engine/kit2.tsx` | The cast (`LOOKS`, Shamz included) and data-driven inserts: `Doc`, `News`, `Chart`, `BigNum`, `Cal`, `MapShot`, `Term`, `Chat`, `Flow`, `ChapterCard`, `Photo`, `Bubble` |
 | `engine/sets.tsx` | Flexible scene sets dressed with a cast list: `ShamzDesk`, `Office`, `Street`, `Table`, `Stage`, plus `Dax`, `Sheet`, `Gadgets`, `Target`, `EndCard` |
 | `engine/heist.tsx` | More scenes from the bank-heist episode: `World` map to the Americas, `PrinterRoom`, `Email`, `Zones` time-zone board, `Orders` payment tiles, `Typo`, `Ship`, `StreetSign`, `TitleShot` |
+| `engine/crypto.tsx` | Scenes from the bitcoin-theft episode: `Call` split-screen scam call, `Wallet`, `Chain` blockchain trail, `Garage`, `Club`, `ScreenShare`, `Watch`, `Toys`, `Van`, `Rules` (a safety-tips card) |
 | `engine/cold.tsx` | Hand-built shots (the Wirecard cold open): how to write a one-off shot |
 | `example/` | A finished 60 s test, ready to render: script, shots, timeline, voice and mix scripts |
 | `tools/` | For full episodes: `voice.py`, `retime.py` (exact per-sentence word timing + chapter-card gaps), `mix.py` (music cues that come and go, ducking, effects), and a full-episode shot list as an example |
