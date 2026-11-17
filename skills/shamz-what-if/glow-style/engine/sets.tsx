@@ -1,7 +1,7 @@
-// Glow Study sets: line-art night rooms and data shots. Each set takes (f, d, p) and draws inside a Cam.
-import React from 'react';
+// Glow style sets: line-art night rooms and data shots. Each set takes (f, d, p) and draws inside a Cam.
+import React, { useContext } from 'react';
 import { AbsoluteFill, random } from 'remotion';
-import { Bubble, BigStat, Cam, Cite, clamp, Dust, easeOut, Fig, Head, G, H, lerp, MONO, SANS, Tag, W, walk, blend, View } from './glow';
+import { Bubble, BigStat, Cam, Cite, clamp, DetailCtx, Dust, easeOut, Fig, Head, Plate, G, H, lerp, MONO, SANS, Tag, W, walk, blend, View } from './glow';
 
 export type SP = { f: number; d: number; p: any; m: Record<string, number> };
 const L = { stroke: G.line, strokeWidth: 3.2, strokeLinejoin: 'round' as const, strokeLinecap: 'round' as const };
@@ -82,14 +82,16 @@ export const Nightstand: React.FC<{ x: number; floorY?: number; t?: string; f: n
 export const Bedroom: React.FC<SP> = ({ f, d, p }) => {
   const warm = p.warm;
   const who = p.who ?? { shamz: true };
+  const det = useContext(DetailCtx);
   return (
     <AbsoluteFill>
       <Cam f={f} d={d} v={p.v ?? [[960, 560, 1.0], [1000, 600, 1.12]]}>
+        {det ? <Plate name={warm ? 'bedroom_warm' : 'bedroom'} floorY={860} blur={1} /> : <>
         <Wall warm={warm} />
         <Window x={1100} y={150} f={f} warm={warm} />
         <Lamp x={330} y={250} on={p.lamp ?? (warm ? 1 : 0.6)} />
         <Shelf x={620} y={290} />
-        <Plant x={1680} y={860} f={f} />
+        <Plant x={1680} y={860} f={f} /></>}
         <Nightstand x={190} t={p.clock ?? '2:00'} f={f} />
         <Bed x={450}>
           {/* pillow, the sleeper's head on it, then the blanket over the body */}
@@ -134,10 +136,12 @@ export const Hall: React.FC<SP> = ({ f, d, p }) => {
   const fallen = mode === 'floor' || mode === 'crowd' || mode === 'ignored';
   const pose = fallen ? 'floor' : f < tt ? walk(f / 2.6) : blend(walk(tt / 2.6), 'fall', k);
   const crowd = mode === 'crowd' || mode === 'ignored';
+  const det = useContext(DetailCtx);
   return (
     <AbsoluteFill>
       <Cam f={f} d={d} v={p.v ?? [[960, 540, 1.0], [960, 560, 1.08]]} shake={mode === 'trip' && f > tt && f < tt + 8 ? 6 : 0}>
-        <Wall floorY={floorY} />
+        {det && <Plate name="hall" />}
+        {!det && <><Wall floorY={floorY} />
         {/* lockers */}
         {Array.from({ length: 16 }).map((_, i) => <g key={i}>
           <rect x={-200 + i * 120} y={300} width={110} height={floorY - 330} fill={i % 5 === 2 ? '#1c2a5c' : '#16204a'} {...L} strokeWidth={2.6} />
@@ -150,7 +154,7 @@ export const Hall: React.FC<SP> = ({ f, d, p }) => {
         <g>
           {Array.from({ length: 7 }).map((_, i) => <rect key={i} x={1180 + i * 70} y={floorY - 50 - i * 50} width={900} height={50} fill={i % 2 ? '#18214a' : '#1b2652'} {...L} />)}
           <line x1={1180} y1={floorY - 120} x2={1670} y2={floorY - 470} stroke={G.line} strokeWidth={6} />
-        </g>
+        </g></>}
         {/* lookers */}
         {crowd && Array.from({ length: 9 }).map((_, i) => {
           const x = 80 + i * 170 + (i > 3 ? 560 : 0);
@@ -176,11 +180,12 @@ export const Hall: React.FC<SP> = ({ f, d, p }) => {
 export const Lab: React.FC<SP> = ({ f, d, p }) => {
   const floorY = 880, mode = p.mode ?? 'enter';
   const enterX = mode === 'enter' ? lerp(f, [0, 40], [1500, 1180]) : 1180;
+  const det = useContext(DetailCtx);
   return (
     <AbsoluteFill>
       <Cam f={f} d={d} v={p.v ?? [[960, 540, 1.0], [1000, 540, 1.08]]}>
-        <Wall floorY={floorY} />
-        <Window x={180} y={150} f={f} w={380} h={300} />
+        {det ? <Plate name="lab" floorY={floorY} blur={1} /> : <><Wall floorY={floorY} />
+        <Window x={180} y={150} f={f} w={380} h={300} /></>}
         <rect x={700} y={170} width={420} height={230} fill="#0e1636" {...L} />
         <text x={910} y={300} textAnchor="middle" fontFamily={MONO} fontWeight={700} fontSize={40} fill={G.line} opacity={0.8}>STUDY 1</text>
         <Door x={1480} floorY={floorY} open={mode === 'enter' ? 1 : 0} />
@@ -211,10 +216,11 @@ export const Crowd: React.FC<SP> = ({ f, d, p, m }) => {
   return (
     <AbsoluteFill>
       <Cam f={f} d={d} v={p.v ?? [[960, 560, 1.0], [960, 580, 1.06]]}>
+        {useContext(DetailCtx) ? <Plate name="lawn" dim={0.25} /> : <>
         <rect x={-300} y={-300} width={W + 600} height={H + 600} fill="#1a2a78" />
         <rect x={-300} y={-300} width={W + 600} height={700} fill="#16236a" />
         <circle cx={960} cy={300} r={700} fill="url(#moonPool)" opacity={0.5} />
-        <path d={`M -300 840 Q 960 790 2220 840 L 2220 1400 L -300 1400 Z`} fill="#0c1230" />
+        <path d={`M -300 840 Q 960 790 2220 840 L 2220 1400 L -300 1400 Z`} fill="#0c1230" /></>}
         {Array.from({ length: n }).map((_, i) => {
           const row = i % 2, col = Math.floor(i / 2), cols = Math.ceil(n / 2);
           const x = 200 + (col + (row ? 0.5 : 0)) * (1520 / cols), y = 850 + row * 70;
@@ -242,8 +248,9 @@ export const Spot: React.FC<SP> = ({ f, d, p }) => {
   return (
     <AbsoluteFill>
       <Cam f={f} d={d} v={many ? [[960, 600, z], [960, 600, z]] : (p.v ?? [[960, 560, 1.05], [960, 560, 1.12]])}>
+        {useContext(DetailCtx) ? <Plate name="stage" dim={0.45} /> : <>
         <rect x={-600} y={-600} width={W + 1200} height={H + 1200} fill="#090c1e" />
-        <rect x={-600} y={860} width={W + 1200} height={600} fill="#060814" />
+        <rect x={-600} y={860} width={W + 1200} height={600} fill="#060814" /></>}
         {spots.map((x, i) => <g key={i}>
           <polygon points={`${x - 60},-200 ${x + 60},-200 ${x + 240},880 ${x - 240},880`} fill="url(#beam)" opacity={0.8} />
           <ellipse cx={x} cy={880} rx={250} ry={40} fill="url(#whitePool)" />
@@ -288,9 +295,10 @@ export const Close: React.FC<SP> = ({ f, d, p }) => {
   return (
     <AbsoluteFill>
       <Cam f={f} d={d} v={p.v ?? [[960, 480, 1.0], [960, 470, 1.08]]}>
+        {useContext(DetailCtx) ? <Plate name={warm ? 'bedroom_warm' : 'bedroom'} floorY={1200} blur={7} dim={0.25} /> : <>
         <Wall warm={warm} floorY={1200} />
         <Window x={1180} y={120} f={f} warm={warm} />
-        <Lamp x={360} y={200} on={1} />
+        <Lamp x={360} y={200} on={1} /></>}
         <Fig x={900} y={1440} s={2.4} f={f} shamz={p.shamz ?? true} shirt={p.shirt} print={p.print} hairC={p.hairC} pose={p.pose ?? 'stand'} eyes={p.eyes ?? 'open'} mouth={p.mouth ?? 'smile'} look={p.look ?? 0.2} talking={p.talking} hair={p.hair} tint={p.tint} />
         <Dust f={f} warm={warm} />
       </Cam>
@@ -304,8 +312,8 @@ export const Close: React.FC<SP> = ({ f, d, p }) => {
 export const Time: React.FC<SP> = ({ f, d, p }) => (
   <AbsoluteFill>
     <Cam f={f} d={d} v={[[960, 540, 1.0], [960, 540, 1.1]]}>
-      <Wall />
-      <Window x={1200} y={170} f={f} />
+      {useContext(DetailCtx) ? <Plate name="desk" blur={5} dim={0.3} /> : <><Wall />
+      <Window x={1200} y={170} f={f} /></>}
       <Chair x={560} s={1.2} />
       <Fig x={560} y={870} s={1.2} f={f} shamz pose="sitPhone" phone eyes="open" mouth="line" look={0.4} />
       <Dust f={f} />

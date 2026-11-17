@@ -1,4 +1,4 @@
-"""Glow Study test sound. Based on the Night Dossier mix: the voice, music that comes and goes (composed here in code), quiet room tone in between,
+"""Glow style test sound. Based on the Night Dossier mix: the voice, music that comes and goes (composed here in code), quiet room tone in between,
 and effects from the studio sound library placed on the shots.
 
     python3 mix.py            (after retime.py)   -> out/mix.wav
@@ -77,7 +77,7 @@ def add(buf, snd, at, gain=1.0):
 
 
 
-# Glow Study music: a soft, warm bed under the whole video (the reference keeps light music under most of it), in
+# Glow style music: a soft, warm bed under the whole video (the reference keeps light music under most of it), in
 # F major / D minor, slow; it drops out for the turn ("But here's the thing") and comes back brighter.
 PROG = [['F3', 'A3', 'C4', 'E4'], ['D3', 'F3', 'A3', 'C4'], ['A#2', 'D3', 'F3', 'A3'], ['C3', 'E3', 'G3', 'A#3']]
 

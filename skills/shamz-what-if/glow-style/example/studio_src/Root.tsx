@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, Audio, Composition, Sequence, staticFile, useCurrentFrame } from 'remotion';
-import { BigStat, Captions, Finish, G, W, H } from './glow';
+import { BigStat, Captions, DetailCtx, Finish, G, W, H } from './glow';
 import { FPS, SHOTS, TOTAL, Shot, WORDS } from './timeline';
 import { SheetComps } from './Sheet';
 
@@ -23,21 +23,26 @@ const One: React.FC<{ s: Shot; gf: number; caps?: boolean }> = ({ s, gf, caps = 
     </AbsoluteFill>
   );
 };
-const Main: React.FC = () => {
+const Main: React.FC<{ detail?: boolean }> = ({ detail = false }) => {
   const gf = useCurrentFrame();
   return (
-    <AbsoluteFill style={{ background: '#000' }}>
-      {SHOTS.map((s, i) => <Sequence key={i} from={s.start} durationInFrames={Math.max(1, s.d)} layout="none"><One s={s} gf={gf} /></Sequence>)}
-    </AbsoluteFill>
+    <DetailCtx.Provider value={detail}>
+      <AbsoluteFill style={{ background: '#000' }}>
+        {SHOTS.map((s, i) => <Sequence key={i} from={s.start} durationInFrames={Math.max(1, s.d)} layout="none"><One s={s} gf={gf} /></Sequence>)}
+      </AbsoluteFill>
+    </DetailCtx.Provider>
   );
 };
-const Board: React.FC = () => {
+const Board: React.FC<{ detail?: boolean }> = ({ detail = false }) => {
   const n = useCurrentFrame();
   const s = SHOTS[Math.min(n, SHOTS.length - 1)];
-  return <One s={s} gf={s.start + Math.round(s.d * 0.62)} />;
+  return <DetailCtx.Provider value={detail}><One s={s} gf={s.start + Math.round(s.d * 0.62)} /></DetailCtx.Provider>;
 };
 export const Root: React.FC = () => (<>
-  <Composition id="Glow" component={Main} durationInFrames={TOTAL} fps={FPS} width={W} height={H} />
-  <Composition id="GlowBoard" component={Board} durationInFrames={SHOTS.length} fps={FPS} width={W} height={H} />
+  {/* the standard: painted backgrounds (owner, Nov 2026). GlowLineArt keeps the first, line-art version. */}
+  <Composition id="Glow" component={Main} durationInFrames={TOTAL} fps={FPS} width={W} height={H} defaultProps={{ detail: true }} />
+  <Composition id="GlowBoard" component={Board} durationInFrames={SHOTS.length} fps={FPS} width={W} height={H} defaultProps={{ detail: true }} />
+  <Composition id="GlowLineArt" component={Main} durationInFrames={TOTAL} fps={FPS} width={W} height={H} defaultProps={{ detail: false }} />
+  <Composition id="GlowLineArtBoard" component={Board} durationInFrames={SHOTS.length} fps={FPS} width={W} height={H} defaultProps={{ detail: false }} />
   <SheetComps />
 </>);

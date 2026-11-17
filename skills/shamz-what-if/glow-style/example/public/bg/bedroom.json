@@ -1,0 +1,7 @@
+{
+ "name": "bedroom",
+ "prompt": "very wide shot from far back, high ceiling, a teenager's bedroom wall at night in cool moonlight, a large window with a full moon and stars over rooftops, long curtains, a low bookshelf with books and potted plants, small framed posters, a dim warm desk lamp, wooden floor, no bed, no toys, no creatures, no faces, detailed 2D digital illustration background for an animated explainer, moody night scene, deep navy blue and indigo palette, soft moonlight through windows, small warm lamp glows, delicate light-blue glowing edge highlights, floating dust specks, soft bloom, subtle film grain, rich detail and clutter, layered depth, straight-on view at eye level, clear empty floor in the lower fifth, wide landscape composition, empty scene, no people, no characters, no text, no letters",
+ "model": "@cf/black-forest-labs/flux-1-schnell",
+ "model_license": "apache-2.0",
+ "provider": "Cloudflare Workers AI"
+}

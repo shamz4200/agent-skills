@@ -1,0 +1,7 @@
+{
+ "name": "hall",
+ "prompt": "very wide shot from far back, high ceiling with lots of empty wall above, furniture appears small and only reaches the middle of the frame, a high school hallway at night seen straight-on from the side, a long row of metal lockers along the back wall, a staircase with a handrail going up on the right, small notice boards, high windows near the ceiling with moonlight, polished floor, detailed 2D digital illustration background for an animated explainer, moody night scene, deep navy blue and indigo palette, soft moonlight through windows, small warm lamp glows, delicate light-blue glowing edge highlights, floating dust specks, soft bloom, subtle film grain, rich detail and clutter, layered depth, straight-on view at eye level, clear empty floor in the lower fifth, wide landscape composition, empty scene, no people, no characters, no text, no letters",
+ "model": "@cf/black-forest-labs/flux-1-schnell",
+ "model_license": "apache-2.0",
+ "provider": "Cloudflare Workers AI"
+}

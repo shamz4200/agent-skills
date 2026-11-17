@@ -1,0 +1,7 @@
+{
+ "name": "lawn",
+ "prompt": "a wide university campus lawn at night under a huge starry sky, distant old college buildings with lit windows on the horizon, soft rolling grass, glowing horizon, detailed 2D digital illustration background for an animated explainer, moody night scene, deep navy blue and indigo palette, soft moonlight through windows, small warm lamp glows, delicate light-blue glowing edge highlights, floating dust specks, soft bloom, subtle film grain, rich detail and clutter, layered depth, straight-on view at eye level, clear empty floor in the lower fifth, wide landscape composition, empty scene, no people, no characters, no text, no letters",
+ "model": "@cf/black-forest-labs/flux-1-schnell",
+ "model_license": "apache-2.0",
+ "provider": "Cloudflare Workers AI"
+}

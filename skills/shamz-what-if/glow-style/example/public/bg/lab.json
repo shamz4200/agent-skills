@@ -1,0 +1,7 @@
+{
+ "name": "lab",
+ "prompt": "very wide shot from far back, high ceiling with lots of empty wall above, furniture appears small and only reaches the middle of the frame, a university psychology seminar room at night, a blank blackboard, low bookshelves, tall arched windows with moonlight, old wooden floor, potted plant, detailed 2D digital illustration background for an animated explainer, moody night scene, deep navy blue and indigo palette, soft moonlight through windows, small warm lamp glows, delicate light-blue glowing edge highlights, floating dust specks, soft bloom, subtle film grain, rich detail and clutter, layered depth, straight-on view at eye level, clear empty floor in the lower fifth, wide landscape composition, empty scene, no people, no characters, no text, no letters",
+ "model": "@cf/black-forest-labs/flux-1-schnell",
+ "model_license": "apache-2.0",
+ "provider": "Cloudflare Workers AI"
+}

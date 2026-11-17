@@ -2,8 +2,8 @@
 
 Studied 17 Nov 2026 from the owner's upload (8:33, 854x480). The video is third-party media and stays out of git; only
 these notes are kept. We adopt the **look, figure design approach, captions, camera language, story shape and pace**,
-never its story, script, characters (Leo, the two dads), studies-as-plot or scenes. Style name: **Glow Study**
-(short name "GS style").
+never its story, script, characters (Leo, the two dads), studies-as-plot or scenes. Style name: **Glow style** (the owner's name;
+first called "Glow style"). Painted detailed backgrounds are the standard.
 
 ## Pace (measured with tools/analyze_shots.py and tools/transcribe.py)
 
@@ -61,7 +61,7 @@ zoom-through into a phone or window; quick time-jump dissolves with a clock.
 
 Every claim is backed by a named study shown on screen. Narration is calm, fast, conversational, short sentences.
 
-## How we build it (Glow Study engine)
+## How we build it (Glow style engine)
 
 Remotion + SVG, like Night Dossier, in `glow/<episode>/studio_src/glow.tsx`: `Fig` (glowing jointed figure with
 poses, walk cycle, blinking, idle breathing, hair shapes, tints, shirts, phone), `Cam`, `Dust`, `Finish`,

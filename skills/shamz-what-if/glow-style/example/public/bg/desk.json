@@ -1,0 +1,7 @@
+{
+ "name": "desk",
+ "prompt": "a teenager's bedroom corner at night with a desk under a window, computer monitor glowing blue, books and mugs on the desk, moon outside, shelves with plants, wooden floor, plain walls, detailed 2D digital illustration background for an animated explainer, moody night scene, deep navy blue and indigo palette, soft moonlight through windows, small warm lamp glows, delicate light-blue glowing edge highlights, floating dust specks, soft bloom, subtle film grain, rich detail and clutter, layered depth, straight-on view at eye level, clear empty floor in the lower fifth, wide landscape composition, empty scene, no people, no characters, no text, no letters",
+ "model": "@cf/black-forest-labs/flux-1-schnell",
+ "model_license": "apache-2.0",
+ "provider": "Cloudflare Workers AI"
+}

@@ -1,7 +1,7 @@
-// Glow Study engine: glowing white figures in line-art night rooms, word-by-word captions, glowing stats.
+// Glow style engine: glowing white figures in line-art night rooms, word-by-word captions, glowing stats.
 // Everything is SVG drawn by code, 1920x1080 at 30 fps.
 import React from 'react';
-import { AbsoluteFill, interpolate, Easing, staticFile, random } from 'remotion';
+import { AbsoluteFill, Img, interpolate, Easing, staticFile, random } from 'remotion';
 import { loadFont } from '@remotion/fonts';
 
 loadFont({ family: 'Inter', url: staticFile('fonts/inter-latin-700-normal.woff2'), weight: '700' });
@@ -326,3 +326,30 @@ export const Bubble: React.FC<{ x: number; y: number; w: number; h: number; k: n
     <g transform={`translate(${-w / 2} ${-h / 2})`}>{children}</g>
   </g>
 );
+
+// ------------------------------------------------------------------ detailed painted backgrounds (the "detailed" look)
+/** true = paint every location from public/bg/<name>.png; false = the line-art rooms. Set per composition. */
+export const DetailCtx = React.createContext(false);
+/** Where each plate's floor line is (y in the 1080-high picture), so figures stand on it; undefined = place as is. */
+const PLATE: Record<string, { y: number; s?: number; floorFrom?: number }> = {
+  hall: { y: -60 }, lawn: { y: -60 }, stage: { y: -150, s: 1.15 },
+  bedroom: { y: 0, floorFrom: 1060 }, bedroom_warm: { y: 0, floorFrom: 1060 }, lab: { y: 0, floorFrom: 1060 }, desk: { y: -100 },
+};
+/** A painted plate inside a Cam, slightly dimmed (and optionally blurred for depth) so the glowing figures pop. */
+export const Plate: React.FC<{ name: string; floorY?: number; blur?: number; dim?: number }> = ({ name, floorY = 860, blur = 0, dim = 0.18 }) => {
+  const c = PLATE[name] ?? { y: 0 };
+  const s = c.s ?? 1.104, w = 1920 * s, h = 1080 * s, x = 960 - w / 2;
+  const y = c.floorFrom ? floorY - c.floorFrom * s : c.y;
+  return (
+    <g>
+      <rect x={-600} y={-600} width={W + 1200} height={H + 1200} fill="#070a1c" />
+      <image href={staticFile(`bg/${name}.png`)} x={x} y={y} width={w} height={h} preserveAspectRatio="none" style={blur ? { filter: `blur(${blur}px)` } : undefined} />
+      <rect x={-600} y={-600} width={W + 1200} height={H + 1200} fill="#0a1030" opacity={dim} />
+      {c.floorFrom && <g>
+        <rect x={-600} y={floorY - 4} width={W + 1200} height={700} fill="#0d1230" />
+        <line x1={-600} y1={floorY - 4} x2={W + 600} y2={floorY - 4} stroke="#4a5ca8" strokeWidth={3} opacity={0.6} />
+        {Array.from({ length: 14 }).map((_, i) => <line key={i} x1={-400 + i * 200} y1={floorY + 30 + (i % 3) * 40} x2={-260 + i * 200} y2={floorY + 30 + (i % 3) * 40} stroke="#ffffff" opacity={0.05} strokeWidth={3} />)}
+      </g>}
+    </g>
+  );
+};

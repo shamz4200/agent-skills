@@ -1,4 +1,4 @@
-// Shot list for the Glow Study 60 s test. Each shot: [script line, cue word or null (line start; 'word#2' = 2nd
+// Shot list for the Glow style 60 s test. Each shot: [script line, cue word or null (line start; 'word#2' = 2nd
 // occurrence), set kind, params, marks {name: cue word} resolved to frames from the shot start].
 import words from './words.json';
 import lines from './lines.json';

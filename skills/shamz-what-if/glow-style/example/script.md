@@ -1,4 +1,4 @@
-# Glow Study 60 s test: "Nobody Saw It" (the spotlight effect)
+# Glow style 60 s test: "Nobody Saw It" (the spotlight effect)
 
 Ending: complete (closes the thread, a question for the comments, subscribe).
 Format: second person ("you"), Shamz is the "you" on screen. One study, cited on screen.

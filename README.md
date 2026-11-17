@@ -86,6 +86,6 @@ of this repo.
   a camera that never stops, handwritten type-on cards, files, maps and stamps, with Shamz as the investigator.
   Engine, a 60-second example, full-episode tools and a master prompt for any agent:
   [`skills/shamz-what-if/night-dossier/`](skills/shamz-what-if/night-dossier/README.md).
-- **Glow Study ("GS style")**: second-person research explainers at night: glowing white figures in line-art rooms,
+- **Glow style**: second-person research explainers at night: glowing white figures in detailed painted night rooms,
   studies shown as crowds of little people with the citation on screen, captions a phrase at a time, Shamz as "you".
-  Engine, a 60-second example and a master prompt: [`skills/shamz-what-if/glow-study/`](skills/shamz-what-if/glow-study/README.md).
+  Engine, background tool, a 60-second example and a master prompt: [`skills/shamz-what-if/glow-style/`](skills/shamz-what-if/glow-style/README.md).
