@@ -461,7 +461,7 @@ export const Sites: React.FC<SP> = ({ f, d, m }) => {
             : <g transform={`translate(${x} 536)`}><circle r={120} fill="none" stroke="#ff6b8a" strokeWidth={16} /><text y={36} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={110} fill="#ff6b8a">18+</text><text y={176} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={40} fill="#ff6b8a" letterSpacing={6}>ADULTS ONLY</text></g>}
           {f >= at && [0, 1, 2].map((i) => { const t = ((f - at + i * 12) % 36) / 36; return <g key={i} transform={`translate(${x + (960 - x) * t} ${300 - Math.sin(t * Math.PI) * 130 - 30})`}><circle r={22} fill={C.green} stroke={INK} strokeWidth={5} /><text y={10} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={28} fill={INK}>€</text></g>; })}
         </g>)}
-        <g transform="translate(960 250)"><rect x={-150} y={-60} width={300} height={110} rx={12} fill="#0e3a22" stroke={C.green} strokeWidth={7} /><text y={14} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={46} fill={C.green} letterSpacing={4}>WIRECARD</text></g>
+        <g transform="translate(960 250)"><rect x={-150} y={-60} width={300} height={110} rx={12} fill="#0e3a22" stroke={C.green} strokeWidth={7} /><text y={14} textAnchor="middle" fontFamily={LABEL} fontWeight={700} fontSize={46} fill={C.green} letterSpacing={4}>{p.box ?? 'WIRECARD'}</text></g>
         <Night id="sites" amt={0.42} lights={[{ x: 520, y: 540, r: 480, color: '#7dffa0', power: f >= a ? 1 : 0.6 }, { x: 1400, y: 540, r: 480, color: '#ff8fb0', power: f >= b ? 1 : 0.6 }, { x: 960, y: 250, r: 300, color: C.green }]} />
       </Layer>
     </Cam>
@@ -550,7 +550,7 @@ export const PayCard: React.FC<SP> = ({ f, d }) => {
           <rect x={-330} y={-200} width={680} height={420} rx={36} fill="#000" opacity={0.35} />
           <rect x={-340} y={-210} width={680} height={420} rx={36} fill="#0e3a22" stroke={INK} strokeWidth={10} />
           <rect x={-290} y={-90} width={110} height={84} rx={12} fill={C.gold} stroke={INK} strokeWidth={6} />
-          <text x={-290} y={-130} fontFamily={LABEL} fontWeight={700} fontSize={56} fill={C.green} letterSpacing={6}>WIRECARD</text>
+          <text x={-290} y={-130} fontFamily={LABEL} fontWeight={700} fontSize={56} fill={C.green} letterSpacing={6}>{p.box ?? 'WIRECARD'}</text>
           <text x={-290} y={90} fontFamily={LABEL} fontWeight={700} fontSize={50} fill="#d9f2df" letterSpacing={8}>5200 •••• •••• 1999</text>
           <text x={-290} y={160} fontFamily={LABEL} fontWeight={700} fontSize={32} fill="#9fd9b0" letterSpacing={4}>PREPAID</text>
         </g>

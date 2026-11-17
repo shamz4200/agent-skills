@@ -13,7 +13,9 @@ export const T: React.FC<{ x: number; y: number; s?: number; c?: string; a?: 'st
 
 // ------------------------------------------------------------------ the cast
 export const LOOKS: Record<string, BeanLook> = {
-  shamz: { body: '#7a5cc0', hair: 'locs', hairC: '#ee7a2c', skin: '#9a6238', collar: '#5b3f9c' },
+  // Shamz (the owner's own design, permanent): black ribbed beanie with the gold patch and black cloud, golden locs,
+  // red eyes with three dots round the pupil. Default outfit: green jacket with a cream collar (new outfit per episode).
+  shamz: { body: '#2F6B48', hair: 'locs', hairC: '#F2B233', hat: 'beanie', skin: '#7A4A2C', collar: '#EFE6D2', iris: '#D3202A', irisDots: 3 },
   mars: { body: '#262b40', hair: 'short', hairC: '#2a2018', stubble: true, collar: '#e9e9ee', skin: C.skin3 },
   braun: { body: '#15151b', hair: 'crop', hairC: '#2b2622', glasses: true, neck: '#15151b', skin: C.skin3 },
   braunS: { body: '#2e2e3c', hair: 'crop', hairC: '#2b2622', glasses: true, neck: '#2e2e3c', skin: C.skin3 },

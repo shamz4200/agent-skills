@@ -141,7 +141,9 @@ export const Rain: React.FC<{ f: number; n?: number; op?: number }> = ({ f, n = 
 // ------------------------------------------------------------------------------------------------ the bean
 export type BeanLook = {
   skin?: string; body: string; hair?: 'short' | 'side' | 'bob' | 'bald' | 'tuft' | 'locs' | 'long' | 'crop'; hairC?: string; glasses?: boolean;
-  hat?: 'pilot' | 'wig' | 'guard' | 'police' | 'cap'; neck?: string; beard?: string; tie?: string; stubble?: boolean; collar?: string;
+  hat?: 'pilot' | 'wig' | 'guard' | 'police' | 'cap' | 'beanie'; neck?: string; beard?: string; tie?: string; stubble?: boolean; collar?: string;
+  /** Shamz's permanent eyes: a ringed iris of this colour, a dark pupil and `irisDots` round dots evenly spaced round it. */
+  iris?: string; irisDots?: number;
 };
 export type BeanP = BeanLook & {
   x: number; y: number; s?: number; flip?: boolean; f: number; seed?: number;
@@ -192,7 +194,10 @@ export const Bean: React.FC<BeanP> = (p) => {
       {/* head */}
       <g transform={`translate(0 ${hy})`}>
         {p.hair === 'locs' && <g fill={p.hairC ?? '#e8742a'} stroke={INK} strokeWidth={4.5}>
-          {[-74, -58, 58, 74].map((x, i) => <rect key={i} x={x - 11} y={-30} width={22} height={118 + (i % 2) * 14} rx={11} />)}
+          {[-74, -58, 58, 74].map((x, i) => <g key={i}>
+            <rect x={x - 11} y={-30} width={22} height={118 + (i % 2) * 14} rx={11} />
+            {p.hat === 'beanie' && [0, 1, 2, 3, 4].map((t) => <path key={t} d={`M ${x - 8} ${-8 + t * 22} L ${x + 8} ${t * 22}`} stroke="#B58412" strokeWidth={3} strokeLinecap="round" />)}
+          </g>)}
         </g>}
         {p.hair === 'long' && <path d={`M -76 70 Q -90 -80 0 -82 Q 90 -80 76 70 L 50 70 L 52 -10 L -52 -10 L -50 70 Z`} fill={p.hairC ?? INK} stroke={INK} strokeWidth={ow} strokeLinejoin="round" />}
         {p.hair === 'bob' && <path d={`M -74 30 Q -84 -78 0 -80 Q 84 -78 74 30 L 56 30 L 52 -20 L -52 -20 L -56 30 Z`} fill={p.hairC ?? INK} stroke={INK} strokeWidth={ow} />}
@@ -207,7 +212,7 @@ export const Bean: React.FC<BeanP> = (p) => {
         {p.hair === 'side' && <path d={`M -68 -4 Q -74 -76 4 -72 Q 70 -70 68 -14 Q 30 -46 -20 -34 Q -50 -28 -68 -4`} fill={p.hairC ?? INK} stroke={INK} strokeWidth={ow} strokeLinejoin="round" />}
         {p.hair === 'tuft' && <path d={`M -40 -56 Q -30 -86 0 -74 Q 26 -90 42 -54 Q 0 -66 -40 -56`} fill={p.hairC ?? INK} stroke={INK} strokeWidth={ow} strokeLinejoin="round" />}
         {p.hair === 'bob' && <path d={`M -66 -14 Q -60 -72 0 -70 Q 60 -72 66 -14 Q 30 -42 0 -40 Q -30 -42 -66 -14`} fill={p.hairC ?? INK} />}
-        {p.hair === 'locs' && <g fill={p.hairC ?? '#e8742a'} stroke={INK} strokeWidth={4.5}>
+        {p.hair === 'locs' && p.hat !== 'beanie' && <g fill={p.hairC ?? '#e8742a'} stroke={INK} strokeWidth={4.5}>
           <path d={`M -66 -18 Q -70 -76 0 -76 Q 70 -76 66 -18 Q 40 -44 0 -42 Q -40 -44 -66 -18`} strokeWidth={ow} strokeLinejoin="round" />
           {[-52, -34, -16, 2, 20, 38].map((x, i) => <rect key={i} x={x} y={-76} width={17} height={30 + ((i * 7) % 3) * 6} rx={8.5} />)}
           {[-74, 58].map((x, i) => <rect key={`s${i}`} x={x} y={-52} width={17} height={80} rx={8.5} />)}
@@ -233,13 +238,36 @@ export const Bean: React.FC<BeanP> = (p) => {
           <path d={`M -70 34 Q -92 -84 0 -84 Q 92 -84 70 34 L 52 34 Q 58 -30 0 -34 Q -58 -30 -52 34 Z`} />
           {[-48, -24, 0, 24, 48].map((x) => <path key={x} d={`M ${x - 11} -58 q 11 -12 22 0`} fill="none" strokeWidth={3} />)}
         </g>}
+        {p.hat === 'beanie' && <g>
+          {/* Shamz's beanie: a ribbed black dome, a ribbed cuff, and the owner's gold patch with the black cloud */}
+          <path d={`M -70 -22 Q -74 -102 0 -104 Q 74 -102 70 -22 Z`} fill="#1E1C24" stroke={INK} strokeWidth={ow} strokeLinejoin="round" />
+          {[-44, -22, 0, 22, 44].map((x) => <path key={x} d={`M ${x} -40 Q ${x * 1.06} -76 ${x * 0.5} -98`} stroke="#34323C" strokeWidth={3.5} fill="none" />)}
+          <rect x={-76} y={-50} width={152} height={32} rx={10} fill="#26242C" stroke={INK} strokeWidth={ow} />
+          {[-54, -36, -18, 0, 18, 36, 54].map((x) => <path key={`rb${x}`} d={`M ${x} -45 L ${x} -23`} stroke="#3A3842" strokeWidth={3.5} />)}
+          <g transform="translate(46 -34) scale(1.35)">
+            <rect x={-10} y={-7.5} width={21} height={15} rx={1.5} fill="#F2B233" stroke={INK} strokeWidth={1.8} />
+            <path d="M 2.49 -6.01 L 0.40 -6.01 L 0.00 -5.55 L -0.28 -5.55 L -1.02 -4.82 L -1.02 -4.31 L -1.13 -4.19 L -2.55 -4.19 L -2.72 -3.97 L -3.00 -3.97 L -3.97 -3.00 L -3.97 -2.04 L -4.31 -1.70 L -4.82 -1.70 L -4.99 -1.47 L -5.27 -1.47 L -5.89 -0.79 L -6.18 -0.79 L -6.35 -0.57 L -6.63 -0.57 L -6.80 -0.79 L -7.31 -0.79 L -7.48 -1.02 L -7.76 -1.02 L -8.44 -1.70 L -8.50 -0.68 L -8.27 -0.51 L -8.27 0.00 L -8.05 0.17 L -8.05 0.68 L -7.82 0.85 L -7.82 1.13 L -7.59 1.30 L -7.59 1.59 L -7.37 1.76 L -7.37 2.04 L -6.18 3.23 L -5.89 3.23 L -5.72 3.46 L -5.44 3.46 L -5.27 3.68 L -4.31 3.68 L -4.14 3.91 L -3.85 3.68 L -3.29 4.25 L -3.29 4.53 L -2.32 5.50 L -2.04 5.50 L -1.87 5.72 L -1.59 5.72 L -1.42 5.95 L 1.59 5.95 L 1.76 5.72 L 2.27 5.72 L 2.44 5.50 L 2.72 5.50 L 4.02 4.14 L 6.35 4.14 L 6.52 3.91 L 6.80 3.91 L 6.97 3.68 L 7.25 3.68 L 7.54 3.40 L 7.54 3.12 L 7.99 2.72 L 7.99 2.44 L 8.22 2.27 L 8.22 1.53 L 8.44 1.36 L 8.44 0.62 L 8.22 0.45 L 8.22 -0.28 L 7.99 -0.45 L 7.99 -0.74 L 7.76 -0.91 L 7.76 -1.19 L 7.54 -1.36 L 7.48 -1.70 L 7.20 -1.70 L 6.57 -2.38 L 6.06 -2.38 L 5.89 -2.61 L 5.16 -2.61 L 4.82 -2.95 L 4.82 -3.23 L 4.59 -3.40 L 4.59 -3.91 L 4.36 -4.08 L 4.36 -4.36 L 3.68 -4.99 L 3.68 -5.27 L 3.34 -5.33 L 3.17 -5.55 L 2.89 -5.55 Z M -3.80 1.76 L -3.46 1.42 L -3.17 1.42 L -3.00 1.19 L -2.72 1.19 L -2.55 0.96 L -2.04 0.96 L -1.87 1.19 L -1.59 1.19 L -0.79 1.98 L -0.79 2.95 L -0.91 3.06 L -1.19 3.06 L -1.30 2.95 L -1.30 2.44 L -2.04 1.70 L -2.55 1.70 L -2.72 1.93 L -3.00 1.93 L -3.29 2.21 L -3.29 2.72 L -3.68 3.06 L -3.80 2.95 Z M 4.31 -0.17 L 4.48 0.06 L 4.99 0.06 L 5.33 0.40 L 5.33 0.68 L 5.55 0.85 L 5.55 1.13 L 5.16 1.47 L 4.82 1.13 L 4.82 0.85 L 4.53 0.57 L 4.02 0.57 L 3.85 0.79 L 3.57 0.79 L 3.29 1.08 L 3.29 2.49 L 3.74 2.89 L 3.74 3.17 L 3.97 3.34 L 3.57 3.74 L 3.00 3.17 L 3.00 2.89 L 2.78 2.72 L 2.78 2.44 L 2.55 2.27 L 2.55 1.08 L 2.78 0.91 L 2.78 0.62 L 3.34 0.06 L 3.85 0.06 L 4.02 -0.17 Z M -3.29 -1.19 L -3.29 -0.68 L -3.40 -0.57 L -4.59 -0.57 L -5.21 0.11 L -5.50 0.11 L -5.67 0.34 L -6.63 0.34 L -6.80 0.11 L -7.08 0.11 L -7.42 -0.23 L -7.31 -0.40 L -6.80 -0.40 L -6.63 -0.17 L -5.89 -0.17 L -5.50 -0.62 L -5.21 -0.62 L -4.59 -1.30 L -3.85 -1.30 L -3.68 -1.76 L -3.51 -1.64 L -3.51 -1.42 Z M -1.30 -3.46 L -1.19 -3.57 L -0.91 -3.57 L -0.79 -3.46 L -0.79 -2.72 L -0.57 -2.55 L -0.57 -2.27 L -0.34 -2.10 L -0.34 -1.81 L 0.17 -1.30 L 0.45 -1.30 L 0.62 -1.08 L 1.13 -1.08 L 1.30 -1.30 L 1.64 -1.36 L 1.64 -1.64 L 1.87 -1.81 L 1.87 -2.10 L 1.64 -2.27 L 1.64 -2.55 L 1.76 -2.66 L 2.04 -2.44 L 2.27 -2.44 L 2.38 -2.32 L 2.38 -1.13 L 1.81 -0.57 L 0.17 -0.57 L 0.00 -0.79 L -0.28 -0.79 L -1.08 -1.59 L -1.08 -2.10 L -1.30 -2.27 Z" fill="#14121C" fillRule="evenodd" transform="translate(0.5 0) scale(0.88)" />
+          </g>
+        </g>}
         {/* face */}
         <g transform={`translate(${lx * 9} ${ly * 7})`}>
-          {eyes === 'open' && <><circle cx={-24} cy={-6} r={7} fill={INK} /><circle cx={24} cy={-6} r={7} fill={INK} /></>}
-          {eyes === 'wide' && <><circle cx={-24} cy={-6} r={12} fill="#fff" stroke={INK} strokeWidth={3} /><circle cx={24} cy={-6} r={12} fill="#fff" stroke={INK} strokeWidth={3} /><circle cx={-24 + lx * 3} cy={-6} r={5} fill={INK} /><circle cx={24 + lx * 3} cy={-6} r={5} fill={INK} /></>}
+          {p.iris && (eyes === 'open' || eyes === 'wide' || eyes === 'worried') && [-24, 24].map((ex) => {
+            const ey = eyes === 'worried' ? -4 : -6, big = eyes === 'wide' ? 1.18 : 1, dots = p.irisDots ?? 0;
+            return <g key={ex}>
+              <ellipse cx={ex} cy={ey} rx={15 * big} ry={16 * big} fill="#fff" stroke={INK} strokeWidth={3.5} />
+              <circle cx={ex + lx * 2} cy={ey} r={11 * big} fill={p.iris} stroke="#5A0A10" strokeWidth={2.2} />
+              <circle cx={ex + lx * 2} cy={ey} r={7.2 * big} fill="none" stroke="#5A0A10" strokeWidth={1.8} />
+              <circle cx={ex + lx * 2} cy={ey} r={4.2 * big} fill="#14080A" />
+              {Array.from({ length: dots }).map((_, k) => { const a = -Math.PI / 2 + (k * 2 * Math.PI) / dots;
+                return <circle key={k} cx={ex + lx * 2 + Math.cos(a) * 9.4 * big} cy={ey + Math.sin(a) * 9.4 * big} r={2.1 * big} fill="#14080A" />; })}
+              <circle cx={ex + lx * 2 + 4} cy={ey - 5} r={2.8} fill="#fff" />
+            </g>;
+          })}
+          {eyes === 'open' && !p.iris && <><circle cx={-24} cy={-6} r={7} fill={INK} /><circle cx={24} cy={-6} r={7} fill={INK} /></>}
+          {eyes === 'wide' && !p.iris && <><circle cx={-24} cy={-6} r={12} fill="#fff" stroke={INK} strokeWidth={3} /><circle cx={24} cy={-6} r={12} fill="#fff" stroke={INK} strokeWidth={3} /><circle cx={-24 + lx * 3} cy={-6} r={5} fill={INK} /><circle cx={24 + lx * 3} cy={-6} r={5} fill={INK} /></>}
           {eyes === 'closed' && <g stroke={INK} strokeWidth={5} strokeLinecap="round"><line x1={-33} y1={-5} x2={-15} y2={-5} /><line x1={15} y1={-5} x2={33} y2={-5} /></g>}
           {eyes === 'happy' && <g stroke={INK} strokeWidth={5} strokeLinecap="round" fill="none"><path d="M -34 -3 q 10 -11 20 0" /><path d="M 14 -3 q 10 -11 20 0" /></g>}
-          {eyes === 'worried' && <g><circle cx={-24} cy={-4} r={7} fill={INK} /><circle cx={24} cy={-4} r={7} fill={INK} /><g stroke={INK} strokeWidth={5} strokeLinecap="round"><line x1={-38} y1={-20} x2={-16} y2={-28} /><line x1={38} y1={-20} x2={16} y2={-28} /></g></g>}
+          {eyes === 'worried' && <g>{!p.iris && <><circle cx={-24} cy={-4} r={7} fill={INK} /><circle cx={24} cy={-4} r={7} fill={INK} /></>}<g stroke={INK} strokeWidth={5} strokeLinecap="round"><line x1={-38} y1={-20} x2={-16} y2={-28} /><line x1={38} y1={-20} x2={16} y2={-28} /></g></g>}
           {p.glasses && <g fill="rgba(255,255,255,0.14)" stroke={INK} strokeWidth={4}><circle cx={-24} cy={-6} r={17} /><circle cx={24} cy={-6} r={17} /><line x1={-7} y1={-6} x2={7} y2={-6} /></g>}
           {(p.mouth ?? 'line') === 'line' && <line x1={-12} y1={28} x2={12} y2={28} stroke={INK} strokeWidth={5} strokeLinecap="round" />}
           {p.mouth === 'smile' && <path d="M -16 24 q 16 16 32 0" fill="none" stroke={INK} strokeWidth={5} strokeLinecap="round" />}
