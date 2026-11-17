@@ -1,7 +1,7 @@
 // Glow style engine: glowing white figures in line-art night rooms, word-by-word captions, glowing stats.
 // Everything is SVG drawn by code, 1920x1080 at 30 fps.
 import React from 'react';
-import { AbsoluteFill, Img, interpolate, Easing, staticFile, random } from 'remotion';
+import { AbsoluteFill, Img, interpolate, Easing, staticFile, random, delayRender, continueRender } from 'remotion';
 import { loadFont } from '@remotion/fonts';
 
 loadFont({ family: 'Inter', url: staticFile('fonts/inter-latin-700-normal.woff2'), weight: '700' });
@@ -80,6 +80,10 @@ export const POSES: Record<string, Pose> = {
   point: { ra: [8, 10], la: [85, 5], ll: [3, 0], rl: [-3, 0] },
   wave: { ra: [8, 10], la: [150, 30], ll: [3, 0], rl: [-3, 0] },
   clip: { la: [35, 75], ra: [30, 85], ll: [3, 0], rl: [-3, 0] },        // holding a clipboard
+  floorSit: { hipY: 150, lean: -6, la: [70, 30], ra: [60, 40], ll: [120, 79], rl: [110, 70], head: 4 },
+  doze: { hipY: 150, lean: -14, la: [60, 30], ra: [50, 30], ll: [120, 79], rl: [110, 70], head: 28 },
+  floorPhone: { hipY: 150, lean: -6, la: [45, 100], ra: [60, 40], ll: [120, 79], rl: [110, 70], head: 10 },
+  box: { lean: 14, la: [55, 35], ra: [45, 40], ll: [3, 0], rl: [-3, 0], head: 16 },
   shirt: { lean: 14, la: [25, 40], ra: [30, 45], ll: [3, 0], rl: [-3, 0], head: 22 },  // looking down at own shirt
 };
 const mixPose = (a: Pose, b: Pose, t: number): Pose => {
@@ -101,14 +105,14 @@ export type Mouth = 'smile' | 'line' | 'o' | 'frown' | 'talk' | 'grin' | 'wobble
 export type FigP = {
   x: number; y: number; s?: number; f: number; flip?: boolean; pose?: Pose | string;
   eyes?: Eyes; mouth?: Mouth; look?: number; blink?: number; tint?: string; glow?: boolean; opacity?: number;
-  hair?: 'cap' | 'bun' | 'pony' | 'none'; hairC?: string; shamz?: boolean;
+  hair?: 'cap' | 'bun' | 'pony' | 'none' | 'helmet' | 'tophat'; hairC?: string; shamz?: boolean; beard?: boolean;
   shirt?: string; print?: 'cat' | 'heart' | 'star'; phone?: boolean; talking?: boolean; seed?: number;
 };
 const THIGH = 80, SHIN = 80, TORSO = 108, UARM = 64, FARM = 60, HR = 52;
 
 export const Fig: React.FC<FigP> = (p) => {
   const s = p.s ?? 1, f = p.f, seed = p.seed ?? 0;
-  const pose = typeof p.pose === 'string' ? POSES[p.pose] : (p.pose ?? POSES.stand);
+  const pose = (typeof p.pose === 'string' ? POSES[p.pose] : p.pose) ?? POSES.stand;
   // idle breathing and sway, so nobody is ever frozen
   const br = Math.sin(f / 14 + seed) * 1.6;
   const lean = rad((pose.lean ?? 0) + Math.sin(f / 23 + seed) * 1.2);
@@ -164,6 +168,9 @@ export const Fig: React.FC<FigP> = (p) => {
           {p.hair === 'cap' && <g><path d={`M -44 -12 Q -44 -50 0 -50 Q 44 -50 44 -12 Z`} fill={p.hairC ?? '#22263a'} /><rect x={-58} y={-18} width={40} height={10} rx={5} fill={p.hairC ?? '#22263a'} /></g>}
           {p.hair === 'bun' && <g fill={p.hairC ?? '#2a2638'}><path d={`M -46 2 Q -50 -50 0 -48 Q 50 -50 46 2 Q 30 -26 0 -24 Q -30 -26 -46 2`} /><circle cx={6} cy={-56} r={18} /></g>}
           {p.hair === 'pony' && <g fill={p.hairC ?? '#2a2638'}><path d={`M -46 2 Q -50 -50 0 -48 Q 50 -50 46 2 Q 30 -26 0 -24 Q -30 -26 -46 2`} /><path d="M -40 -20 Q -78 0 -64 46 Q -54 10 -38 -2 Z" /></g>}
+          {p.hair === 'helmet' && <g><path d="M -50 -6 Q -52 -62 0 -64 Q 52 -62 50 -6 Z" fill={p.hairC ?? '#d8342c'} /><path d="M -64 -6 L 70 -6 Q 74 4 60 6 L -58 6 Q -70 4 -64 -6 Z" fill={p.hairC ?? '#b8261f'} /><rect x={-8} y={-58} width={16} height={22} rx={4} fill="#f2c94c" /></g>}
+          {p.hair === 'tophat' && <g fill="#1c1a22"><rect x={-34} y={-118} width={68} height={74} rx={6} /><rect x={-58} y={-50} width={116} height={12} rx={6} /><rect x={-34} y={-62} width={68} height={10} fill="#5a2a2a" /></g>}
+          {p.beard && <path d="M -40 14 Q -36 62 0 64 Q 36 62 40 14 Q 20 34 0 30 Q -20 34 -40 14 Z" fill="#8a8a92" />}
           {p.shamz && <ShamzHat />}
           <Face eyes={eyes} mouth={mouth} look={look} shamz={p.shamz} f={f} />
         </g>
@@ -333,17 +340,27 @@ export const DetailCtx = React.createContext(false);
 /** Where each plate's floor line is (y in the 1080-high picture), so figures stand on it; undefined = place as is. */
 const PLATE: Record<string, { y: number; s?: number; floorFrom?: number }> = {
   hall: { y: -60 }, lawn: { y: -60 }, stage: { y: -150, s: 1.15 },
+  vault: { y: -90 }, vault_morning: { y: -50 }, lobby: { y: 0, floorFrom: 930 }, street: { y: 0 }, fifth: { y: -120 },
+  cave: { y: -80 }, workshop: { y: 0, floorFrom: 1060 },
   bedroom: { y: 0, floorFrom: 1060 }, bedroom_warm: { y: 0, floorFrom: 1060 }, lab: { y: 0, floorFrom: 1060 }, desk: { y: -100 },
 };
 /** A painted plate inside a Cam, slightly dimmed (and optionally blurred for depth) so the glowing figures pop. */
 export const Plate: React.FC<{ name: string; floorY?: number; blur?: number; dim?: number }> = ({ name, floorY = 860, blur = 0, dim = 0.18 }) => {
+  // hold the frame until the picture is decoded, so a plate is never missing from a rendered frame
+  const src = staticFile(`bg/${name}.png`);
+  const [hold] = React.useState(() => delayRender(`plate ${name}`));
+  React.useEffect(() => {
+    const im = new Image();
+    im.src = src;
+    im.decode().then(() => continueRender(hold), () => continueRender(hold));
+  }, [src, hold]);
   const c = PLATE[name] ?? { y: 0 };
   const s = c.s ?? 1.104, w = 1920 * s, h = 1080 * s, x = 960 - w / 2;
   const y = c.floorFrom ? floorY - c.floorFrom * s : c.y;
   return (
     <g>
       <rect x={-600} y={-600} width={W + 1200} height={H + 1200} fill="#070a1c" />
-      <image href={staticFile(`bg/${name}.png`)} x={x} y={y} width={w} height={h} preserveAspectRatio="none" style={blur ? { filter: `blur(${blur}px)` } : undefined} />
+      <image href={src} x={x} y={y} width={w} height={h} preserveAspectRatio="none" style={blur ? { filter: `blur(${blur}px)` } : undefined} />
       <rect x={-600} y={-600} width={W + 1200} height={H + 1200} fill="#0a1030" opacity={dim} />
       {c.floorFrom && <g>
         <rect x={-600} y={floorY - 4} width={W + 1200} height={700} fill="#0d1230" />

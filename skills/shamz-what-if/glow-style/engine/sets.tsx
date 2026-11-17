@@ -295,11 +295,11 @@ export const Close: React.FC<SP> = ({ f, d, p }) => {
   return (
     <AbsoluteFill>
       <Cam f={f} d={d} v={p.v ?? [[960, 480, 1.0], [960, 470, 1.08]]}>
-        {useContext(DetailCtx) ? <Plate name={warm ? 'bedroom_warm' : 'bedroom'} floorY={1200} blur={7} dim={0.25} /> : <>
+        {useContext(DetailCtx) ? <Plate name={p.plate ?? (warm ? 'bedroom_warm' : 'bedroom')} floorY={1200} blur={7} dim={0.25} /> : <>
         <Wall warm={warm} floorY={1200} />
         <Window x={1180} y={120} f={f} warm={warm} />
         <Lamp x={360} y={200} on={1} /></>}
-        <Fig x={900} y={1440} s={2.4} f={f} shamz={p.shamz ?? true} shirt={p.shirt} print={p.print} hairC={p.hairC} pose={p.pose ?? 'stand'} eyes={p.eyes ?? 'open'} mouth={p.mouth ?? 'smile'} look={p.look ?? 0.2} talking={p.talking} hair={p.hair} tint={p.tint} />
+        <Fig x={900} y={1440} s={2.4} f={f} shamz={p.shamz ?? true} shirt={p.shirt} print={p.print} hairC={p.hairC} beard={p.beard} phone={p.phone} pose={p.pose ?? 'stand'} eyes={p.eyes ?? 'open'} mouth={p.mouth ?? 'smile'} look={p.look ?? 0.2} talking={p.talking} hair={p.hair} tint={p.tint} />
         <Dust f={f} warm={warm} />
       </Cam>
       {p.tag && <Tag f={f} text={p.tag} />}
@@ -312,10 +312,10 @@ export const Close: React.FC<SP> = ({ f, d, p }) => {
 export const Time: React.FC<SP> = ({ f, d, p }) => (
   <AbsoluteFill>
     <Cam f={f} d={d} v={[[960, 540, 1.0], [960, 540, 1.1]]}>
-      {useContext(DetailCtx) ? <Plate name="desk" blur={5} dim={0.3} /> : <><Wall />
+      {useContext(DetailCtx) ? <Plate name={p.plate ?? 'desk'} blur={5} dim={0.3} /> : <><Wall />
       <Window x={1200} y={170} f={f} /></>}
-      <Chair x={560} s={1.2} />
-      <Fig x={560} y={870} s={1.2} f={f} shamz pose="sitPhone" phone eyes="open" mouth="line" look={0.4} />
+      {!p.plate && <Chair x={560} s={1.2} />}
+      <Fig x={560} y={870} s={1.2} f={f} shamz eyes={p.eyes ?? 'open'} pose={p.pose ?? 'sitPhone'} phone={p.phone ?? !p.plate} mouth={p.mouth ?? 'line'} look={0.4} />
       <Dust f={f} />
     </Cam>
     <BigStat f={f} text={p.t ?? '2:00 AM'} at={2} x={1300} y={500} size={170} color={G.yellow} />
@@ -340,9 +340,9 @@ export const End: React.FC<SP> = (sp) => {
   const k = lerp(f, [14, 28], [0, 1], easeOut);
   return (
     <AbsoluteFill>
-      <Bedroom {...sp} p={{ warm: true, lamp: 1, eyes: 'happy', mouth: 'smile', clock: '2:01', v: [[960, 560, 1.06], [960, 560, 1.0]] }} />
+      {sp.p.bg ? <sp.p.bg {...sp} p={sp.p.bgp ?? {}} /> : <Bedroom {...sp} p={{ warm: true, lamp: 1, eyes: 'happy', mouth: 'smile', clock: '2:01', v: [[960, 560, 1.06], [960, 560, 1.0]] }} />}
       <AbsoluteFill style={{ background: `rgba(4,6,20,${0.6 * k})`, alignItems: 'center', justifyContent: 'center', opacity: k }}>
-        <div style={{ fontFamily: SANS, fontWeight: 900, fontSize: 88, color: '#fff', textAlign: 'center', lineHeight: 1.1, textShadow: '0 0 30px #ffc54d66' }}>WHAT MOMENT DO <span style={{ color: G.yellow }}>YOU</span><br />STILL REPLAY?</div>
+        <div style={{ fontFamily: SANS, fontWeight: 900, fontSize: 88, color: '#fff', textAlign: 'center', lineHeight: 1.1, textShadow: '0 0 30px #ffc54d66' }}>{sp.p.l1 ?? 'WHAT MOMENT DO'} <span style={{ color: G.yellow }}>{sp.p.gold ?? 'YOU'}</span><br />{sp.p.l2 ?? 'STILL REPLAY?'}</div>
         <div style={{ fontFamily: SANS, fontWeight: 800, fontSize: 44, color: '#dfe6ff', marginTop: 26 }}>Tell me in the comments</div>
         <div style={{ fontFamily: SANS, fontWeight: 900, fontSize: 50, color: '#1a0a0a', background: G.red, borderRadius: 60, padding: '12px 56px', marginTop: 34, letterSpacing: 2, transform: `scale(${1 + 0.04 * Math.sin(f / 6)})`, boxShadow: `0 0 40px ${G.red}88` }}>SUBSCRIBE</div>
       </AbsoluteFill>
