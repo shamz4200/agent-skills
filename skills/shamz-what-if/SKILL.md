@@ -21,6 +21,7 @@ schematic for the science beat, a cliffhanger blackout). Read the one closest to
 | `studio/` | The Remotion project: copy it once, then every episode lives in it |
 | `scripts/` | voice, plan, stills, board, sfx, mixcheck, motiongrid, master (Python 3.9+ and Node) |
 | `night-dossier/` | A second style, **Night Dossier ("ND style")**: true-story investigations at night with bean characters, a moving camera and a dossier kit. Its own engine, example, tools and a master prompt: start at `night-dossier/README.md` |
+| `glow-study/` | A third style, **Glow Study ("GS style")**: second-person research explainers at night with glowing white figures, line-art rooms, studies shown as crowds and word-by-word captions. Engine, a 60 s example and a master prompt: start at `glow-study/README.md` |
 
 ## Rules
 
