@@ -97,6 +97,9 @@ What the style is:
   shown as people, a twist, a slow warm ending and a question for the comments.
 
 Rules:
+- Follow the Shamz Story Formula (../references/story-formula.md): a promise in the first 15 seconds, personal "you"
+  moments, re-hooks every 60-90 seconds, a payoff that answers the title, a takeaway, an ending that feels positive,
+  a numbered "Shamz's Rule" card, and the sign-off "Stay curious. I'll see you in the next one."
 - Before writing the script, decide and tell me the ending: "complete" (question + subscribe) or "cliffhanger".
 - Only real, published studies; cite them on screen and in [SRC] lines; round honestly.
 - Never copy the reference video's story, script, characters or scenes: only the look, pace, camera and structure.

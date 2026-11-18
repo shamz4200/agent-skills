@@ -195,3 +195,6 @@ pace, credits). Watch the final file once through with sound. Hand over `out/<sl
 | `public/<slug>/` | voice.wav, sfx.wav, music.wav |
 | `out/<slug>/` | board stills, storyboard.jpg, shotlist.md, motion grids, renders, costs.json, report.json |
 | `library/sfx/` | Every generated sound clip, shared by all episodes |
+
+## The Shamz Story Formula (every episode, every style)
+Before any script, read `references/story-formula.md`: viral topic turned into a personal, cinematic story with a promise and a payoff, an arc that ends positive, real value, and the recurring Shamz motifs (cloud patch glows at the insight moment, a numbered "Shamz's Rule" card at the end, the same sign-off line).

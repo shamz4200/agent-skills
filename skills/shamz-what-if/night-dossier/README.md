@@ -130,6 +130,9 @@ What the style is:
   ducked under the voice.
 
 Rules:
+- Follow the Shamz Story Formula (../references/story-formula.md): a promise in the first 15 seconds, personal "you"
+  moments, re-hooks every 60-90 seconds, a payoff that answers the title, a takeaway, an ending that feels positive,
+  a numbered "Shamz's Rule" card, and the sign-off "Stay curious. I'll see you in the next one."
 - Before writing the script, decide and tell me the ending: "complete" (bookend scene, a question for the comments,
   a call to subscribe) or "cliffhanger" (needs a Part 2).
 - Only true, published, checkable facts. Put [SRC] lines in the script. Word allegations as allegations. Real
