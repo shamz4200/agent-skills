@@ -14,6 +14,7 @@ this needs to be the standard"). The first version, with line-art rooms drawn in
 | `engine/glow.tsx` | The rig and the look: `Fig` (glowing jointed figure: poses, `walk` cycle, `blend` between poses, blinking, idle breathing, hair shapes, colour tints, shirts with prints, a phone with a light beam), `Head` (a head alone, e.g. on a pillow), Shamz's beanie, locs and eyes, `Cam`, `Dust`, `Finish`, `Captions`, `Tag`, `BigStat`, `Cite`, `Bubble`, and `Plate` + `DetailCtx` (the painted backgrounds) |
 | `engine/sets.tsx` | The sets, each with a painted plate behind it (or line art when `DetailCtx` is false): `Bedroom` (a sleeper and a thought bubble with a replay inside), `Hall` (school hallway, a trip with flying books, a crowd that stares or ignores), `Lab` (an experiment room), `Crowd` (a study's sample with a group lit up and a big number), `Spot` (one spotlight, one that follows, everyone's own), `Bars` (guess vs reality), `Close` (a reaction close-up with the room blurred behind), `Time` (a big clock time), `End` (question + subscribe); furniture people touch (`Bed`, `Nightstand`, `Clock`, `Chair`, `Door`) is drawn in code on top |
 | `engine/vault.tsx` | Scenes from the first full episode ("What If You Were Locked Inside a Bank Vault Overnight?"): `VaultIn` (vault door from inside shutting/opening, bang, pace with panic breath, sit, doze, wake, the emergency ventilator, CCTV look), `DoorOut` (lobby: fire crew, phone, drill, staff, morning), `Street`, `TimeLock`, `Workshop`, `Avenue`, `WallCut`, `BoxDims`, `Gauge` (CO2 meter), `PhoneUI`, `Cave`, `Dates` |
+| `engine/awake.tsx` | Scenes from "What If You Stayed Awake for 11 Days?": `Room` (any plate and cast, hallucination warp, faces in the dark), `Pinball`, `Bars2`, `Micro` (microsleep), `Neurons`, `Wash` (the brain cleaning itself in sleep), `Count`, `RatStat`, `Day` (day cards), `LongSleep`; figure options `quiff`, `glasses`, `tired`, pose `cheer` |
 | `tools/backgrounds.py` | Generates the painted plates with FLUX.1 [schnell] on Cloudflare Workers AI in the fixed Glow palette (no people, no text) |
 | `cast/` | Shamz in the Glow style (`shamz-glow-sheet.png`, `shamz-glow-head.png`) and the code that draws them (`Sheet.tsx`) |
 | `example/` | The finished 60 s test "Nobody Saw It" (the spotlight effect): script, `plates.json` and the plates in `public/bg/`, shot list, Root, voice, retime, mix and render scripts |
@@ -25,7 +26,7 @@ this needs to be the standard"). The first version, with line-art rooms drawn in
   bloom and dust, rich clutter, straight-on at eye level, empty floor, no people, no text. Ask for a **very wide shot
   from far back** so furniture comes out human-sized next to the figures. The plate is dimmed a little so the figures
   pop, and blurred behind close-ups for depth. Check every plate: regenerate any with lettering, faces, creatures, modern objects in a
-  period scene, or wrong scale. `Plate` holds each frame until its picture is decoded, so no frame renders without it.
+  period scene, or wrong scale. `Plate` holds each frame until its picture is decoded, so no frame renders without it, and it is keyed by name so a shot that switches plates never shows the previous one.
 - **Figures.** Soft white glowing people: big round head, dark oval eyes with a glint, short brows, a simple mouth,
   a pill torso and thick round-ended tube limbs, shaded grey-blue on the far side. Identity from one hair shape (cap,
   bun, ponytail) or a colour tint for a group (yellow = the group that matters).
@@ -59,7 +60,7 @@ both OFL) are in `example/public/fonts/`; the render browser may not reach Googl
    then `python3 retime.py` (exact per-sentence word timing).
 4. **Shots**: one line per shot in `studio_src/timeline.ts`: `[script line, cue word, set, params, marks]`.
 5. **Storyboard**: `npx remotion render studio_src/index.ts GlowBoard out/board --sequence --public-dir public`;
-   tile and fix before animating (feet on floors, people to scale with the room, nothing cut off, text off faces).
+   tile and fix before animating (feet on floors, people to scale with the room, nothing cut off, text off faces: in zoomed close-ups keep the face in the upper half so the captions never cover it).
 6. **Sound**: `python3 mix.py` (a soft warm music bed ducked under the voice, effects on the action).
 7. **Render**: `bash render.sh <frames> 700` (composition `Glow`), then mux with
    `-af "volume=<gain>dB,alimiter=limit=0.8:level=disabled"` to about -14 LUFS.

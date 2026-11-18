@@ -83,6 +83,7 @@ export const POSES: Record<string, Pose> = {
   floorSit: { hipY: 150, lean: -6, la: [70, 30], ra: [60, 40], ll: [120, 79], rl: [110, 70], head: 4 },
   doze: { hipY: 150, lean: -14, la: [60, 30], ra: [50, 30], ll: [120, 79], rl: [110, 70], head: 28 },
   floorPhone: { hipY: 150, lean: -6, la: [45, 100], ra: [60, 40], ll: [120, 79], rl: [110, 70], head: 10 },
+  cheer: { la: [135, -35], ra: [-130, 30], ll: [6, 0], rl: [-6, 0], head: -8 },
   box: { lean: 14, la: [55, 35], ra: [45, 40], ll: [3, 0], rl: [-3, 0], head: 16 },
   shirt: { lean: 14, la: [25, 40], ra: [30, 45], ll: [3, 0], rl: [-3, 0], head: 22 },  // looking down at own shirt
 };
@@ -105,7 +106,7 @@ export type Mouth = 'smile' | 'line' | 'o' | 'frown' | 'talk' | 'grin' | 'wobble
 export type FigP = {
   x: number; y: number; s?: number; f: number; flip?: boolean; pose?: Pose | string;
   eyes?: Eyes; mouth?: Mouth; look?: number; blink?: number; tint?: string; glow?: boolean; opacity?: number;
-  hair?: 'cap' | 'bun' | 'pony' | 'none' | 'helmet' | 'tophat'; hairC?: string; shamz?: boolean; beard?: boolean;
+  hair?: 'cap' | 'bun' | 'pony' | 'none' | 'helmet' | 'tophat' | 'quiff'; hairC?: string; shamz?: boolean; beard?: boolean; glasses?: boolean; tired?: boolean;
   shirt?: string; print?: 'cat' | 'heart' | 'star'; phone?: boolean; talking?: boolean; seed?: number;
 };
 const THIGH = 80, SHIN = 80, TORSO = 108, UARM = 64, FARM = 60, HR = 52;
@@ -170,9 +171,11 @@ export const Fig: React.FC<FigP> = (p) => {
           {p.hair === 'pony' && <g fill={p.hairC ?? '#2a2638'}><path d={`M -46 2 Q -50 -50 0 -48 Q 50 -50 46 2 Q 30 -26 0 -24 Q -30 -26 -46 2`} /><path d="M -40 -20 Q -78 0 -64 46 Q -54 10 -38 -2 Z" /></g>}
           {p.hair === 'helmet' && <g><path d="M -50 -6 Q -52 -62 0 -64 Q 52 -62 50 -6 Z" fill={p.hairC ?? '#d8342c'} /><path d="M -64 -6 L 70 -6 Q 74 4 60 6 L -58 6 Q -70 4 -64 -6 Z" fill={p.hairC ?? '#b8261f'} /><rect x={-8} y={-58} width={16} height={22} rx={4} fill="#f2c94c" /></g>}
           {p.hair === 'tophat' && <g fill="#1c1a22"><rect x={-34} y={-118} width={68} height={74} rx={6} /><rect x={-58} y={-50} width={116} height={12} rx={6} /><rect x={-34} y={-62} width={68} height={10} fill="#5a2a2a" /></g>}
+          {p.hair === 'quiff' && <path d="M -46 -6 Q -52 -52 -6 -58 Q 30 -74 52 -44 Q 56 -20 46 -6 Q 30 -36 4 -38 Q -26 -38 -46 -6 Z" fill={p.hairC ?? '#3a2a1e'} />}
           {p.beard && <path d="M -40 14 Q -36 62 0 64 Q 36 62 40 14 Q 20 34 0 30 Q -20 34 -40 14 Z" fill="#8a8a92" />}
           {p.shamz && <ShamzHat />}
-          <Face eyes={eyes} mouth={mouth} look={look} shamz={p.shamz} f={f} />
+          <Face eyes={eyes} mouth={mouth} look={look} shamz={p.shamz} f={f} tired={p.tired} />
+          {p.glasses && <g fill="rgba(255,255,255,0.12)" stroke={G.ink} strokeWidth={3.4}><circle cx={-17 + look} cy={-2} r={14} /><circle cx={17 + look} cy={-2} r={14} /><line x1={-3 + look} y1={-2} x2={3 + look} y2={-2} /></g>}
         </g>
         {p.shamz && <ShamzLocs hc={hc} head={head} />}
         {stroke(A.d, 27, shade)}<circle cx={A.e[0]} cy={A.e[1]} r={14} fill={light} />
@@ -200,7 +203,7 @@ export const Head: React.FC<{ x: number; y: number; s?: number; rot?: number; f:
   );
 };
 
-const Face: React.FC<{ eyes: Eyes; mouth: Mouth; look: number; shamz?: boolean; f: number }> = ({ eyes, mouth, look, shamz, f }) => {
+const Face: React.FC<{ eyes: Eyes; mouth: Mouth; look: number; shamz?: boolean; f: number; tired?: boolean }> = ({ eyes, mouth, look, shamz, f, tired }) => {
   const ex = [-17 + look, 17 + look], ey = shamz ? 8 : -2;
   const eye = (x: number) => {
     if (eyes === 'closed') return <path d={`M ${x - 8} ${ey} q 8 5 16 0`} stroke={G.ink} strokeWidth={4} fill="none" strokeLinecap="round" />;
@@ -222,6 +225,7 @@ const Face: React.FC<{ eyes: Eyes; mouth: Mouth; look: number; shamz?: boolean; 
   return (
     <g>
       {ex.map((x) => <g key={x}>{eye(x)}</g>)}
+      {tired && ex.map((x) => <path key={`t${x}`} d={`M ${x - 11} ${ey + (shamz ? 16 : 13)} q 11 7 22 0`} stroke="#8a6fb8" strokeWidth={3.4} fill="none" strokeLinecap="round" opacity={0.9} />)}
       {eyes === 'worried' && <g stroke={G.ink} strokeWidth={3.6} strokeLinecap="round"><line x1={ex[0] - 9} y1={by + 2} x2={ex[0] + 6} y2={by - 4} /><line x1={ex[1] + 9} y1={by + 2} x2={ex[1] - 6} y2={by - 4} /></g>}
       {eyes === 'angry' && <g stroke={G.ink} strokeWidth={3.6} strokeLinecap="round"><line x1={ex[0] - 9} y1={by - 4} x2={ex[0] + 7} y2={by + 2} /><line x1={ex[1] + 9} y1={by - 4} x2={ex[1] - 7} y2={by + 2} /></g>}
       {(eyes === 'open' || eyes === 'wide' || eyes === 'down') && !shamz && <g stroke={G.ink} strokeWidth={3.2} strokeLinecap="round"><line x1={ex[0] - 7} y1={by - 2} x2={ex[0] + 6} y2={by - 3} /><line x1={ex[1] - 6} y1={by - 3} x2={ex[1] + 7} y2={by - 2} /></g>}
@@ -345,7 +349,9 @@ const PLATE: Record<string, { y: number; s?: number; floorFrom?: number }> = {
   bedroom: { y: 0, floorFrom: 1060 }, bedroom_warm: { y: 0, floorFrom: 1060 }, lab: { y: 0, floorFrom: 1060 }, desk: { y: -100 },
 };
 /** A painted plate inside a Cam, slightly dimmed (and optionally blurred for depth) so the glowing figures pop. */
-export const Plate: React.FC<{ name: string; floorY?: number; blur?: number; dim?: number }> = ({ name, floorY = 860, blur = 0, dim = 0.18 }) => {
+/** A painted plate inside a Cam. Keyed by name, so switching plates always waits for the new picture to load. */
+export const Plate: React.FC<{ name: string; floorY?: number; blur?: number; dim?: number }> = (props) => <PlateInner key={props.name} {...props} />;
+const PlateInner: React.FC<{ name: string; floorY?: number; blur?: number; dim?: number }> = ({ name, floorY = 860, blur = 0, dim = 0.18 }) => {
   // hold the frame until the picture is decoded, so a plate is never missing from a rendered frame
   const src = staticFile(`bg/${name}.png`);
   const [hold] = React.useState(() => delayRender(`plate ${name}`));
