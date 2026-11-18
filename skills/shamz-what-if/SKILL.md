@@ -198,3 +198,4 @@ pace, credits). Watch the final file once through with sound. Hand over `out/<sl
 
 ## The Shamz Story Formula (every episode, every style)
 Before any script, read `references/story-formula.md`: viral topic turned into a personal, cinematic story with a promise and a payoff, an arc that ends positive, real value, and the recurring Shamz motifs (cloud patch glows at the insight moment, a numbered "Shamz's Rule" card at the end, the same sign-off line).
+A ready-to-paste prompt for any agent that sums all of this up: `references/channel-master-prompt.md`.
