@@ -113,5 +113,5 @@ Rules:
 - Start with a 60-second test and show it to me before building a full episode.
 
 My topic: <one line, e.g. "Why you remember embarrassing moments at 2 a.m.">
-Length: <e.g. 60-second test / about 8 minutes>
+Length: <60-second test, or a full episode of 8 to 30 minutes>
 ```

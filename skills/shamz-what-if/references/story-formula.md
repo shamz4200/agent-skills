@@ -4,6 +4,8 @@ Every video is **cinematic storytelling** built to be shared: it hooks fast, mak
 real value, keeps its promise, and leaves a **positive** feeling tied to Shamz, so people come back and subscribe.
 Read this before writing any script. It sits on top of the style rules in `docs/STYLES.md`.
 
+**Length (owner, Nov 2026): every full episode runs 8 to 30 minutes.** At about 175 words a minute that is about 1,400 to 5,200 words of narration. Fill the time with story, not padding: more scenes and "how would this feel" moments, more real research beats, a re-hook every 60-90 seconds. Shorts and 60-second tests are the only exceptions.
+
 ## 1. Pick the topic (viral, but turned into a story that lasts)
 
 - **Start from what people are talking about right now** (news, trends, a viral clip, a new study) and spin it into an

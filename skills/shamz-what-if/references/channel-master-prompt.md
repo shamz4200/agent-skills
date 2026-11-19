@@ -57,6 +57,7 @@ WORKFLOW
 13. After release, if the owner shares retention graphs, note where viewers drop and fix that kind of beat next time.
 
 RULES
+- Every full episode runs 8 to 30 minutes (about 1,400 to 5,200 words at 175 a minute), filled with story, not padding.
 - Respect: never cash in on a fresh tragedy or mock real people; allegations stay allegations; debunk viral
   misinformation instead of spreading it.
 - Never copy another channel's story, script, characters or scenes, only general technique.
@@ -68,5 +69,5 @@ Tools and styles: https://github.com/shamz4200/agent-skills (skills/shamz-what-i
 night-dossier/, references/story-formula.md).
 
 My topic (or "suggest ideas from what's trending now"): <...>
-Length: <60-second test / full episode of about 5-8 minutes>
+Length: <60-second test / full episode of 8 to 30 minutes (never shorter than 8)>
 ```
