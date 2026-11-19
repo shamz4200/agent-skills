@@ -46,6 +46,22 @@ this needs to be the standard"). The first version, with line-art rooms drawn in
   decided up front: **complete** (question + subscribe) or **cliffhanger**.
 - **Only real, published studies**, cited on screen and in `[SRC]` lines. Round honestly ("about one in four").
 
+## Glow style standing rule: custom staging, never ready-made sets (owner, Nov 2026)
+Every Glow episode is staged shot by shot from its own narration. The engine's sets (`crowd`, `lab`, `close`, `spot`,
+`bars`, `Room`/`Room2`, `hud`, ...) are building blocks, never finished shots: never drop one in with its default
+layout, and never cycle through them beat by beat (that is what makes the work look templated: identical figures in a
+row, the same framing again and again, shots that could belong to any episode).
+1. **Staging notes first** (`<ep>/staging.md`): one entry per shot: the visual idea of this line; who is where and
+   doing what (pose, prop, action, grouping, depth); the camera (framing and move).
+2. **Build exactly that composition.** Figure positions, poses, props and camera are set per shot in the timeline.
+3. **Never repeat**: no two shots share an arrangement; no two neighbouring shots share framing or camera move; a
+   location can return, but the staging inside it is different every time (positions, poses, groupings, props, camera).
+4. **No rows of figures.** Crowds are scattered in depth (different y and scale), each figure doing something
+   different: on a phone, typing, facepalming, signing, pointing, talking in pairs, walking.
+5. **Board self-check before showing it**: every frame: hero on-model, feet on the floor, no rows, no repeated
+   composition, captions readable. Fix and re-render before presenting.
+6. If a set cannot vary enough, build the variation into the shot (custom params or a one-off scene component).
+
 ## Make a video
 
 Work in a new folder (copy `example/`), link `node_modules` to the skill studio's and copy its `package.json`
@@ -110,6 +126,10 @@ Rules:
 - Storyboard every shot and fix it before the long render. Check a 1 fps contact sheet of the finished video
   before sending it: feet on floors, people to scale, nothing cut off at a frame edge, text inside the frame and off
   faces, captions readable.
+- Custom staging, never ready-made sets: write a staging note for every shot (the idea of that line, where everyone
+  is and what they do, the camera), then build exactly that. No two shots share an arrangement, no rows of figures
+  (crowds scattered in depth, each doing something different), neighbouring shots never share framing or camera move.
+  Check every board frame (hero on-model, feet on the floor, no rows, no repeats, captions readable) before showing it.
 - Start with a 60-second test and show it to me before building a full episode.
 
 My topic: <one line, e.g. "Why you remember embarrassing moments at 2 a.m.">
