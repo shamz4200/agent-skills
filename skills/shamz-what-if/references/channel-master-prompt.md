@@ -57,7 +57,7 @@ WORKFLOW
 13. After release, if the owner shares retention graphs, note where viewers drop and fix that kind of beat next time.
 
 RULES
-- Every full episode runs 8 to 30 minutes (about 1,400 to 5,200 words at 175 a minute), filled with story, not padding.
+- Every full episode runs 8 to 30 minutes (about 1,300 to 4,800 words at Shamz's real pace of about 160 a minute), filled with story, not padding.
 - Respect: never cash in on a fresh tragedy or mock real people; allegations stay allegations; debunk viral
   misinformation instead of spreading it.
 - Never copy another channel's story, script, characters or scenes, only general technique.
