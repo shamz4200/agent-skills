@@ -341,7 +341,7 @@ export const End: React.FC<SP> = (sp) => {
   return (
     <AbsoluteFill>
       {sp.p.bg ? <sp.p.bg {...sp} p={sp.p.bgp ?? {}} /> : <Bedroom {...sp} p={{ warm: true, lamp: 1, eyes: 'happy', mouth: 'smile', clock: '2:01', v: [[960, 560, 1.06], [960, 560, 1.0]] }} />}
-      <AbsoluteFill style={{ background: `rgba(4,6,20,${0.6 * k})`, alignItems: 'center', justifyContent: 'center', opacity: k }}>
+      <AbsoluteFill style={{ background: `rgba(4,6,20,${0.6 * k})`, alignItems: 'center', justifyContent: sp.p.bg ? 'flex-start' : 'center', paddingTop: sp.p.bg ? 70 : 0, opacity: k }}>
         <div style={{ fontFamily: SANS, fontWeight: 900, fontSize: 88, color: '#fff', textAlign: 'center', lineHeight: 1.1, textShadow: '0 0 30px #ffc54d66' }}>{sp.p.l1 ?? 'WHAT MOMENT DO'} <span style={{ color: G.yellow }}>{sp.p.gold ?? 'YOU'}</span><br />{sp.p.l2 ?? 'STILL REPLAY?'}</div>
         <div style={{ fontFamily: SANS, fontWeight: 800, fontSize: 44, color: '#dfe6ff', marginTop: 26 }}>Tell me in the comments</div>
         <div style={{ fontFamily: SANS, fontWeight: 900, fontSize: 50, color: '#1a0a0a', background: G.red, borderRadius: 60, padding: '12px 56px', marginTop: 34, letterSpacing: 2, transform: `scale(${1 + 0.04 * Math.sin(f / 6)})`, boxShadow: `0 0 40px ${G.red}88` }}>SUBSCRIBE</div>

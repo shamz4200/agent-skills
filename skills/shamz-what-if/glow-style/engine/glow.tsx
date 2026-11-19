@@ -351,6 +351,7 @@ export const Bubble: React.FC<{ x: number; y: number; w: number; h: number; k: n
 export const DetailCtx = React.createContext(false);
 /** Where each plate's floor line is (y in the 1080-high picture), so figures stand on it; undefined = place as is. */
 const PLATE: Record<string, { y: number; s?: number; floorFrom?: number }> = {
+  winterstreet: { y: -60 }, cafe: { y: -80 }, servers: { y: -60 }, park: { y: -60 },
   city: { y: -60 }, junction: { y: -80 }, tunnel: { y: -80 }, bridge: { y: -60 }, rooftop: { y: -60 },
   apartment: { y: 0, floorFrom: 1060 }, kitchen: { y: 0, floorFrom: 1060 }, controlroom: { y: 0, floorFrom: 1060 },
   hall: { y: -60 }, lawn: { y: -60 }, stage: { y: -150, s: 1.15 },

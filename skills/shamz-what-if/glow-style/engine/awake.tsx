@@ -88,7 +88,7 @@ export const Bars2: React.FC<SP> = ({ f, d, p }) => {
         })}
         <Dust f={f} n={40} />
       </Cam>
-      {p.cite && <Cite f={f} text={p.cite} at={8} y={970} />}
+      {p.cite && <Cite f={f} text={p.cite} at={8} y={860} />}
     </AbsoluteFill>
   );
 };
