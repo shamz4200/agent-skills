@@ -106,7 +106,7 @@ export type Mouth = 'smile' | 'line' | 'o' | 'frown' | 'talk' | 'grin' | 'wobble
 export type FigP = {
   x: number; y: number; s?: number; f: number; flip?: boolean; pose?: Pose | string;
   eyes?: Eyes; mouth?: Mouth; look?: number; blink?: number; tint?: string; glow?: boolean; opacity?: number;
-  hair?: 'cap' | 'bun' | 'pony' | 'none' | 'helmet' | 'tophat' | 'quiff'; hairC?: string; shamz?: boolean; beard?: boolean; glasses?: boolean; tired?: boolean;
+  hair?: 'cap' | 'bun' | 'pony' | 'none' | 'helmet' | 'tophat' | 'quiff'; hairC?: string; shamz?: boolean; beard?: boolean; glasses?: boolean; tired?: boolean; insight?: number; torch?: boolean;
   shirt?: string; print?: 'cat' | 'heart' | 'star'; phone?: boolean; talking?: boolean; seed?: number;
 };
 const THIGH = 80, SHIN = 80, TORSO = 108, UARM = 64, FARM = 60, HR = 52;
@@ -173,12 +173,17 @@ export const Fig: React.FC<FigP> = (p) => {
           {p.hair === 'tophat' && <g fill="#1c1a22"><rect x={-34} y={-118} width={68} height={74} rx={6} /><rect x={-58} y={-50} width={116} height={12} rx={6} /><rect x={-34} y={-62} width={68} height={10} fill="#5a2a2a" /></g>}
           {p.hair === 'quiff' && <path d="M -46 -6 Q -52 -52 -6 -58 Q 30 -74 52 -44 Q 56 -20 46 -6 Q 30 -36 4 -38 Q -26 -38 -46 -6 Z" fill={p.hairC ?? '#3a2a1e'} />}
           {p.beard && <path d="M -40 14 Q -36 62 0 64 Q 36 62 40 14 Q 20 34 0 30 Q -20 34 -40 14 Z" fill="#8a8a92" />}
-          {p.shamz && <ShamzHat />}
+          {p.shamz && <ShamzHat glow={p.insight ?? 0} f={f} />}
           <Face eyes={eyes} mouth={mouth} look={look} shamz={p.shamz} f={f} tired={p.tired} />
           {p.glasses && <g fill="rgba(255,255,255,0.12)" stroke={G.ink} strokeWidth={3.4}><circle cx={-17 + look} cy={-2} r={14} /><circle cx={17 + look} cy={-2} r={14} /><line x1={-3 + look} y1={-2} x2={3 + look} y2={-2} /></g>}
         </g>
         {p.shamz && <ShamzLocs hc={hc} head={head} />}
         {stroke(A.d, 27, shade)}<circle cx={A.e[0]} cy={A.e[1]} r={14} fill={light} />
+        {p.torch && <g transform={`translate(${A.e[0]} ${A.e[1]})`}>
+          <polygon points="10,-6 420,-120 420,120 10,6" fill="url(#beam)" opacity={0.75} transform="rotate(-8)" />
+          <rect x={-14} y={-10} width={36} height={20} rx={6} fill="#3a3f55" stroke="#cfd8f5" strokeWidth={3} />
+          <circle cx={22} cy={0} r={9} fill="#fff6dc" filter="url(#bloom)" />
+        </g>}
         {p.phone && <g transform={`translate(${A.e[0]} ${A.e[1]}) rotate(-20)`}>
           <polygon points={`8,-20 ${hc[0] - A.e[0] + 10},${hc[1] - A.e[1] - 40} ${hc[0] - A.e[0] + 30},${hc[1] - A.e[1] + 30}`} fill="url(#beam)" opacity={0.6} />
           <rect x={-6} y={-30} width={24} height={42} rx={5} fill="#cfe0ff" stroke="#24305e" strokeWidth={3} />
@@ -244,14 +249,17 @@ const Face: React.FC<{ eyes: Eyes; mouth: Mouth; look: number; shamz?: boolean; 
 
 // Shamz in the Glow style: the same glowing body as everyone, plus his permanent marks: the black ribbed beanie with
 // the gold patch and black cloud, golden locs, and red eyes with three dots round the pupil.
-const ShamzHat: React.FC = () => (
+// glow (0..1): the cloud patch lights up gold when Shamz figures something out (the channel's insight motif).
+const ShamzHat: React.FC<{ glow?: number; f?: number }> = ({ glow = 0, f = 0 }) => (
   <g transform="translate(0 -10)">
     <path d="M -47 -10 Q -50 -66 0 -68 Q 50 -66 47 -10 Z" fill="#1E1C24" />
     {[-30, -15, 0, 15, 30].map((x) => <path key={x} d={`M ${x} -22 Q ${x * 1.05} -48 ${x * 0.5} -64`} stroke="#3a3844" strokeWidth={2.6} fill="none" />)}
     <rect x={-51} y={-26} width={102} height={22} rx={8} fill="#26242C" />
     {[-38, -26, -14, -2, 10, 22, 34].map((x) => <line key={x} x1={x} y1={-23} x2={x} y2={-7} stroke="#3c3a46" strokeWidth={2.6} />)}
     <g transform="translate(26 -15)">
-      <rect x={-14} y={-9} width={28} height={18} rx={2} fill="#F2B233" stroke="#7a5608" strokeWidth={1.4} />
+      {glow > 0 && <circle r={30 + 10 * Math.sin(f / 4)} fill="url(#warmPool)" opacity={glow} />}
+      {glow > 0 && <circle r={18} fill="#ffe08a" opacity={glow * 0.8} filter="url(#bloom)" />}
+      <rect x={-14} y={-9} width={28} height={18} rx={2} fill={glow > 0.3 ? '#FFD54A' : '#F2B233'} stroke="#7a5608" strokeWidth={1.4} />
       <g fill="#14121C"><circle cx={-5} cy={2} r={4.2} /><circle cx={1} cy={-2} r={5} /><circle cx={6.5} cy={2} r={3.8} /><rect x={-9} y={2} width={19} height={4.2} rx={2} /></g>
     </g>
   </g>
@@ -343,6 +351,8 @@ export const Bubble: React.FC<{ x: number; y: number; w: number; h: number; k: n
 export const DetailCtx = React.createContext(false);
 /** Where each plate's floor line is (y in the 1080-high picture), so figures stand on it; undefined = place as is. */
 const PLATE: Record<string, { y: number; s?: number; floorFrom?: number }> = {
+  city: { y: -60 }, junction: { y: -80 }, tunnel: { y: -80 }, bridge: { y: -60 }, rooftop: { y: -60 },
+  apartment: { y: 0, floorFrom: 1060 }, kitchen: { y: 0, floorFrom: 1060 }, controlroom: { y: 0, floorFrom: 1060 },
   hall: { y: -60 }, lawn: { y: -60 }, stage: { y: -150, s: 1.15 },
   vault: { y: -90 }, vault_morning: { y: -50 }, lobby: { y: 0, floorFrom: 930 }, street: { y: 0 }, fifth: { y: -120 },
   cave: { y: -80 }, workshop: { y: 0, floorFrom: 1060 },

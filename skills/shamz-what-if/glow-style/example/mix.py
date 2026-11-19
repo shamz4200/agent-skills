@@ -105,9 +105,11 @@ def bed(dur, bright=0.6, pulse=True):
 L0 = lambda i: words[lines[i]['i']]['s']
 L1 = lambda i: words[lines[i]['i'] + lines[i]['n'] - 1]['e']
 music = np.zeros(N, np.float32)
-turn = L0(7)
-add(music, bed(turn - 0.2, 0.5, pulse=False), 0.0, 1.0)       # quiet, sparse under the hook
-add(music, bed(END - L1(7) + 0.2, 0.75, pulse=True), L1(7) - 0.2, 1.0)   # fuller from the research on
+# music: sparse under the alert, a pulse through the first hours, sparse and dark at nightfall, warm from the bridge on
+add(music, bed(L0(10) - 0.2, 0.5, pulse=False), 0.0, 1.0)
+add(music, bed(L0(36) - L0(10) + 0.4, 0.7, pulse=True), L0(10) - 0.2, 1.0)
+add(music, bed(L0(41) - L0(36) + 0.4, 0.35, pulse=False), L0(36) - 0.2, 1.0)
+add(music, bed(END - L0(41) + 0.2, 0.85, pulse=True), L0(41) - 0.2, 1.0)
 
 voice, vsr = sf.read('audio/voice_ep.wav' if Path('audio/voice_ep.wav').exists() else 'audio/voice.wav', dtype='float32')
 if voice.ndim > 1:
@@ -119,34 +121,44 @@ v[: min(N, len(voice))] = voice[:N]
 # duck: envelope of the voice, smoothed
 env = np.abs(v)
 k = int(0.25 * SR)
-env = np.convolve(env, np.ones(k) / k, mode='same')
+c = np.concatenate([[0.0], np.cumsum(env, dtype=np.float64)])  # fast moving average (same result as a box convolution)
+lo = np.clip(np.arange(N) - k // 2, 0, N); hi = np.clip(np.arange(N) + k - k // 2, 0, N)
+env = ((c[hi] - c[lo]) / k).astype(np.float32)
 env = np.clip(env / (env.max() * 0.35 + 1e-9), 0, 1)
 music *= 0.30 - 0.18 * env
 
 fx = np.zeros(N, np.float32)
-W0 = lambda word, line, nth=1: next(w['s'] for j, w in enumerate(words[lines[line]['i']:lines[line]['i'] + lines[line]['n']]) if norm(w['w']) == word and (nth := nth - 1) == 0)
-add(fx, lib('step', 0.5), L0(0) + 0.1); add(fx, lib('step', 0.5), L0(0) + 0.45)
-add(fx, lib('tumble', 0.8), W0('trip', 0) + 0.15)
-add(fx, lib('paper_land', 0.7), L0(1) + 0.05)
-add(fx, lib('class_murmur', 0.35), L0(2) - 0.1)
-add(fx, lib('gasp', 0.4), L0(2) + 0.3)
-add(fx, lib('pop', 0.5), W0('think', 3))
-add(fx, lib('counter_tick', 0.4), L0(4))
-add(fx, lib('rewind', 0.45), W0('replay', 4))
-add(fx, lib('rewind', 0.45), L0(5)); add(fx, lib('rewind', 0.5), L0(6))
-add(fx, lib('drone_hit', 0.5), L0(7) - 0.1)
-add(fx, lib('pop', 0.5), L0(8) + 0.3)
-add(fx, lib('step', 0.4), L0(9) + 0.2); add(fx, lib('step', 0.4), L0(9) + 0.6)
-add(fx, lib('select_draw', 0.4), L0(11))
-add(fx, lib('ding', 0.45), W0('four', 13))
-add(fx, lib('title_boom', 0.45), W0('spotlight', 14) - 0.1)
-add(fx, lib('sparkle', 0.35), W0('spotlight', 14))
-add(fx, lib('shades', 0.3), L0(16))
-add(fx, lib('tumble', 0.5), L0(18) + 0.1)
-add(fx, lib('counter_tick', 0.35), L0(19))
-add(fx, lib('rewind', 0.4), L0(20))
-add(fx, lib('sparkle', 0.35), W0('forgot', 22))
-add(fx, lib('ding', 0.5), L0(23) + 0.6)
+def W0(word, line, nth=1):
+    for w in words[lines[line]['i']:lines[line]['i'] + lines[line]['n']]:
+        if norm(w['w']) == word:
+            nth -= 1
+            if nth == 0:
+                return w['s']
+    return L0(line)
+add(fx, lib('buzzer', 0.5), 0.1); add(fx, lib('buzzer', 0.4), 0.9)
+add(fx, lib('pop', 0.4), L0(1) + 0.2)
+add(fx, lib('crack', 0.4), L0(5) + 0.4)
+add(fx, lib('power_down', 0.6), W0('everywhere', 7) + 0.1)
+for i in (10, 21, 26, 35, 46, 52, 56, 61):
+    add(fx, lib('counter_tick', 0.45), L0(i))
+add(fx, lib('power_down', 0.5), L0(11) + 0.3)
+add(fx, lib('glitch', 0.35), L0(15) + 0.4)
+add(fx, lib('power_down', 0.5), L0(18) + 1.2)
+add(fx, lib('drone_hit', 0.45), L0(20))
+add(fx, lib('buzzer', 0.3), L0(22) + 0.6)
+add(fx, lib('power_down', 0.35), L0(27) + 0.3)
+add(fx, lib('sparkle', 0.4), L0(31))
+add(fx, lib('buzzer', 0.3), L0(34) + 0.5)
+add(fx, lib('roof_wind', 0.35), L0(39))
+add(fx, lib('laugh', 0.25), L0(44) + 0.6)
+add(fx, lib('sparkle', 0.45), L0(45))
+add(fx, lib('switch_off', 0.4), L0(47) + 0.3)
+add(fx, lib('roof_wind', 0.3), L0(54))
+add(fx, lib('select_draw', 0.35), L0(59) + 0.5)
+add(fx, lib('title_boom', 0.45), L0(62)); add(fx, lib('power_hum', 0.4), L0(63))
+add(fx, lib('ding', 0.35), L0(64) + 0.3)
+add(fx, lib('sparkle', 0.5), L0(71))
+add(fx, lib('ding', 0.5), L0(74) + 0.6)
 
 out = v + music + fx * 0.8
 out = out / max(1e-9, np.abs(out).max()) * 0.95
