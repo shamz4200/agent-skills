@@ -75,7 +75,7 @@ open question instead, and says when Part 2 comes.
 5. Plates: generate early in the day (the Cloudflare free allowance resets at midnight UTC and runs out after about
    two episodes' worth); reuse the plate library when it runs out.
 6. Storyboard → fix → render → 1 fps QC (feet, scale, edges, captions off faces) → master at about −14 LUFS.
-7. Shorts: cut from the hook and the most emotional or surprising moment, each with its own mini promise and payoff.
+7. Shorts: cut from the hook and the most emotional or surprising moment, each with its own mini promise and payoff. Every Short ships with upload details (`<ep>-shorts-upload.json`: title with #Shorts, description pointing to the full episode, hashtags, pinned comment), and its on-screen title is in CAPITALS like the locked Vertical Captions recipe.
 8. Upload pack: title + alternates, description with sources and chapters, tags, a pinned comment that asks the
    episode's question, end screen pointing to a related episode.
 9. After release: when the owner shares retention graphs, note where viewers drop and fix that kind of beat next time.
