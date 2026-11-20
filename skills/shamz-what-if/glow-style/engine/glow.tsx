@@ -86,6 +86,16 @@ export const POSES: Record<string, Pose> = {
   cheer: { la: [135, -35], ra: [-130, 30], ll: [6, 0], rl: [-6, 0], head: -8 },
   box: { lean: 14, la: [55, 35], ra: [45, 40], ll: [3, 0], rl: [-3, 0], head: 16 },
   shirt: { lean: 14, la: [25, 40], ra: [30, 45], ll: [3, 0], rl: [-3, 0], head: 22 },  // looking down at own shirt
+  type: { lean: 12, la: [55, 55], ra: [50, 60], ll: [3, 0], rl: [-3, 0], head: 16 },          // typing at a desk
+  sign: { la: [165, 15], ra: [-165, -15], ll: [4, 0], rl: [-4, 0], head: -6 },             // holding a sign overhead
+  pad: { lean: 6, la: [40, 100], ra: [35, 105], ll: [3, 0], rl: [-3, 0], head: 14 },        // holding a controller
+  lookUp: { la: [8, 10], ra: [-6, 12], ll: [5, 0], rl: [-5, 0], head: -24 },
+  crouch: { lean: 30, hipY: 45, la: [70, 40], ra: [60, 50], ll: [55, 85], rl: [30, 70], head: 4 },
+  swing: { lean: 14, la: [155, 40], ra: [140, 30], ll: [14, 0], rl: [-16, 0], head: -4 },  // smashing something
+  cross: { la: [40, 125], ra: [40, 125], ll: [4, 0], rl: [-4, 0], head: 4 },              // arms crossed
+  hips: { la: [-30, -70], ra: [30, 70], ll: [6, 0], rl: [-6, 0], head: -4 },              // hands on hips
+  think: { la: [8, 10], ra: [35, 145], ll: [3, 0], rl: [-3, 0], head: 12 },               // hand to chin
+  reach: { lean: 8, la: [100, 0], ra: [90, 10], ll: [10, 0], rl: [-8, 0], head: 2 },        // reaching forward
 };
 const mixPose = (a: Pose, b: Pose, t: number): Pose => {
   const m = (x?: number, y?: number) => (x ?? 0) + ((y ?? 0) - (x ?? 0)) * t;
@@ -352,6 +362,7 @@ export const DetailCtx = React.createContext(false);
 /** Where each plate's floor line is (y in the 1080-high picture), so figures stand on it; undefined = place as is. */
 const PLATE: Record<string, { y: number; s?: number; floorFrom?: number }> = {
   winterstreet: { y: -60 }, cafe: { y: -80 }, servers: { y: -60 }, park: { y: -60 },
+  gameroof: { y: 0, floorFrom: 950 },
   city: { y: -60 }, junction: { y: -80 }, tunnel: { y: -80 }, bridge: { y: -60 }, rooftop: { y: -60 },
   apartment: { y: 0, floorFrom: 1060 }, kitchen: { y: 0, floorFrom: 1060 }, controlroom: { y: 0, floorFrom: 1060 },
   hall: { y: -60 }, lawn: { y: -60 }, stage: { y: -150, s: 1.15 },

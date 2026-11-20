@@ -11,9 +11,9 @@ export const Chat: React.FC<SP> = ({ f, d, p, m }) => {
   const cold = p.cold;
   return (
     <AbsoluteFill>
-      <Cam f={f} d={d} v={[[960, 560, 1.0], [960, 560, 1.04]]}>
+      <Cam f={f} d={d} v={p.v ?? [[960, 560, 1.0], [960, 560, 1.04]]}>
         <Plate name={p.plate ?? 'apartment'} blur={10} dim={0.5} />
-        <g transform={`translate(960 560) rotate(${Math.sin(f / 30) * 1})`}>
+        <g transform={`translate(${960 + (p.px ?? 0)} ${560 + (p.py ?? 0)}) rotate(${(p.rot ?? 0) + Math.sin(f / 30) * 1}) scale(${p.ps ?? 1})`}>
           <rect x={-260} y={-450} width={520} height={900} rx={60} fill="#0b0f22" stroke="#cfe0ff" strokeWidth={6} filter="url(#soft)" />
           <circle cx={-170} cy={-370} r={34} fill={cold ? '#5a6488' : (p.friend ? '#5fe08a' : '#ff7fb0')} filter={cold ? undefined : 'url(#soft)'} />
           <text x={-120} y={-360} fontFamily={SANS} fontWeight={800} fontSize={34} fill="#fff">{p.name ?? 'Nova'}</text>
