@@ -16,6 +16,7 @@ motion graphics change every 0.5 to 1 s over painted scenes, and Shamz is the ho
 | `tools/mix.sh` | Voice + the music bed ducked about 10 dB under it (sidechain), fades, mastered to about -14 LUFS, muxed onto the render |
 | `tools/music_scan.py` | Scans the owner's music beds: tempo, loud vocal-free stretches, sung sections (faster-whisper) |
 | `cast/shamz-gta-sheet.png` | Shamz, the host: keep every permanent mark |
+| `bulk/` | **Bulk mode**: the data-driven engine (one shared studio, a spec per Short), batch voice, plates, build and mix tools for several Shorts a day: start at `bulk/README.md` |
 | `example/` | Video #1 "GTA 6 is about to DELETE your money": script with `[SRC]` lines, upload pack, plates, cover, 1 fps QC sheet |
 
 ## The style in one page
@@ -45,6 +46,8 @@ motion graphics change every 0.5 to 1 s over painted scenes, and Shamz is the ho
 - **SEO (every upload).** A keyword-first title under 100 characters, a description whose first two lines repeat the main
   search terms, a YouTube tags list (`shamz`, `shamz888` first), a pinned comment, and captions for YouTube, TikTok and
   Instagram. **`#shamz` is always a hashtag on every platform.** No sources in descriptions. No misleading tags.
+- **Images.** Brand-new plates for every video, never reused from another video; Shamz in a brand-new outfit every
+  video. Cloudflare Workers Paid plan for bulk (the free tier is about 12 images a day).
 - **QC.** Make a 1 fps contact sheet and check it by eye before sending: Shamz on-model, nothing on faces, captions readable and
   inside their boxes, nothing cut off, the CTA clear of the platform UI, loudness about -14 LUFS. Fix, re-render, then send.
 

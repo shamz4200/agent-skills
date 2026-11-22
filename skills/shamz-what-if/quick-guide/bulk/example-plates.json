@@ -1,0 +1,12 @@
+{
+ "outfit": "a charcoal-black sleeveless hoodie with the hood down, a thick silver chain, black fingerless gloves",
+ "shamz": {
+  "s1_stop": "He holds one flat palm up toward the camera like a stop sign, frowning, mouth open saying 'stop'. Background: an original small-town Florida bank branch at dusk, beige stucco, palm trees, a modest glass door, warm street light, haze.",
+  "s3_smirk": "He gives a sly sideways smirk and points at the camera, relaxed. Background: an original Ocean Beach street at sunset, pastel art-deco buildings, palm trees, a parked armored cash van in the distance, pink and orange sky.",
+  "s2_grin": "He grins with wide excited eyes, rubbing his gloved hands together. Background: inside an enormous original marble bank lobby at night, a massive round steel vault door glowing with warm light behind him, brass details, dust in the light."
+ },
+ "scenes": {
+  "b_vault": "The interior of a giant round bank vault, its huge circular steel door wide open, shelves of stacked cash bricks and gold bars glowing under warm lights, polished floor, dramatic perspective.",
+  "b_van": "A boxy steel-grey armored cash-in-transit truck with no badges, no logos and no lettering, parked at the curb outside a grand art-deco bank at golden hour in a Florida city, two guard silhouettes, palm trees, long shadows."
+ }
+}
