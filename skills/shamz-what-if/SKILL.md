@@ -22,6 +22,7 @@ schematic for the science beat, a cliffhanger blackout). Read the one closest to
 | `scripts/` | voice, plan, stills, board, sfx, mixcheck, motiongrid, master (Python 3.9+ and Node) |
 | `night-dossier/` | A second style, **Night Dossier ("ND style")**: true-story investigations at night with bean characters, a moving camera and a dossier kit. Its own engine, example, tools and a master prompt: start at `night-dossier/README.md` |
 | `glow-style/` | A third style, the **Glow style**: second-person research explainers at night with glowing white figures in detailed painted rooms, studies shown as crowds and word-by-word captions. Engine, a 60 s example and a master prompt: start at `glow-style/README.md` |
+| `quick-guide/` | A fourth style, the **Shamz Quick Guide**: vertical 30-60 s GTA 6 guides, tips and viral news Shorts at about 150 wpm with dense motion graphics, Shamz as host in a new outfit every video, the owner's music beds and max-SEO upload packs (#shamz always). Engine, tools, an example and a master prompt: start at `quick-guide/README.md` |
 
 ## Rules
 

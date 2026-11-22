@@ -89,3 +89,7 @@ of this repo.
 - **Glow style**: second-person research explainers at night: glowing white figures in detailed painted night rooms,
   studies shown as crowds of little people with the citation on screen, captions a phrase at a time, Shamz as "you".
   Engine, background tool, a 60-second example and a master prompt: [`skills/shamz-what-if/glow-style/`](skills/shamz-what-if/glow-style/README.md).
+- **Shamz Quick Guide**: vertical 30-60 s GTA 6 guides, tips and viral news Shorts: a hook in under 3 s, one surprising
+  number, dense motion graphics (phone alerts, giant numerals, data cards, strikes, maps), word-keyed captions, Shamz
+  hosting in a new outfit every video, owner's music beds, max-SEO upload packs with #shamz.
+  Engine, tools, an example and a master prompt: [`skills/shamz-what-if/quick-guide/`](skills/shamz-what-if/quick-guide/README.md).
