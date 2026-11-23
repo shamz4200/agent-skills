@@ -1,19 +1,22 @@
 # Shamz Content ID Dispute Playbook
 
-A $shamz skill, part of the Shamz agent-skills collection. A Content ID claim on original work gets a dispute filed under Original content, verified live, and tracked to expiry.
+A Content ID claim on original work gets a dispute filed under Original content, verified live, and tracked
+to expiry.
+
+![Shamz: I identify as a threat](hero.jpg)
 
 ## What it does
 
-1. Confirms the channel and that the work is original.
-2. Files the dispute under 'Original content' with the exact approved text.
-3. Verifies 'Dispute under review' live, with the expiry date.
-4. Tracks the 30-day clock and records the publish-or-hold decision.
+1. **Confirms the channel and that the work is original.**
+2. **Files the dispute under 'Original content'** with the exact approved text.
+3. **Verifies 'Dispute under review' live,** with the expiry date.
+4. **Tracks the 30-day clock** and records the publish-or-hold decision.
 
 ## What you need
 
-- Access to YouTube Studio on the right channel.
-- The exact approved dispute text.
-- The claim details: claimant, video ID, and expiry date once filed.
+- Access to YouTube Studio on the right channel
+- The exact approved dispute text
+- The claim details: claimant, video ID, and expiry date once filed
 
 ## How a run works
 
@@ -22,11 +25,17 @@ A $shamz skill, part of the Shamz agent-skills collection. A Content ID claim on
 3. Check the live status reads 'Dispute under review' with an expiry date.
 4. Record the claim, the decision, and the expiry date.
 
-## Rules it follows
+## Install
 
-- Dispute reason is always 'Original content'.
-- Verify the review live; a submitted form is not proof.
-- Restrictions are suspended while under review.
+From the folder you want to work in, give your agent the prompt in
+[SETUP_PROMPT.md](../../SETUP_PROMPT.md), or run the installer yourself:
+
+```bash
+git clone --depth 1 https://github.com/shamz4200/agent-skills /tmp/agent-skills
+bash /tmp/agent-skills/install.sh .
+```
+
+Then start your agent from that folder and give it the claim to dispute.
 
 ## What's in the folder
 
@@ -34,5 +43,16 @@ A $shamz skill, part of the Shamz agent-skills collection. A Content ID claim on
 |---|---|
 | `SKILL.md` | The playbook the agent follows |
 | `README.md` | This how-to guide |
+| `LICENSE` | MIT licence, which must stay with these files |
+| `hero.jpg` | The hero image for this guide |
 
-The MIT licence file ships with the skill at publish time.
+## Rules it follows
+
+- Dispute reason is always 'Original content'.
+- Verify the review live; a submitted form is not proof.
+- Restrictions are suspended while under review.
+- Never file a dispute on content you do not own. This playbook is not for strikes.
+
+## Licences
+
+- MIT: see `LICENSE` in this folder, which must stay with these files.
