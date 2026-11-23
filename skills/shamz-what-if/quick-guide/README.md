@@ -1,6 +1,7 @@
 # Shamz Quick Guide (GTA 6 daily Shorts)
 
-A fourth Shamz style, approved by the owner on 22 Nov 2026: **vertical 30 to 60 s game guides, tips and viral news**
+A fourth Shamz style, approved by the owner on 22 Nov 2026 (**for daily production use `bulk/`: 6 a day, with the
+owner's eye, hand, naming and SEO rules**): **vertical 30 to 60 s game guides, tips and viral news**
 for @shamz888 (YouTube Shorts, TikTok, Instagram Reels). Fast, punchy, second person. The hook is a mistake the viewer
 is making, followed by one surprising number, named specifics, a twist, one action step and a CTA tied to the topic. Dense
 motion graphics change every 0.5 to 1 s over painted scenes, and Shamz is the host in a brand-new outfit every video.
@@ -17,6 +18,9 @@ motion graphics change every 0.5 to 1 s over painted scenes, and Shamz is the ho
 | `tools/music_scan.py` | Scans the owner's music beds: tempo, loud vocal-free stretches, sung sections (faster-whisper) |
 | `cast/shamz-gta-sheet.png` | Shamz, the host: keep every permanent mark |
 | `bulk/` | **Bulk mode**: the data-driven engine (one shared studio, a spec per Short), batch voice, plates, build and mix tools for several Shorts a day: start at `bulk/README.md` |
+| `cast/shamz_eyes_reference.png` | The owner's eye reference: Shamz's eyes always look exactly like this |
+| `example/eyes/` | Before/after and a preview sheet of the painted eyes on Shamz plates |
+| `example/batch/` | Two Shorts from a daily batch: script, plates.json, upload pack and thumbnail with matching names |
 | `example/` | Video #1 "GTA 6 is about to DELETE your money": script with `[SRC]` lines, upload pack, plates, cover, 1 fps QC sheet |
 
 ## The style in one page
@@ -28,8 +32,9 @@ motion graphics change every 0.5 to 1 s over painted scenes, and Shamz is the ho
 - **Topic.** Today's most useful, surprising and checkable guide, tip or viral news. Verify every fact against several
   solid sources and never invent in-game numbers, names or locations. Sources go in the script's `[SRC]` lines,
   **never in descriptions**.
-- **Host.** Shamz from `cast/shamz-gta-sheet.png`: golden braided locs with gold bead tips, red eyes (white sclera, red
-  irises), $shamz / ankh / Om neck tattoos, Medusa and mandala sleeve, Hidden Leaf mark. **A brand-new outfit every
+- **Host.** Shamz from `cast/shamz-gta-sheet.png`: golden braided locs with gold bead tips, **eyes exactly like
+  `cast/shamz_eyes_reference.png`** (bright red iris, black outer ring, thin inner ring, black pupil, three curled
+  tomoe, white glint upper-left; painted on every plate by `bulk/tools/eyes.py`), $shamz / ankh / Om neck tattoos, Medusa and mandala sleeve, Hidden Leaf mark. **A brand-new outfit every
   video**, logged so none repeats. Use waist-up shots: they keep his face large (better identity), and there are no
   feet to float. Check every plate by eye, and regenerate brand logos, wrong hands and drifted faces.
 - **Look.** Painted semi-realistic game-art scenes (original Florida-style neon beach towns, rooms, ATMs and so on, never
@@ -53,6 +58,7 @@ motion graphics change every 0.5 to 1 s over painted scenes, and Shamz is the ho
 
 ## Master prompt (for any agent making one of these)
 
+> For the daily 6, follow `bulk/README.md` (it supersedes the single-Short steps below).
 > You are making today's **Shamz Quick Guide** Short for @shamz888 (YouTube Shorts, TikTok, Instagram Reels).
 > 1. Read this README, `STUDY.md` and `example/`. Research today's most useful, surprising and checkable GTA 6 guide,
 >    tip or viral news (news sites, Reddit, patch notes, Rockstar Newswire). Verify every fact against several solid

@@ -3,7 +3,7 @@ python3 gta/tools/voice.py <ep dir> [...]  ->  <ep>/audio/voice.wav and <ep>/wor
 import json, os, sys
 import pathlib; sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[3] / 'scripts'))
 from chatterbox_voice import synth
-SAMPLE = '/home/user/story-video-engine/assets/voice/shamz_voice.mp3'
+SAMPLE = os.environ.get('SHAMZ_VOICE', 'assets/voice/shamz_voice.mp3')  # the owner's sample: never commit or share it
 for ep in sys.argv[1:]:
     t = open(f'{ep}/script.md').read().split('## Script')[1].split('[SRC]')[0]
     text = ' '.join(l.strip() for l in t.split('\n') if l.strip())

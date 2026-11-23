@@ -1,10 +1,10 @@
 """Batch plates for Quick Guide Shorts with FLUX.2 on Cloudflare Workers AI (Shamz from the original painted sheet by default).
 python3 gta/tools/plates.py <ep dir> [...]: reads <ep>/plates.json {"outfit": "...", "shamz": {name: prompt}, "scenes": {name: prompt}}
 Shamz prompts get the identity paragraph + outfit and the sheet crops as references. Skips plates that exist."""
-import json, sys, subprocess, base64, pathlib, concurrent.futures as cf
+import json, os, sys, subprocess, base64, pathlib, concurrent.futures as cf
 T = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(T))
-acc = json.load(open('/home/user/story-video-engine/config/cloudflare.json'))['account_id']
+acc = os.environ.get('CLOUDFLARE_ACCOUNT_ID') or json.load(open('config/cloudflare.json'))['account_id']  # token: proxy-injected, or put it in the Authorization header
 LOOK_PAINTED = ("The young man from the reference images, matching his face exactly: handsome, calm, deep dark brown skin (the same deep "
         "skin tone as the reference, never light), strong brows, golden blonde box-braided locs with gold bead tips framing his "
         "face, eyes with WHITE sclera and crimson-red irises with small black tomoe dots, black neck tattoos (an Om symbol, an "
@@ -41,7 +41,7 @@ def run(out, prompt, refs):
 jobs = []
 for ep in sys.argv[1:]:
     ep = pathlib.Path(ep); spec = json.load(open(ep / 'plates.json')); (ep / 'plates').mkdir(exist_ok=True)
-    refs = ([T.parents[1] / 'assets/private/owner_face.png', T / 'refs_real/body_front.png', T / 'refs_real/tattoos.png'] if STYLE == 'real'
+    refs = ([T / 'refs_real/owner_face.png', T / 'refs_real/body_front.png', T / 'refs_real/tattoos.png'] if STYLE == 'real'
             else [T / 'refs' / f for f in ('face.png', 'body.png', 'tattoos.png')])   # painted: crops of assets/characters/shamz-gta-sheet.png
     for n, p in spec.get('shamz', {}).items():
         jobs.append((ep / 'plates' / f'{n}.png', f"Vertical cinematic medium shot, waist-up. {LOOK.format(outfit=spec['outfit'])} {p} Anatomically correct hands: each hand has exactly five fingers (one thumb and four fingers), no extra or missing fingers. Any phone or gadget is plain with no logo. His head in the upper-middle of the frame.", refs))

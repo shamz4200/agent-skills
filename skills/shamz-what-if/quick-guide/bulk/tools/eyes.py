@@ -8,7 +8,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 import mediapipe as mp
 
-MODEL = pathlib.Path(__file__).resolve().parents[2] / 'models' / 'face_landmarker.task'
+MODEL = pathlib.Path(__file__).resolve().parent / 'models' / 'face_landmarker.task'
 LIDS = {'r': [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246],
         'l': [362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385, 384, 398]}
 IRIS = {'r': (468, [469, 470, 471, 472]), 'l': (473, [474, 475, 476, 477])}

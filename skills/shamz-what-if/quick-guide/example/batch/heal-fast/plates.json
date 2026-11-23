@@ -1,0 +1,13 @@
+{
+ "outfit": "a white short-sleeve medical-style scrub top worn as streetwear with a black long-sleeve tee underneath, a red cross pin, a thin gold chain",
+ "shamz": {
+  "s1_hurt": "He clutches his side, wincing, looking at the camera, one hand raised in a 'hold on' gesture. Background: a Florida city street at night after a shootout, a damaged car, broken glass, police lights far away, no readable signs.",
+  "s2_drink": "He tilts his head back drinking from a small plain green energy can with no label, eyes on the camera. Background: a quiet small-town Florida kitchen at night, warm light, a fridge with plain doors, absolutely no signs and no letters.",
+  "s3_flex": "He flexes one arm with a proud grin at the camera. Background: an open-air Florida beach gym at sunset, weights, palm trees."
+ },
+ "scenes": {
+  "b_cans": "Small plain green energy-drink cans with no labels and no logos stacked on a shop shelf, a glowing fridge, a Florida convenience store at night.",
+  "b_food": "A Cuban sandwich, fries and a cold drink with no logos on a street-food counter in a Florida city at night, string lights, palm trees.",
+  "b_bed": "A cosy small safehouse bedroom at night, an unmade bed, warm lamp, a fan turning, a window with palm shadows."
+ }
+}
