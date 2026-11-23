@@ -4,7 +4,8 @@ The data-driven engine used for the owner's batches (videos #2-#6). One shared R
 spec (`src/eps/<slug>.ts`: shots + overlays keyed to **word indices** of its voice take) plus its own folder
 `<slug>/` (`script.md`, `plates.json`, `plates/`, `audio/voice.wav`, `words.json`, `upload.md`).
 
-**Rules (owner, Nov 2026):** brand-new images for every video (never reuse a plate from another video); Shamz in a
+**Rules (owner, Nov 2026):** 6 Shorts a day; zoom on every hand and count five fingers, check for logos and garbled
+lettering, before any plate is used (a six-fingered hand once reached a finished video); brand-new images for every video (never reuse a plate from another video); Shamz in a
 brand-new outfit every video (log it); next music bed in the rotation; max-SEO upload pack with #shamz always and no
 sources in descriptions; 1 fps QC board checked by eye before sending.
 
