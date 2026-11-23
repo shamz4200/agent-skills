@@ -35,7 +35,7 @@ def run(out, prompt, refs):
     img = (d.get('result') or {}).get('image')
     if not img: return f'FAIL {out.name} {json.dumps(d)[:300]}'
     out.write_bytes(base64.b64decode(img))
-    if refs and STYLE == 'real':               # realistic Shamz: paint his tomoe eyes (gta/tools/eyes.py)
+    if refs:                                   # every Shamz plate: paint his eyes from the owner's reference (gta/tools/eyes.py)
         import eyes; n = eyes.paint(str(out)); return f'ok {out.name} (eyes painted: {n})'
     return f'ok {out.name}'
 jobs = []
