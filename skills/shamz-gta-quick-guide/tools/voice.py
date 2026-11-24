@@ -1,7 +1,12 @@
 """Voice the script with Chatterbox. python3 tools/voice.py [sample.mp3]  (no sample = Chatterbox default voice, preview only)
 Writes audio/voice.wav and studio/src/words.json."""
 import json, sys
-import pathlib; sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / 'scripts'))  # shamz-what-if/scripts/chatterbox_voice.py
+import os, pathlib
+_here = pathlib.Path(__file__).resolve()
+for _d in [os.environ.get('SHAMZ_SCRIPTS', ''), _here.parents[1] / 'scripts', _here.parents[2] / 'scripts',
+           pathlib.Path('.claude/skills/shamz-gta-quick-guide/scripts')]:
+    if _d and (pathlib.Path(_d) / 'chatterbox_voice.py').exists(): sys.path.insert(0, str(_d)); break
+# chatterbox_voice.py ships in this skill's scripts/ (or set SHAMZ_SCRIPTS)
 from chatterbox_voice import synth
 t = open('script.md').read().split('## Script')[1].split('[SRC]')[0]
 text = ' '.join(l.strip() for l in t.split('\n') if l.strip())

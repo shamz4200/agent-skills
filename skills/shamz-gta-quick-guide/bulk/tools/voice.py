@@ -1,7 +1,12 @@
 """Voice one or more Quick Guide scripts with Chatterbox in the owner's voice (0.5 / 0.5).
 python3 gta/tools/voice.py <ep dir> [...]  ->  <ep>/audio/voice.wav and <ep>/words.json"""
 import json, os, sys
-import pathlib; sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[3] / 'scripts'))
+import os, pathlib
+_here = pathlib.Path(__file__).resolve()
+for _d in [os.environ.get('SHAMZ_SCRIPTS', ''), _here.parents[1] / 'scripts', _here.parents[2] / 'scripts',
+           pathlib.Path('.claude/skills/shamz-gta-quick-guide/scripts')]:
+    if _d and (pathlib.Path(_d) / 'chatterbox_voice.py').exists(): sys.path.insert(0, str(_d)); break
+# chatterbox_voice.py ships in this skill's scripts/ (or set SHAMZ_SCRIPTS)
 from chatterbox_voice import synth
 SAMPLE = os.environ.get('SHAMZ_VOICE', 'assets/voice/shamz_voice.mp3')  # the owner's sample: never commit or share it
 for ep in sys.argv[1:]:

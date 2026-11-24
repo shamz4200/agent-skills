@@ -34,6 +34,7 @@ Aider, Gemini CLI and others).
 | [restart-proof-build-continuity](skills/restart-proof-build-continuity/) | Keeps every long build restart-proof with a state file, chunked builds, a protected folder, and a 10-minute idle watchdog | Workspace state file per job, checkpointed chunks, watchdog |
 | [script-aware-loop-check](skills/script-aware-loop-check/) | Catches repeated phrases in a narration transcript without flagging scripted repetition or numbers spoken in different forms | Timestamped transcript, script, original suspect report |
 | [segment-audio-hygiene](skills/segment-audio-hygiene/) | Assembles multi-chunk narration without DC bursts, drift, or gaps | Narration chunks and timed transcript, expected beat total |
+| [shamz-gta-quick-guide](skills/shamz-gta-quick-guide/) | Makes the daily batch of 6 GTA 6 tip and news Shorts with Shamz as host: verified topics, the owner's voice, new images with his red tomoe eyes, motion graphics, music, and same-named thumbnail and SEO upload packs | The owner's voice sample and music, Cloudflare Workers AI (paid), Node, Python, ffmpeg |
 | [shamz-thumbnail-method](skills/shamz-thumbnail-method/) | Builds thumbnails on a fixed per-channel template, tested by watch time | Episode premise, locked character sheet, channel thumbnail system file |
 | [shamzclipz](skills/shamzclipz/) | Cuts Shorts from your own livestream VODs in the Shamz funny-caption format | A VOD link from your own stream, Python 3.12, ffmpeg, the finder engine |
 | [shot-narration-match](skills/shot-narration-match/) | Gates a narrated block on per-shot narration match, group shots, and one locked location before any stills are made | Narrator text per shot, shot list with location lock, character sheets |
@@ -120,7 +121,3 @@ of this repo.
 - **Glow style**: second-person research explainers at night: glowing white figures in detailed painted night rooms,
   studies shown as crowds of little people with the citation on screen, captions a phrase at a time, Shamz as "you".
   Engine, background tool, a 60-second example and a master prompt: [`skills/shamz-what-if/glow-style/`](skills/shamz-what-if/glow-style/README.md).
-- **Shamz Quick Guide**: vertical 30-60 s GTA 6 guides, tips and viral news Shorts: a hook in under 3 s, one surprising
-  number, dense motion graphics (phone alerts, giant numerals, data cards, strikes, maps), word-keyed captions, Shamz
-  hosting in a new outfit every video, owner's music beds, max-SEO upload packs with #shamz.
-  Engine, tools, an example and a master prompt: [`skills/shamz-what-if/quick-guide/`](skills/shamz-what-if/quick-guide/README.md).
