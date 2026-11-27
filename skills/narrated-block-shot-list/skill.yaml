@@ -1,0 +1,22 @@
+name: narrated_block_shot_list
+title: Narrated Block Shot List
+description: Gate a narrated video block shot list on measured rate, story only narration, shot narration match, varied angles, group shots, one locked location and distinct verbs before any stills or narration are made.
+category: Creation
+include_in_prompt: false
+skill_improvement:
+  managed: true
+  status: active
+  evidence_handles:
+  - 7b0b5dbf688e5622004030a1299f434b3833189040936ee84d0cb4ba54025d2e
+  - 144e338f6013a2de1389efc40325ce18268043bab0dc7310697cb01a3703d68a
+  - sirun_073ddc652d61463492b4954516a48c01
+  - sirun_1a2687f70f8b4d78b045ff00abef8959
+  measurement:
+    proxy_metric_id: objective_success_rate
+    success_criterion: Within 14 days, no block shot list built with the merged skill passes its first verdict with an assumed narration rate, a motion only narrator line, front facing dominance, a who mismatch, a recycled verb, zero group shots in a group scene, or an unlocked location, and no block needs shot list rework for those shapes after its first verdict.
+    window_days: 14
+  needs_review: false
+  rationale: Ten active learned skills trigger consolidation. The two shot list skills gate the same Shamz Survives block list at the same pre-production stage, cross reference each other, and were both proven on separate rejected blocks. Merging them into one gate list removes the duplicate load while preserving every proven check from both.
+  reviewed_at: 2026-11-23T18:45:03.479888+00:00
+  run_id: sirun_e6ba25fa825c451492c3ec51db22e57b
+  review_after: 2026-12-07T18:45:03.479888+00:00

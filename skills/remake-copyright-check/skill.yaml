@@ -1,0 +1,20 @@
+name: remake_copyright_check
+title: Remake Copyright Check
+description: Answer four copyright questions for a remake before it posts to YouTube, and hold any remake that fails them.
+category: Work and knowledge
+include_in_prompt: false
+skill_improvement:
+  managed: true
+  status: retired
+  measurement:
+    proxy_metric_id: post_publish_regression
+    success_criterion: Within 14 days, no audit re-opens the retired skill, no proposal restores its content, and no failure is attributed to its absence because the merged skill carries its check.
+    window_days: 14
+  needs_review: false
+  rationale: Retirement of the superseded skill in the consolidation batch. Its four question copyright check is preserved in the merged publish_preflight_check skill.
+  review_after: 2026-12-09T18:45:04.696618+00:00
+  reviewed_at: 2026-11-25T18:45:04.696618+00:00
+  evidence_handles:
+  - sirun_02e82dc25e294ad19fc4a6bc2d41e409
+  - 'MEMORY.md #19 COPYRIGHT STRIKE 2026-11-24'
+  run_id: sirun_2e6c37375d6747d2b8c19d98f96e492c
