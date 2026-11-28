@@ -1,0 +1,5 @@
+name: "amv"
+title: "AMV"
+description: "Build an AMV style edit (anime music video) in the style of the viral TikTok AMV editors, from a song and a footage set, using beat-cut grids, kinetic typography, matched-pose morphs and single-look colour grades. Use when $shamz asks for an AMV edit or names a song for one."
+category: "Work and knowledge"
+include_in_prompt: true
